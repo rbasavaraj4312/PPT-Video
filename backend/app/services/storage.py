@@ -18,6 +18,7 @@ from ..models.presentation import (
 )
 from ..data.builtin_templates import BUILTIN_TEMPLATES
 from ..data.builtin_motion_templates import BUILTIN_MOTION_TEMPLATES
+from .speech_storage import SpeechStorage, atomic_json
 
 logger = logging.getLogger(__name__)
 
@@ -466,8 +467,13 @@ class StorageService:
         pres.updated_at = now_iso
 
         file_path = self._get_file_path(pres.id)
-        with open(file_path, "w", encoding="utf-8") as f:
-            json.dump(pres.model_dump(), f, indent=2, ensure_ascii=False)
+        atomic_json(file_path, pres.model_dump())
+        # A failed save never reaches cleanup. Cleanup itself is best effort and
+        # uses disk files only; it cannot start the voice service or load models.
+        try:
+            SpeechStorage().cleanup_saved_jobs(pres)
+        except Exception:
+            logger.warning('Speech scratch cleanup deferred after saving %s', pres.id, exc_info=True)
         return pres
 
     def delete_presentation(self, presentation_id: str) -> bool:

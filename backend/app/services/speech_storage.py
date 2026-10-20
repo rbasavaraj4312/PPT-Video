@@ -1,6 +1,7 @@
 """Saved files and brief WAV conversion. No worker, model, or background threads."""
 import hashlib
 import json
+import logging
 import os
 from pathlib import Path
 import re
@@ -12,6 +13,14 @@ import imageio_ffmpeg
 from .audio_timing import speech_bounds
 
 TERMINAL = {'complete', 'failed', 'cancelled'}
+logger = logging.getLogger(__name__)
+
+# Only disposable speech-worker artifacts. Never sweep entire job directories:
+# job.json supports recovery, and render jobs contain downloadable video files.
+SPEECH_TEMP_FILES = (
+    'synthesize.json', 'align.json', 'narration.wav', 'captions.json',
+    'narration.wav.metrics.json', 'captions.json.metrics.json', 'worker.log',
+)
 
 
 def atomic_json(path, value):
@@ -38,6 +47,42 @@ class SpeechStorage:
 
     def profiles(self):
         return [json.loads(path.read_text()) for path in sorted(self.root.glob('voices/*/profile.json'))]
+
+    def cleanup_saved_jobs(self, presentation):
+        """Remove scratch files only after the caller has durably saved the deck.
+
+        Retain job results and batch manifests so polling, idempotent submissions,
+        and refresh recovery work even while the voice service is stopped.
+        Each job is independent; an unreadable record or locked file is retried
+        on a later save and must never make a successful presentation save fail.
+        """
+        saved = {slide.narration.asset_id: slide.narration for slide in presentation.slides
+                 if slide.narration and slide.narration.asset_id}
+        if not saved:
+            return
+        for path in self.root.glob('jobs/*/job.json'):
+            try:
+                if path.is_symlink() or path.parent.is_symlink():
+                    continue
+                job = json.loads(path.read_text())
+                if job.get('kind') != 'speech' or job.get('status') != 'complete':
+                    continue
+                result = job.get('result') or {}
+                narration = saved.get(result.get('asset_id'))
+                if narration is None or any(result.get(field) != getattr(narration, field)
+                        for field in ('generated_script', 'generated_engine', 'generated_voice_id', 'duration_ms')):
+                    continue
+                # Only clean when the reusable result really exists outside the
+                # job directory. Do not delete the last copy of a partial result.
+                for filename in ('narration.wav', 'captions.json', 'result.json'):
+                    self.asset(narration.asset_id, filename)
+                for filename in SPEECH_TEMP_FILES:
+                    try:
+                        path.with_name(filename).unlink(missing_ok=True)
+                    except OSError:
+                        logger.warning('Could not clean speech scratch file %s', path.with_name(filename), exc_info=True)
+            except (OSError, ValueError, TypeError, AttributeError):
+                logger.warning('Skipped speech job cleanup for %s', path, exc_info=True)
 
     def profile(self, voice_id):
         path = self.root / 'voices' / valid_id(voice_id) / 'profile.json'

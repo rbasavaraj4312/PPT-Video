@@ -213,7 +213,14 @@ marks interrupted jobs failed, preserving completed results for individual retri
 
 Editing, reordering, or deleting slides while jobs run does not attach old results
 to another slide or overwrite a changed script/voice. Save after generation to store
-the completed audio metadata with the presentation. Automatic word-linked reveal
+the completed audio metadata with the presentation. After a successful save, the
+backend automatically removes temporary generation/alignment requests, scratch
+audio/captions, metrics files, and worker logs for completed speech jobs whose
+results are stored in that presentation. Generated audio, captions, voice profiles,
+small job completion records, batch recovery records, and exported videos are
+retained. Active, failed, cancelled, and unsaved jobs are left alone. Cleanup runs
+without starting the voice service; a cleanup failure is retried on a later save
+and does not fail the presentation save. Automatic word-linked reveal
 suggestions are not part of this workflow; existing manual reveal controls remain
 available after narration generation.
 
