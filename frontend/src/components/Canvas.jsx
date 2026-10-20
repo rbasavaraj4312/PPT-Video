@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { ZoomIn, ZoomOut, Scan, Hand } from 'lucide-react';
+import { ZoomIn, ZoomOut, Scan, Hand, Magnet } from 'lucide-react';
 import { SlideElement } from '../rendering/SlideElement';
+import { alignmentTargets, selectionBounds, snapDrag } from '../rendering/alignmentGuides.js';
 
 const DEFAULT_CANVAS_WIDTH = 1280;
 const DEFAULT_CANVAS_HEIGHT = 720;
@@ -58,6 +59,15 @@ export function Canvas({
 
   // Dragging / Resizing / Creating state
   const [interactionState, setInteractionState] = useState(null);
+  const [guides, setGuides] = useState([]);
+  const [smartGuides, setSmartGuides] = useState(() => {
+    try { return localStorage.getItem('ppt_smart_guides') !== 'false'; } catch { return true; }
+  });
+  useEffect(() => {
+    try { localStorage.setItem('ppt_smart_guides', String(smartGuides)); } catch { /* Optional preference. */ }
+    if (!smartGuides) setGuides([]);
+  }, [smartGuides]);
+  useEffect(() => { setGuides([]); setInteractionState(null); }, [currentSlide.id]);
 
   // Inline text editing
   const [editingTextId, setEditingTextId] = useState(null);
@@ -303,6 +313,7 @@ export function Canvas({
 
   // Start moving an existing element (works for elements on-slide or off-slide)
   const handleElementPointerDown = (e, element) => {
+    if (e.button !== 0) return;
     if (isSpacePressed || activeTool === 'hand') return;
     if (activeTool !== 'select') return;
     e.stopPropagation();
@@ -343,11 +354,14 @@ export function Canvas({
       .filter((el) => currentSelection.includes(el.id))
       .map((el) => ({ ...el }));
 
+    setGuides([]);
     setInteractionState({
       type: 'drag',
       startX: x,
       startY: y,
       initialElements,
+      bounds: selectionBounds(initialElements),
+      targets: alignmentTargets(slideElements.filter(el => !currentSelection.includes(el.id)), canvasWidth, canvasHeight),
     });
   };
 
@@ -396,18 +410,26 @@ export function Canvas({
       }));
     } else if (interactionState.type === 'drag') {
       const { initialElements } = interactionState;
+      // A plain click must never move an element toward a nearby guide.
+      if (!interactionState.moved && Math.hypot(dx, dy) * zoom < 2) return;
+      if (!interactionState.moved) containerRef.current?.setPointerCapture(e.pointerId);
+      const snapped = snapDrag({ bounds: interactionState.bounds, targets: interactionState.targets,
+        dx, dy, threshold: 7 / zoom, disabled: !smartGuides || e.altKey });
+      setGuides(snapped.guides);
+      setInteractionState(prev => ({ ...prev, moved: true }));
+      const round = value => Math.round(value * 1000) / 1000;
       if (initialElements) {
         initialElements.forEach((initial) => {
           const isLine = initial.type === 'line' || initial.type === 'arrow';
           const partial = {
-            x: Math.round(initial.x + dx),
-            y: Math.round(initial.y + dy),
+            x: round(initial.x + snapped.dx),
+            y: round(initial.y + snapped.dy),
           };
           if (isLine) {
-            partial.x1 = Math.round((initial.x1 ?? initial.x) + dx);
-            partial.y1 = Math.round((initial.y1 ?? initial.y) + dy);
-            partial.x2 = Math.round((initial.x2 ?? (initial.x + initial.width)) + dx);
-            partial.y2 = Math.round((initial.y2 ?? (initial.y + initial.height)) + dy);
+            partial.x1 = round((initial.x1 ?? initial.x) + snapped.dx);
+            partial.y1 = round((initial.y1 ?? initial.y) + snapped.dy);
+            partial.x2 = round((initial.x2 ?? (initial.x + initial.width)) + snapped.dx);
+            partial.y2 = round((initial.y2 ?? (initial.y + initial.height)) + snapped.dy);
           }
           updateElement(initial.id, partial, false);
         });
@@ -472,6 +494,7 @@ export function Canvas({
 
   // Pointer up (finishing create, drag, resize, or pan)
   const handlePointerUp = () => {
+    setGuides([]);
     if (isPanning) {
       setIsPanning(false);
       return;
@@ -589,13 +612,11 @@ export function Canvas({
       }
     } else if (interactionState.type === 'drag') {
       const { initialElements } = interactionState;
-      if (initialElements && initialElements.length > 0) {
-        initialElements.forEach((initial, idx) => {
-          const el = slideElements.find((item) => item.id === initial.id);
-          if (el) {
-            updateElement(el.id, { ...el }, idx === initialElements.length - 1);
-          }
-        });
+      if (interactionState.moved && initialElements && initialElements.length > 0) {
+        // All members already moved without history. Commit the whole current
+        // presentation once, so one Undo restores the entire selection.
+        const el = slideElements.find(item => item.id === initialElements[0].id);
+        if (el) updateElement(el.id, { ...el }, true);
       }
     } else if (interactionState.type === 'resize') {
       const el = slideElements.find((item) => item.id === interactionState.initialElement.id);
@@ -892,6 +913,7 @@ export function Canvas({
       onPointerDown={handleContainerPointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
       onDragOver={event => { if ([...(event.dataTransfer?.types || [])].includes('Files')) event.preventDefault(); }}
       onDrop={event => {
         const files = [...(event.dataTransfer?.files || [])].filter(file => file.type.startsWith('image/'));
@@ -954,6 +976,14 @@ export function Canvas({
 
             {/* Selection Box & Resize Handles */}
             {renderSelectionOutline()}
+            {guides.length > 0 && <g data-alignment-guides aria-hidden="true" pointerEvents="none">
+              {guides.map((guide, index) => <line key={index}
+                x1={guide.axis === 'x' ? guide.value : guide.start - 12 / zoom}
+                y1={guide.axis === 'y' ? guide.value : guide.start - 12 / zoom}
+                x2={guide.axis === 'x' ? guide.value : guide.end + 12 / zoom}
+                y2={guide.axis === 'y' ? guide.value : guide.end + 12 / zoom}
+                stroke="#e83eaa" strokeWidth={1 / zoom} strokeDasharray={`${5 / zoom} ${4 / zoom}`} />)}
+            </g>}
           </svg>
 
           {overlay}
@@ -1010,7 +1040,14 @@ export function Canvas({
       </div>
 
       {/* Floating Zoom & Pan Controls HUD (PowerPoint style) */}
-      <div className="absolute bottom-5 right-6 z-30 flex items-center gap-1 px-3 py-1.5 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl text-slate-700 dark:text-slate-200 select-none">
+      <div onPointerDown={event => event.stopPropagation()} className="absolute bottom-5 right-6 z-30 flex items-center gap-1 px-3 py-1.5 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl text-slate-700 dark:text-slate-200 select-none">
+        <button type="button" aria-label="Smart alignment guides" aria-pressed={smartGuides}
+          title="Smart alignment guides (hold Alt/Option while dragging to bypass)"
+          onClick={() => setSmartGuides(value => !value)}
+          className={`p-1.5 rounded-lg transition ${smartGuides ? 'bg-pink-100 dark:bg-pink-950/60 text-pink-600 dark:text-pink-400' : 'hover:bg-slate-100 dark:hover:bg-slate-800'}`}>
+          <Magnet size={14} />
+        </button>
+        <div className="h-4 w-px bg-slate-200 dark:bg-slate-800 mx-1" />
         {/* Fit Slide to Window */}
         <button
           onClick={handleFitToScreen}

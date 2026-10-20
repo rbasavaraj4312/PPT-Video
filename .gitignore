@@ -58,6 +58,7 @@ backend/storage/data/*.mp4
 backend/storage/speech/
 .remotion/
 output/reveal-check/
+output/alignment-check/
 
 # OS & Editor
 .DS_Store

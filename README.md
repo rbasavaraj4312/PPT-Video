@@ -16,6 +16,11 @@ MP4, and PowerPoint exports. PNG, JPEG, WebP, and GIF are accepted (GIF imports 
 a still image); each import must be under 10 MB. Large images are reduced to a
 maximum 4096-pixel edge to limit memory use.
 
+When arranging elements, pink smart guides snap the selection to slide edges,
+slide centers, and other elements’ edges and centers. Groups move together with
+their spacing preserved. Use the magnet button beside the canvas zoom controls
+to toggle guides, or hold **Alt/Option** while dragging to move freely.
+
 ## Local voice cloning and captions
 
 The unified editor includes a docked **Design / Voice / Captions** inspector and
