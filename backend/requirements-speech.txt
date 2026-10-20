@@ -1,0 +1,2 @@
+# Compatibility entry point. Voice runs in its own on-demand FastAPI service.
+-r ../voice_service/requirements.txt

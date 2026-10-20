@@ -1,0 +1,32 @@
+{
+  "layout": {
+    "stage": {
+      "x": 220,
+      "y": 122,
+      "right": 1332,
+      "bottom": 724
+    },
+    "canvas": {
+      "x": 328,
+      "y": 171,
+      "right": 1224,
+      "bottom": 675
+    },
+    "inspectorX": 1332,
+    "timelineY": 724,
+    "overflow": false
+  },
+  "caption_editing": true,
+  "inline_seek": true,
+  "synchronized_playback": true,
+  "morph_overlap": true,
+  "captions_during_morph": true,
+  "stale_audio_guard": true,
+  "generation_job_polling": true,
+  "design_inspector": true,
+  "shape_drag_and_undo": true,
+  "inline_voice_upload": true,
+  "laptop_layout": true,
+  "light_theme": true,
+  "uncaught_errors": []
+}

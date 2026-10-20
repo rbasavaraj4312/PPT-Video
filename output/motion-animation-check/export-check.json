@@ -1,0 +1,12 @@
+{
+  "native_highlight_pixels_early_late": [
+    0,
+    26383
+  ],
+  "legacy_mean_pixel_change": 15.485677366255144,
+  "decoded_frames": [
+    61,
+    85
+  ],
+  "passed": true
+}

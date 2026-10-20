@@ -1,0 +1,11 @@
+fastapi>=0.110.0
+uvicorn>=0.28.0
+pydantic>=2.6.0
+python-multipart>=0.0.9
+imageio-ffmpeg>=0.5.0
+# Default TTS engine: OmniVoice through MLX Audio on Apple Silicon.
+# Pocket TTS is optional; install requirements-pocket.txt only if needed.
+stable-ts
+soundfile>=0.12
+numpy>=1.26
+mlx-audio; sys_platform == 'darwin' and platform_machine == 'arm64'

@@ -1,0 +1,11 @@
+{
+  "clipboard_paste": true,
+  "text_field_paste_preserved": true,
+  "aspect_ratio_resize": true,
+  "draggable_crop": true,
+  "crop_undo_redo": true,
+  "flip_rotation_adjustments": true,
+  "save_reload": true,
+  "preview": true,
+  "errors": []
+}

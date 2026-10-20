@@ -1,0 +1,107 @@
+[
+  {
+    "text": " Turn",
+    "startMs": 380.0,
+    "endMs": 520.0,
+    "timestampMs": 450.0,
+    "confidence": 0.0034870796371251345
+  },
+  {
+    "text": " that",
+    "startMs": 520.0,
+    "endMs": 720.0,
+    "timestampMs": 620.0,
+    "confidence": 0.9952579140663147
+  },
+  {
+    "text": " idea",
+    "startMs": 720.0,
+    "endMs": 1060.0,
+    "timestampMs": 890.0,
+    "confidence": 0.993466317653656
+  },
+  {
+    "text": " into",
+    "startMs": 1060.0,
+    "endMs": 1400.0,
+    "timestampMs": 1230.0,
+    "confidence": 0.9960418939590454
+  },
+  {
+    "text": " a",
+    "startMs": 1400.0,
+    "endMs": 1540.0,
+    "timestampMs": 1470.0,
+    "confidence": 0.9978949427604675
+  },
+  {
+    "text": " plan.",
+    "startMs": 1540.0,
+    "endMs": 1880.0,
+    "timestampMs": 1710.0,
+    "confidence": 0.9113287329673767
+  },
+  {
+    "text": " Notice",
+    "startMs": 2400.0,
+    "endMs": 2540.0,
+    "timestampMs": 2469.9999999999995,
+    "confidence": 0.9555202722549438
+  },
+  {
+    "text": " how",
+    "startMs": 2540.0,
+    "endMs": 2760.0,
+    "timestampMs": 2650.0,
+    "confidence": 0.9986841082572937
+  },
+  {
+    "text": " the",
+    "startMs": 2760.0,
+    "endMs": 2880.0,
+    "timestampMs": 2820.0,
+    "confidence": 0.9972098469734192
+  },
+  {
+    "text": " same",
+    "startMs": 2880.0,
+    "endMs": 3060.0,
+    "timestampMs": 2969.9999999999995,
+    "confidence": 0.9989057779312134
+  },
+  {
+    "text": " cards",
+    "startMs": 3060.0,
+    "endMs": 3360.0,
+    "timestampMs": 3210.0,
+    "confidence": 0.980613112449646
+  },
+  {
+    "text": " move",
+    "startMs": 3360.0,
+    "endMs": 3660.0,
+    "timestampMs": 3510.0,
+    "confidence": 0.9851697087287903
+  },
+  {
+    "text": " smoothly",
+    "startMs": 3660.0,
+    "endMs": 3980.0,
+    "timestampMs": 3820.0000000000005,
+    "confidence": 0.9993938207626343
+  },
+  {
+    "text": " into",
+    "startMs": 3980.0,
+    "endMs": 4460.0,
+    "timestampMs": 4220.0,
+    "confidence": 0.9957450032234192
+  },
+  {
+    "text": " alignment.",
+    "startMs": 4460.0,
+    "endMs": 5040.0,
+    "timestampMs": 4750.0,
+    "confidence": 0.9739235937595367
+  }
+]

@@ -1,0 +1,30 @@
+{
+  "frames": 44,
+  "duration_seconds": 1.4666666666666666,
+  "transition_adds_silence": false,
+  "audio_correlations": [
+    0.9037138439561669,
+    0.9052444922092504
+  ],
+  "highlighted_caption_pixels_during_morph": 2352,
+  "timeline": [
+    {
+      "start": 0,
+      "hold": 25,
+      "transition": 21,
+      "transition_start": 13,
+      "audio_from": 9,
+      "audio_frames": 19
+    },
+    {
+      "start": 25,
+      "hold": 19,
+      "transition": 0,
+      "transition_start": 44,
+      "audio_from": 9,
+      "audio_frames": 19
+    }
+  ],
+  "srt": "1\n00:00:00,100 --> 00:00:00,500\nFirst\n\n2\n00:00:00,933 --> 00:00:01,333\nSecond\n",
+  "model_inference": false
+}

@@ -1,0 +1,30 @@
+{
+  "duration_seconds": 20.6,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "fps": 30,
+  "video_bytes": 1627467,
+  "decoded_without_errors": true,
+  "clips": [
+    {
+      "scene": "momentum-1",
+      "audio_seconds": 4.89,
+      "words": 14,
+      "rendered_audio_correlation": 0.99703
+    },
+    {
+      "scene": "momentum-2",
+      "audio_seconds": 5.45,
+      "words": 15,
+      "rendered_audio_correlation": 0.99831
+    },
+    {
+      "scene": "momentum-3",
+      "audio_seconds": 6.25,
+      "words": 15,
+      "rendered_audio_correlation": 0.99864
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+[
+  {
+    "text": " Now",
+    "startMs": 380.0,
+    "endMs": 540.0,
+    "timestampMs": 460.0,
+    "confidence": 0.07603008300065994
+  },
+  {
+    "text": " bring",
+    "startMs": 540.0,
+    "endMs": 720.0,
+    "timestampMs": 630.0,
+    "confidence": 0.9193978309631348
+  },
+  {
+    "text": " the",
+    "startMs": 720.0,
+    "endMs": 900.0,
+    "timestampMs": 810.0,
+    "confidence": 0.9975048899650574
+  },
+  {
+    "text": " launch",
+    "startMs": 900.0,
+    "endMs": 1100.0,
+    "timestampMs": 1000.0,
+    "confidence": 0.9633510708808899
+  },
+  {
+    "text": " into",
+    "startMs": 1100.0,
+    "endMs": 1300.0,
+    "timestampMs": 1200.0000000000002,
+    "confidence": 0.9625020623207092
+  },
+  {
+    "text": " focus.",
+    "startMs": 1300.0,
+    "endMs": 1760.0,
+    "timestampMs": 1530.0,
+    "confidence": 0.6490215957164764
+  },
+  {
+    "text": " Combine",
+    "startMs": 2420.0,
+    "endMs": 2600.0,
+    "timestampMs": 2510.0,
+    "confidence": 0.9265683889389038
+  },
+  {
+    "text": " clarity,",
+    "startMs": 2600.0,
+    "endMs": 3000.0,
+    "timestampMs": 2800.0,
+    "confidence": 0.8802316188812256
+  },
+  {
+    "text": " practical",
+    "startMs": 3440.0,
+    "endMs": 3700.0,
+    "timestampMs": 3570.0000000000005,
+    "confidence": 0.13876692950725555
+  },
+  {
+    "text": " planning,",
+    "startMs": 3700.0,
+    "endMs": 4260.0,
+    "timestampMs": 3980.0,
+    "confidence": 0.8069499731063843
+  },
+  {
+    "text": " and",
+    "startMs": 4580.0,
+    "endMs": 4660.0,
+    "timestampMs": 4620.0,
+    "confidence": 0.9459834694862366
+  },
+  {
+    "text": " one",
+    "startMs": 4660.0,
+    "endMs": 4800.0,
+    "timestampMs": 4730.0,
+    "confidence": 0.9493123292922974
+  },
+  {
+    "text": " confident",
+    "startMs": 4800.0,
+    "endMs": 5200.0,
+    "timestampMs": 5000.0,
+    "confidence": 0.96930992603302
+  },
+  {
+    "text": " next",
+    "startMs": 5200.0,
+    "endMs": 5460.0,
+    "timestampMs": 5330.0,
+    "confidence": 0.9827436208724976
+  },
+  {
+    "text": " step.",
+    "startMs": 5460.0,
+    "endMs": 5820.0,
+    "timestampMs": 5640.000000000001,
+    "confidence": 0.9699166715145111
+  }
+]

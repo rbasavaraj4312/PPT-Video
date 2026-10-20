@@ -1,0 +1,18 @@
+[
+  {
+    "id": "folder-reels",
+    "name": "Reels & Shorts",
+    "color": "#ec4899",
+    "parent_id": null,
+    "created_at": "2026-09-30T08:02:14.064685+00:00",
+    "updated_at": "2026-09-30T08:02:14.064685+00:00"
+  },
+  {
+    "id": "folder-tutorials",
+    "name": "AI & Tech Guides",
+    "color": "#6366f1",
+    "parent_id": null,
+    "created_at": "2026-09-30T08:02:14.064685+00:00",
+    "updated_at": "2026-09-30T08:02:14.064685+00:00"
+  }
+]

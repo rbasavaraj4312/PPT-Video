@@ -1,0 +1,525 @@
+{
+  "text": " Now bring the launch into focus. A clear message, a practical plan, and one confident next step.",
+  "segments": [
+    {
+      "start": 0.46,
+      "end": 1.97,
+      "text": " Now bring the launch into focus.",
+      "seek": null,
+      "tokens": [
+        2735,
+        2222,
+        262,
+        4219,
+        656,
+        2962,
+        13
+      ],
+      "temperature": null,
+      "avg_logprob": null,
+      "compression_ratio": null,
+      "no_speech_prob": null,
+      "words": [
+        {
+          "word": " Now",
+          "start": 0.46,
+          "end": 0.6,
+          "probability": 0.12106703966856003,
+          "tokens": [
+            2735
+          ]
+        },
+        {
+          "word": " bring",
+          "start": 0.6,
+          "end": 0.82,
+          "probability": 0.925725519657135,
+          "tokens": [
+            2222
+          ]
+        },
+        {
+          "word": " the",
+          "start": 0.82,
+          "end": 0.98,
+          "probability": 0.9970032572746277,
+          "tokens": [
+            262
+          ]
+        },
+        {
+          "word": " launch",
+          "start": 0.98,
+          "end": 1.16,
+          "probability": 0.9524864554405212,
+          "tokens": [
+            4219
+          ]
+        },
+        {
+          "word": " into",
+          "start": 1.16,
+          "end": 1.42,
+          "probability": 0.967761754989624,
+          "tokens": [
+            656
+          ]
+        },
+        {
+          "word": " focus.",
+          "start": 1.42,
+          "end": 1.97,
+          "probability": 0.5701835975050926,
+          "tokens": [
+            2962,
+            13
+          ]
+        }
+      ]
+    },
+    {
+      "start": 2.4,
+      "end": 3.03,
+      "text": " A clear message,",
+      "seek": null,
+      "tokens": [
+        317,
+        1598,
+        3275,
+        11
+      ],
+      "temperature": null,
+      "avg_logprob": null,
+      "compression_ratio": null,
+      "no_speech_prob": null,
+      "words": [
+        {
+          "word": " A",
+          "start": 2.4,
+          "end": 2.4,
+          "probability": 0.8706066012382507,
+          "tokens": [
+            317
+          ]
+        },
+        {
+          "word": " clear",
+          "start": 2.4,
+          "end": 2.58,
+          "probability": 0.942897379398346,
+          "tokens": [
+            1598
+          ]
+        },
+        {
+          "word": " message,",
+          "start": 2.58,
+          "end": 3.03,
+          "probability": 0.7833282351493835,
+          "tokens": [
+            3275,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "start": 3.5,
+      "end": 4.41,
+      "text": " a practical plan,",
+      "seek": null,
+      "tokens": [
+        257,
+        8472,
+        1410,
+        11
+      ],
+      "temperature": null,
+      "avg_logprob": null,
+      "compression_ratio": null,
+      "no_speech_prob": null,
+      "words": [
+        {
+          "word": " a",
+          "start": 3.5,
+          "end": 3.5,
+          "probability": 0.0028254082426428795,
+          "tokens": [
+            257
+          ]
+        },
+        {
+          "word": " practical",
+          "start": 3.5,
+          "end": 3.76,
+          "probability": 0.9589363932609558,
+          "tokens": [
+            8472
+          ]
+        },
+        {
+          "word": " plan,",
+          "start": 3.76,
+          "end": 4.41,
+          "probability": 0.7438958436250687,
+          "tokens": [
+            1410,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "start": 4.74,
+      "end": 5.78,
+      "text": " and one confident next step.",
+      "seek": null,
+      "tokens": [
+        290,
+        530,
+        6563,
+        1306,
+        2239,
+        13
+      ],
+      "temperature": null,
+      "avg_logprob": null,
+      "compression_ratio": null,
+      "no_speech_prob": null,
+      "words": [
+        {
+          "word": " and",
+          "start": 4.74,
+          "end": 4.78,
+          "probability": 0.8919665217399597,
+          "tokens": [
+            290
+          ]
+        },
+        {
+          "word": " one",
+          "start": 4.78,
+          "end": 4.96,
+          "probability": 0.9745785593986511,
+          "tokens": [
+            530
+          ]
+        },
+        {
+          "word": " confident",
+          "start": 4.96,
+          "end": 5.44,
+          "probability": 0.9857062101364136,
+          "tokens": [
+            6563
+          ]
+        },
+        {
+          "word": " next",
+          "start": 5.44,
+          "end": 5.68,
+          "probability": 0.9790290594100952,
+          "tokens": [
+            1306
+          ]
+        },
+        {
+          "word": " step.",
+          "start": 5.68,
+          "end": 5.78,
+          "probability": 0.9593481421470642,
+          "tokens": [
+            2239,
+            13
+          ]
+        }
+      ]
+    }
+  ],
+  "language": "en",
+  "ori_dict": {
+    "text": " Now bring the launch into focus. A clear message, a practical plan, and one confident next step.",
+    "segments": [
+      {
+        "start": 0.46,
+        "end": 5.78,
+        "text": " Now bring the launch into focus. A clear message, a practical plan, and one confident next step.",
+        "seek": null,
+        "tokens": [
+          2735,
+          2222,
+          262,
+          4219,
+          656,
+          2962,
+          13,
+          317,
+          1598,
+          3275,
+          11,
+          257,
+          8472,
+          1410,
+          11,
+          290,
+          530,
+          6563,
+          1306,
+          2239,
+          13
+        ],
+        "temperature": null,
+        "avg_logprob": null,
+        "compression_ratio": null,
+        "no_speech_prob": null,
+        "words": [
+          {
+            "word": " Now",
+            "start": 0.46,
+            "end": 0.6,
+            "probability": 0.12106703966856003,
+            "tokens": [
+              2735
+            ]
+          },
+          {
+            "word": " bring",
+            "start": 0.6,
+            "end": 0.82,
+            "probability": 0.925725519657135,
+            "tokens": [
+              2222
+            ]
+          },
+          {
+            "word": " the",
+            "start": 0.82,
+            "end": 0.98,
+            "probability": 0.9970032572746277,
+            "tokens": [
+              262
+            ]
+          },
+          {
+            "word": " launch",
+            "start": 0.98,
+            "end": 1.16,
+            "probability": 0.9524864554405212,
+            "tokens": [
+              4219
+            ]
+          },
+          {
+            "word": " into",
+            "start": 1.16,
+            "end": 1.42,
+            "probability": 0.967761754989624,
+            "tokens": [
+              656
+            ]
+          },
+          {
+            "word": " focus.",
+            "start": 1.42,
+            "end": 2.38,
+            "probability": 0.5701835975050926,
+            "tokens": [
+              2962,
+              13
+            ]
+          },
+          {
+            "word": " A",
+            "start": 2.4,
+            "end": 2.4,
+            "probability": 0.8706066012382507,
+            "tokens": [
+              317
+            ]
+          },
+          {
+            "word": " clear",
+            "start": 2.4,
+            "end": 2.58,
+            "probability": 0.942897379398346,
+            "tokens": [
+              1598
+            ]
+          },
+          {
+            "word": " message,",
+            "start": 2.58,
+            "end": 3.18,
+            "probability": 0.7833282351493835,
+            "tokens": [
+              3275,
+              11
+            ]
+          },
+          {
+            "word": " a",
+            "start": 3.5,
+            "end": 3.5,
+            "probability": 0.0028254082426428795,
+            "tokens": [
+              257
+            ]
+          },
+          {
+            "word": " practical",
+            "start": 3.5,
+            "end": 3.76,
+            "probability": 0.9589363932609558,
+            "tokens": [
+              8472
+            ]
+          },
+          {
+            "word": " plan,",
+            "start": 3.76,
+            "end": 4.74,
+            "probability": 0.7438958436250687,
+            "tokens": [
+              1410,
+              11
+            ]
+          },
+          {
+            "word": " and",
+            "start": 4.74,
+            "end": 4.78,
+            "probability": 0.8919665217399597,
+            "tokens": [
+              290
+            ]
+          },
+          {
+            "word": " one",
+            "start": 4.78,
+            "end": 4.96,
+            "probability": 0.9745785593986511,
+            "tokens": [
+              530
+            ]
+          },
+          {
+            "word": " confident",
+            "start": 4.96,
+            "end": 5.44,
+            "probability": 0.9857062101364136,
+            "tokens": [
+              6563
+            ]
+          },
+          {
+            "word": " next",
+            "start": 5.44,
+            "end": 5.68,
+            "probability": 0.9790290594100952,
+            "tokens": [
+              1306
+            ]
+          },
+          {
+            "word": " step.",
+            "start": 5.68,
+            "end": 5.78,
+            "probability": 0.9593481421470642,
+            "tokens": [
+              2239,
+              13
+            ]
+          }
+        ]
+      }
+    ],
+    "language": null,
+    "ori_dict": {},
+    "regroup_history": "",
+    "nonspeech_sections": [
+      {
+        "start": 0.0,
+        "end": 0.46
+      },
+      {
+        "start": 1.56,
+        "end": 1.58
+      },
+      {
+        "start": 1.76,
+        "end": 2.34
+      },
+      {
+        "start": 2.48,
+        "end": 2.52
+      },
+      {
+        "start": 3.18,
+        "end": 3.5
+      },
+      {
+        "start": 3.7,
+        "end": 3.84
+      },
+      {
+        "start": 3.96,
+        "end": 4.0
+      },
+      {
+        "start": 4.14,
+        "end": 4.72
+      },
+      {
+        "start": 5.16,
+        "end": 5.18
+      },
+      {
+        "start": 5.72,
+        "end": 6.5
+      }
+    ]
+  },
+  "regroup_history": "isp=1_cm=2.5+++0_sp=.* /\u3002/?/\uff1f+0+0++++1_sg=0.5+0+0+1_sp=,* /\uff0c+0+0++50++1_sl=70++1+0+0+0+0+1_cm=2.5+++0",
+  "nonspeech_sections": [
+    {
+      "start": 0.0,
+      "end": 0.46
+    },
+    {
+      "start": 1.56,
+      "end": 1.58
+    },
+    {
+      "start": 1.76,
+      "end": 2.34
+    },
+    {
+      "start": 2.48,
+      "end": 2.52
+    },
+    {
+      "start": 3.18,
+      "end": 3.5
+    },
+    {
+      "start": 3.7,
+      "end": 3.84
+    },
+    {
+      "start": 3.96,
+      "end": 4.0
+    },
+    {
+      "start": 4.14,
+      "end": 4.72
+    },
+    {
+      "start": 5.16,
+      "end": 5.18
+    },
+    {
+      "start": 5.72,
+      "end": 6.5
+    }
+  ]
+}
