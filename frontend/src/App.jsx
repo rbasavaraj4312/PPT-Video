@@ -991,6 +991,9 @@ export default function App() {
         updatePresentation={updatePresentation}
         onUpdateSlide={updateSlideProperties}
         selectedElementId={selectedElementId}
+        selectedElements={selectedElements}
+        onUpdateSelectedElements={updateSelectedElements}
+        onSelectRevealElement={(id, slideIndex) => selectElement(id, { slideIndex })}
         sidebarProps={{ onAddSlide: addSlide, onDuplicateSlide: duplicateSlide, onDeleteSlide: deleteSlide,
           onReorderSlides: reorderSlides, onOpenTemplateModal: () => setIsTemplateModalOpen(true),
           onOpenAiOutline: () => setIsAiOutlineModalOpen(true) }}

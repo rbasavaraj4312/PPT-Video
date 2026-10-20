@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import { readFileSync } from 'node:fs';
 import { build } from 'esbuild';
+import { buildTimeline, motionSlideAtFrame } from '../src/narration/timeline.js';
+import { createReveal } from '../src/narration/reveals.js';
 
 // Render the actual React components, including the editor's interaction wrappers.
 const bundled = await build({ stdin: {
@@ -11,6 +13,8 @@ const bundled = await build({ stdin: {
     import { Canvas } from './src/components/Canvas.jsx';
     import { RemotionSlideRenderer } from './src/motion/core/RemotionSlideRenderer.jsx';
     import { CaptionOverlay } from './src/narration/CaptionOverlay.jsx';
+    import { SlideThumbnail } from './src/components/editor/SlideThumbnail.jsx';
+    export const thumbnail = slide => renderToStaticMarkup(React.createElement(SlideThumbnail, { slide, vertical: true }));
     export const captions = narration => renderToStaticMarkup(React.createElement(CaptionOverlay, { narration, timeMs: 150 }));
     export const editor = (slide, vertical) => renderToStaticMarkup(React.createElement(Canvas, { activeSlide: slide, aspectRatio: vertical ? '9:16' : '16:9' }));
     export const video = (slide, vertical, scale = 1) => renderToStaticMarkup(React.createElement(RemotionSlideRenderer, { slide, isVertical: vertical, scale }));`,
@@ -87,4 +91,23 @@ test('Cropped, flipped, rotated images use identical layout in editor and video'
   assert.equal(scene(editor(slide)), scene(video(slide)));
   assert.match(scene(video(slide)), /viewBox="120 40 300 240"/);
   assert.match(scene(video(slide)), /brightness\(120%\)/);
+});
+
+test('Portrait image reveals affect video opacity while editing and thumbnails remain visible', () => {
+  const narration = { script: 'Show image', generated_script: 'Show image', engine: 'omnivoice', generated_engine: 'omnivoice',
+    voice_id: 'v', generated_voice_id: 'v', asset_id: 'a'.repeat(64), duration_ms: 2000,
+    captions: [{ text: 'Show', startMs: 0, endMs: 400 }, { text: ' image', startMs: 1000, endMs: 1500 }] };
+  const slide = { id: 'portrait', transition_type: 'none', narration, elements: [{ id: 'picture', type: 'image', x: 50, y: 500,
+    width: 500, height: 300, image_src: 'data:image/png;base64,aGVsbG8=', image_width: 600, image_height: 400,
+    image_crop: { x: .1, y: .2, width: .5, height: .6 }, flip_x: true, rotation: 90, opacity: .6, reveal: createReveal(narration, 1) }] };
+  const { items } = buildTimeline({ aspect_ratio: '9:16', slides: [slide] });
+  const hidden = scene(video(motionSlideAtFrame(items, 0, 29), true), true);
+  const fading = scene(video(motionSlideAtFrame(items, 0, 33), true), true);
+  const revealed = scene(video(motionSlideAtFrame(items, 0, 36), true), true);
+  assert.match(hidden, /opacity="0"/);
+  assert.match(fading, /opacity="0.3"/);
+  assert.match(revealed, /opacity="0.6"/);
+  assert.equal(scene(editor(slide, true), true), revealed);
+  assert.match(module.exports.thumbnail(slide), /opacity="0.6"/);
+  assert.match(revealed, /viewBox="60 80 300 240"/);
 });

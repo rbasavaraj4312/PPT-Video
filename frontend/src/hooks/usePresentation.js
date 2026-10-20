@@ -319,12 +319,12 @@ export function usePresentation(initialPresentation = null) {
   const selectedElement = selectedElements[0] || null;
 
   // Toggle or select an element with Shift key support
-  const selectElement = useCallback((elementId, { toggle = false, multi = false } = {}) => {
+  const selectElement = useCallback((elementId, { toggle = false, multi = false, slideIndex = activeSlideIndex } = {}) => {
     if (!elementId) {
       setSelectedElementIdsState([]);
       return;
     }
-    const currentSlide = presentation.slides[activeSlideIndex];
+    const currentSlide = presentation.slides[slideIndex];
     if (!currentSlide) return;
     const targetEl = currentSlide.elements.find((e) => e.id === elementId);
     const groupMembers = targetEl?.group_id

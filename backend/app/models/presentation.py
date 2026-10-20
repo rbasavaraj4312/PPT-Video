@@ -76,6 +76,16 @@ class ImageCrop(BaseModel):
         return self
 
 
+class NarrationReveal(BaseModel):
+    effect: str = Field(default='fade', pattern=r'^(appear|fade)$')
+    word_index: int = Field(ge=0, le=5999)
+    word_text: str = Field(min_length=1, max_length=12000)
+    script_hash: str = Field(pattern=r'^[0-9a-f]{8}$')
+    token_sequence_hash: str = Field(pattern=r'^[0-9a-f]{8}$')
+    offset_ms: int = Field(default=0, ge=-500, le=500)
+    duration_ms: int = Field(default=200, ge=100, le=1000)
+
+
 class ElementModel(BaseModel):
     id: str
     type: ElementType
@@ -125,6 +135,7 @@ class ElementModel(BaseModel):
     morph_id: Optional[str] = None
     opacity: float = 1.0
     group_id: Optional[str] = None
+    reveal: Optional[NarrationReveal] = None
 
     # Motion Component Data (for ElementType.MOTION_COMPONENT)
     motion_data: Optional[MotionComponentData] = None

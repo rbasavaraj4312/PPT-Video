@@ -9,10 +9,13 @@ import { editorTimeline, slideAtFrame } from '../../narration/editorState.js';
 import { speechUrl } from '../../services/speech';
 import { EditorTimeline } from './EditorTimeline';
 import { NarrationInspector } from './NarrationInspector';
+import { RevealControls } from './RevealControls';
+import { revealIssues } from '../../narration/reveals.js';
 import './editor-workspace.css';
 
 export const EditorWorkspace = forwardRef(function EditorWorkspace({ presentation, activeSlideIndex, onSelectSlide,
-  updatePresentation, onUpdateSlide, selectedElementId, toolbar, canvas, designPanel, sidebarProps }, ref) {
+  updatePresentation, onUpdateSlide, selectedElementId, selectedElements = [], onUpdateSelectedElements, onSelectRevealElement,
+  toolbar, canvas, designPanel, sidebarProps }, ref) {
   const [tab, setTab] = useState('voice');
   const [sidebarHidden, setSidebarHidden] = useState(() => {
     try { return localStorage.getItem('ppt_slides_sidebar_hidden') === 'true'; } catch { return false; }
@@ -23,9 +26,11 @@ export const EditorWorkspace = forwardRef(function EditorWorkspace({ presentatio
   const [preview, setPreview] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [frame, setFrame] = useState(0);
+  const revealStop = useRef(null), markerSelection = useRef(false);
   const player = useRef(null), stage = useRef(null), frameRef = useRef(frame), playingRef = useRef(playing), indexRef = useRef(activeSlideIndex);
   const [size, setSize] = useState({ width: 1000, height: 580 });
   const timeline = useMemo(() => editorTimeline(presentation), [presentation]);
+  const issues = useMemo(() => revealIssues(timeline.items), [timeline]);
   const timelineRef = useRef(timeline);
   const selectSlideRef = useRef(onSelectSlide);
   selectSlideRef.current = onSelectSlide;
@@ -34,24 +39,43 @@ export const EditorWorkspace = forwardRef(function EditorWorkspace({ presentatio
   const vertical = presentation.aspect_ratio === '9:16';
   const width = vertical ? 720 : 1280, height = vertical ? 1280 : 720;
   const inputProps = useMemo(() => ({ presentation, assetBase: speechUrl('/assets') }), [presentation]);
-  const edit = useCallback(() => { player.current?.pause(); setPlaying(false); setPreview(false); }, []);
+  const edit = useCallback(() => { revealStop.current = null; player.current?.pause(); setPlaying(false); setPreview(false); }, []);
   const seek = useCallback(value => {
+    revealStop.current = null;
     const target = Math.max(0, Math.min(timelineRef.current.totalFrames - 1, Math.round(value)));
     player.current?.pause(); setPlaying(false); setFrame(target); frameRef.current = target;
     setPreview(true); selectSlide(slideAtFrame(timelineRef.current.items, target));
     player.current?.seekTo(target);
   }, [selectSlide]);
   function play() {
+    revealStop.current = null;
     if (playing) { player.current?.pause(); setPlaying(false); return; }
     if (frame >= timeline.totalFrames - 1) { frameRef.current = 0; setFrame(0); player.current?.seekTo(0); }
     setPlaying(true); setPreview(true); player.current?.play();
   }
   useImperativeHandle(ref, () => ({ preview: () => {
+    revealStop.current = null;
     if (frameRef.current >= timelineRef.current.totalFrames - 1) { frameRef.current = 0; setFrame(0); player.current?.seekTo(0); }
     setPlaying(true); setPreview(true); player.current?.play();
   }, edit,
     showVoice: () => { edit(); setTab('voice'); } }), [edit]);
-  useEffect(() => { if (selectedElementId) { edit(); setTab('design'); } }, [selectedElementId, edit]);
+  useEffect(() => {
+    if (selectedElementId) { if (!markerSelection.current) edit(); setTab('design'); }
+    markerSelection.current = false;
+  }, [selectedElementId, edit]);
+  function previewReveal(resolved) {
+    const start = Math.max(0, resolved.trigger - 15);
+    revealStop.current = Math.min(timeline.totalFrames - 1, resolved.trigger + resolved.duration + 30);
+    setFrame(start); frameRef.current = start; player.current?.seekTo(start);
+    setPreview(true); setPlaying(true); player.current?.play();
+  }
+  function selectReveal(slideIndex, elementId, target) {
+    markerSelection.current = elementId !== selectedElementId;
+    seek(target);
+    selectSlide(slideIndex);
+    onSelectRevealElement?.(elementId, slideIndex);
+    setTab('design');
+  }
   useEffect(() => {
     const element = stage.current;
     if (!element) return;
@@ -63,8 +87,11 @@ export const EditorWorkspace = forwardRef(function EditorWorkspace({ presentatio
     const instance = player.current;
     const onFrame = event => {
       setFrame(event.detail.frame);
+      if (revealStop.current !== null && event.detail.frame >= revealStop.current) {
+        instance.pause(); revealStop.current = null; setPlaying(false);
+      }
       const index = slideAtFrame(timelineRef.current.items, event.detail.frame);
-      if (index !== indexRef.current) selectSlide(index);
+      if (playingRef.current && index !== indexRef.current) selectSlide(index);
     };
     const onPlay = () => setPlaying(true), onPause = () => setPlaying(false);
     instance.addEventListener('frameupdate', onFrame); instance.addEventListener('play', onPlay);
@@ -97,6 +124,7 @@ export const EditorWorkspace = forwardRef(function EditorWorkspace({ presentatio
         {toolbar}
       </div>
       <div ref={stage} className="workspace-stage">
+        {preview && issues.length > 0 && <div className="reveal-preview-warning" role="status">{issues.length} reveal{issues.length === 1 ? '' : 's'} need attention. Unresolved elements remain visible. Select their timeline markers to relink.</div>}
         {preview ? <div className="workspace-inline-preview"><div style={{ width: previewWidth, height: previewWidth * height / width }}>
           <Player ref={player} component={NarratedComposition} inputProps={inputProps} durationInFrames={timeline.totalFrames}
             compositionWidth={width} compositionHeight={height} fps={30} controls={false} autoPlay={false}
@@ -105,10 +133,12 @@ export const EditorWorkspace = forwardRef(function EditorWorkspace({ presentatio
           : React.cloneElement(canvas, { overlay: narrationReady(slide?.narration) ? <CaptionOverlay narration={slide.narration} timeMs={localMs} /> : null })}
       </div>
       <EditorTimeline presentation={presentation} timeline={timeline} frame={frame} playing={playing} onSeek={seek} onTogglePlay={play}
-        activeSlideIndex={activeSlideIndex} onCaptionSelect={() => setTab('captions')} />
+        activeSlideIndex={activeSlideIndex} onCaptionSelect={() => setTab('captions')} onRevealSelect={selectReveal} />
     </main>
     <NarrationInspector tab={tab} onTabChange={value => { if (value === 'design') edit(); setTab(value); }} presentation={presentation}
       activeSlideIndex={activeSlideIndex} updatePresentation={updatePresentation} onUpdateSlide={onUpdateSlide} designPanel={designPanel}
+      revealPanel={<RevealControls key={selectedElements.map(element => element.id).join('|')} items={timeline.items} slideIndex={activeSlideIndex} selectedElements={selectedElements}
+        onChange={patch => { edit(); onUpdateSelectedElements?.(patch); }} onPreview={previewReveal} />}
       onEdit={edit} onSeekCaption={ms => seek((timeline.items[activeSlideIndex]?.start || 0) - (timeline.items[activeSlideIndex]?.audio_from || 0) + Math.ceil(ms / 1000 * 30))} />
     <footer className="workspace-status"><span><CheckCircle2 size={13} />{narrationReady(slide?.narration) ? 'Narration ready' : 'Edit slides, voice and captions in one place'}</span><span>Slide {activeSlideIndex + 1} of {presentation.slides.length} <i />{presentation.aspect_ratio || '16:9'}</span></footer>
   </div>;

@@ -24,8 +24,8 @@ export function NarratedComposition({ presentation, assetBase }) {
   const { index, inTransition, progress } = visualAtFrame(items, frame);
   const item = items[index];
   if (!item) return null;
-  const normal = motionSlideAtFrame(items, index, frame);
-  const next = items[index + 1] ? motionSlideAtFrame(items, index + 1, frame) : null;
+  const normal = motionSlideAtFrame(items, index, frame, fps);
+  const next = items[index + 1] ? motionSlideAtFrame(items, index + 1, frame, fps) : null;
   const display = inTransition && item.slide.transition_type !== 'fade' ? morphSlide(normal, next, progress) : normal;
   return <div style={{ position: 'absolute', inset: 0, background: '#000' }}>
     <RemotionSlideRenderer slide={display} scale={scale} isVertical={vertical} />

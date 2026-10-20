@@ -1,5 +1,6 @@
 import { BASE_URL } from './api.js';
-import { narrationReady } from '../narration/timeline.js';
+import { narrationReady, buildTimeline } from '../narration/timeline.js';
+import { revealIssues } from '../narration/reveals.js';
 
 export const speechUrl = (path) => `${BASE_URL}/speech${path}`;
 export async function speechRequest(path, options = {}) {
@@ -16,6 +17,8 @@ export const speechPost = (path, body) => speechRequest(path, {
 });
 
 export async function exportNarratedVideo(presentation, { onProgress, pollInterval = 1000 } = {}) {
+  const issue = revealIssues(buildTimeline(presentation).items)[0];
+  if (issue) throw new Error(`Reveal on "${issue.title || 'Untitled slide'}": ${issue.issue}`);
   for (const slide of presentation.slides) {
     if (slide.narration?.script?.trim() && !narrationReady(slide.narration)) {
       throw new Error(`Generate current narration for "${slide.title || 'Untitled slide'}" in Voice & narration before exporting.`);

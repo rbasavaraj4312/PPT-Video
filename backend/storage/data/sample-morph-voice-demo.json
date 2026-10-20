@@ -4,7 +4,7 @@
   "aspect_ratio": "16:9",
   "folder_id": null,
   "created_at": "2026-10-20T04:32:25.808638+00:00",
-  "updated_at": "2026-10-20T08:04:31.477226+00:00",
+  "updated_at": "2026-10-20T10:43:47.410292+00:00",
   "slides": [
     {
       "id": "momentum-1",
@@ -53,7 +53,24 @@
           "morph_id": "brand",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "step",
@@ -91,7 +108,24 @@
           "morph_id": "step",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "headline",
@@ -129,7 +163,24 @@
           "morph_id": "headline",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "subtitle",
@@ -167,7 +218,24 @@
           "morph_id": "subtitle",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "baseline",
@@ -205,7 +273,24 @@
           "morph_id": "baseline",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "card-0",
@@ -215,10 +300,10 @@
           "width": 530.0,
           "height": 220.0,
           "rotation": 0.0,
-          "x1": null,
-          "y1": null,
-          "x2": null,
-          "y2": null,
+          "x1": 86.0,
+          "y1": 300.0,
+          "x2": 616.0,
+          "y2": 520.0,
           "arrow_head": "end",
           "fill": "#172d3d",
           "fill_opacity": 1.0,
@@ -243,7 +328,24 @@
           "morph_id": "card-0",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "number-0",
@@ -281,7 +383,24 @@
           "morph_id": "number-0",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "label-0",
@@ -319,7 +438,24 @@
           "morph_id": "label-0",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "card-1",
@@ -357,7 +493,24 @@
           "morph_id": "card-1",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "number-1",
@@ -395,7 +548,24 @@
           "morph_id": "number-1",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "label-1",
@@ -433,7 +603,24 @@
           "morph_id": "label-1",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "card-2",
@@ -471,7 +658,24 @@
           "morph_id": "card-2",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "number-2",
@@ -509,7 +713,24 @@
           "morph_id": "number-2",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "label-2",
@@ -547,7 +768,24 @@
           "morph_id": "label-2",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         }
       ],
       "narration": {
@@ -721,7 +959,24 @@
           "morph_id": "brand",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "step",
@@ -759,7 +1014,24 @@
           "morph_id": "step",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "headline",
@@ -797,7 +1069,24 @@
           "morph_id": "headline",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "subtitle",
@@ -835,7 +1124,24 @@
           "morph_id": "subtitle",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "baseline",
@@ -873,7 +1179,24 @@
           "morph_id": "baseline",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "card-0",
@@ -911,7 +1234,24 @@
           "morph_id": "card-0",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "number-0",
@@ -949,7 +1289,24 @@
           "morph_id": "number-0",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "label-0",
@@ -987,7 +1344,24 @@
           "morph_id": "label-0",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "card-1",
@@ -997,10 +1371,10 @@
           "width": 340.0,
           "height": 220.0,
           "rotation": 0.0,
-          "x1": null,
-          "y1": null,
-          "x2": null,
-          "y2": null,
+          "x1": 458.0,
+          "y1": 300.0,
+          "x2": 798.0,
+          "y2": 520.0,
           "arrow_head": "end",
           "fill": "#172d3d",
           "fill_opacity": 1.0,
@@ -1024,8 +1398,25 @@
           "z_index": 2,
           "morph_id": "card-1",
           "opacity": 1.0,
-          "group_id": null,
-          "motion_data": null
+          "group_id": "grp-dbe8a048-289e-4170-8d91-cd67d2e46a32",
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "number-1",
@@ -1035,10 +1426,10 @@
           "width": 296.0,
           "height": 30.0,
           "rotation": 0.0,
-          "x1": null,
-          "y1": null,
-          "x2": null,
-          "y2": null,
+          "x1": 480.0,
+          "y1": 320.0,
+          "x2": 776.0,
+          "y2": 350.0,
           "arrow_head": "end",
           "fill": "#3b82f6",
           "fill_opacity": 1.0,
@@ -1062,8 +1453,25 @@
           "z_index": 3,
           "morph_id": "number-1",
           "opacity": 1.0,
-          "group_id": null,
-          "motion_data": null
+          "group_id": "grp-dbe8a048-289e-4170-8d91-cd67d2e46a32",
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "label-1",
@@ -1073,10 +1481,10 @@
           "width": 296.0,
           "height": 64.0,
           "rotation": 0.0,
-          "x1": null,
-          "y1": null,
-          "x2": null,
-          "y2": null,
+          "x1": 480.0,
+          "y1": 398.0,
+          "x2": 776.0,
+          "y2": 462.0,
           "arrow_head": "end",
           "fill": "#3b82f6",
           "fill_opacity": 1.0,
@@ -1100,8 +1508,25 @@
           "z_index": 3,
           "morph_id": "label-1",
           "opacity": 1.0,
-          "group_id": null,
-          "motion_data": null
+          "group_id": "grp-dbe8a048-289e-4170-8d91-cd67d2e46a32",
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "card-2",
@@ -1139,7 +1564,24 @@
           "morph_id": "card-2",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "number-2",
@@ -1177,7 +1619,24 @@
           "morph_id": "number-2",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "label-2",
@@ -1215,7 +1674,24 @@
           "morph_id": "label-2",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         }
       ],
       "narration": {
@@ -1396,7 +1872,24 @@
           "morph_id": "brand",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "step",
@@ -1434,7 +1927,24 @@
           "morph_id": "step",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "headline",
@@ -1472,7 +1982,24 @@
           "morph_id": "headline",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "subtitle",
@@ -1510,7 +2037,24 @@
           "morph_id": "subtitle",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "baseline",
@@ -1548,7 +2092,24 @@
           "morph_id": "baseline",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "card-0",
@@ -1586,7 +2147,24 @@
           "morph_id": "card-0",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "number-0",
@@ -1624,7 +2202,24 @@
           "morph_id": "number-0",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "label-0",
@@ -1662,7 +2257,24 @@
           "morph_id": "label-0",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "card-1",
@@ -1700,7 +2312,24 @@
           "morph_id": "card-1",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "number-1",
@@ -1738,7 +2367,24 @@
           "morph_id": "number-1",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "label-1",
@@ -1776,7 +2422,24 @@
           "morph_id": "label-1",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "card-2",
@@ -1814,7 +2477,24 @@
           "morph_id": "card-2",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "number-2",
@@ -1852,7 +2532,24 @@
           "morph_id": "number-2",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         },
         {
           "id": "label-2",
@@ -1890,7 +2587,24 @@
           "morph_id": "label-2",
           "opacity": 1.0,
           "group_id": null,
-          "motion_data": null
+          "reveal": null,
+          "motion_data": null,
+          "image_src": null,
+          "image_name": "Image",
+          "image_width": 1,
+          "image_height": 1,
+          "image_crop": {
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
+          },
+          "aspect_locked": true,
+          "flip_x": false,
+          "flip_y": false,
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         }
       ],
       "narration": {

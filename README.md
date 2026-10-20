@@ -21,7 +21,10 @@ maximum 4096-pixel edge to limit memory use.
 The unified editor includes a docked **Design / Voice / Captions** inspector and
 a synchronized timeline for slides, audio waveforms, captions, and transitions.
 Write scripts, record or upload voices, generate narration, and preview playback
-in the canvas. Voice profiles use OmniVoice through MLX Audio by default, reusing
+in the canvas. Select an element and use **Design → Reveal with narration** to
+link its appearance to a spoken word. Grouped elements can reveal together, with
+the same timing in preview and MP4; reveal edits never regenerate speech.
+Voice profiles use OmniVoice through MLX Audio by default, reusing
 the local `k2-fsa/OmniVoice` model when already installed. Pocket TTS is an optional
 installation. Both support word highlighting and narrated MP4/SRT export. Speech dependencies
 are optional; models run on demand in separate processes for limited-memory Macs.

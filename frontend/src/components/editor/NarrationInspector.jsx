@@ -9,7 +9,7 @@ function Toggle({ label, checked, onChange }) {
   return <label className="editor-toggle-label"><span>{label}</span><input type="checkbox" role="switch" checked={checked} onChange={event => onChange(event.target.checked)} /><span className="editor-switch" aria-hidden="true" /></label>;
 }
 
-export function NarrationInspector({ tab, onTabChange, presentation, activeSlideIndex, updatePresentation, onUpdateSlide, designPanel, onEdit, onSeekCaption }) {
+export function NarrationInspector({ tab, onTabChange, presentation, activeSlideIndex, updatePresentation, onUpdateSlide, designPanel, revealPanel, onEdit, onSeekCaption }) {
   const voice = useNarration({ presentation, activeSlideIndex, updatePresentation });
   const { n } = voice;
   const slide = presentation.slides[activeSlideIndex];
@@ -27,7 +27,7 @@ export function NarrationInspector({ tab, onTabChange, presentation, activeSlide
       {['design', 'voice', 'captions'].map(name => <button key={name} role="tab" aria-selected={tab === name} aria-controls={`inspector-${name}`} id={`tab-${name}`} onClick={() => onTabChange(name)}>{name[0].toUpperCase() + name.slice(1)}</button>)}
     </div>
     <div className="inspector-scroll" role="tabpanel" id={`inspector-${tab}`} aria-labelledby={`tab-${tab}`}>
-      {tab === 'design' ? <div className="workspace-design">{designPanel}</div> : <>
+      {tab === 'design' ? <>{revealPanel}<div className="workspace-design">{designPanel}</div></> : <>
         {voice.error && <div role="alert" className="editor-alert">{voice.error}<button aria-label="Dismiss error" onClick={() => voice.setError('')}>×</button></div>}
         {tab === 'voice' && <>
           <section className="inspector-section">

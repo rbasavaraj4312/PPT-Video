@@ -183,6 +183,8 @@ class NarrationService:
         from backend.app.services.narration_timeline import validate_narrations
         validate_narrations(presentation, self)
         presentation = self.prepare_timing(presentation)
+        from backend.app.services.reveals import validate_reveals
+        validate_reveals(presentation)
         return self._enqueue("render", {"presentation": presentation.model_dump()})
 
     def asset_result(self, asset_id):

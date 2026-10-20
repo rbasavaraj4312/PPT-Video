@@ -175,7 +175,7 @@ voice, or engine makes previous audio outdated; export rejects it until regenera
 Caption text/timing changes do not regenerate audio. Generation results are attached
 only if the original slide still has the same script, voice, and engine.
 
-Decks with narration or motion components automatically use the animated renderer
+Decks with narration, motion components, or narration reveals automatically use the animated renderer
 at 1080p / 30 FPS. Motion-only exports do not load speech models. The static
 silent-video exporter remains available for decks without narration or motion
 components. Motion clocks start when each slide first becomes visible, including
@@ -183,6 +183,33 @@ incoming Morph/Fade transitions; HTML/CSS templates are locked to the same frame
 clock for deterministic scrubbing and export. PowerPoint audio embedding
 is not included in this version. Present/F5 opens synchronized Remotion playback for
 narrated decks, and the existing interactive slideshow for decks without narration.
+
+## Reveal content as it is spoken
+
+1. Generate current narration for the slide, then select an element or a group.
+2. Open **Design → Reveal with narration → Choose spoken word**. Each word shows
+   its position and source-audio timestamp, so repeated words can be linked precisely.
+3. Choose the word. All selected elements receive the same link and a 200 ms fade.
+   Choose **Appear** for an immediate reveal, or **Always visible** to clear the link.
+4. Use **Preview reveal** to play from 500 ms before the trigger until one second
+   after the effect finishes. **Advanced timing** adjusts the offset (−500 to +500 ms)
+   and fade duration (100–1000 ms). Reveal edits support undo/redo and never generate speech.
+
+The **Reveals** timeline lane appears when links exist. Click a marker to seek and
+select its element. Elements remain visible and selectable while editing and in
+thumbnails; during playback they stay hidden until their word, then remain visible
+through the outgoing transition. Motion components start their animation at the reveal.
+Reveals work with captions hidden and use the same frame evaluator in preview and MP4.
+They add no time, silence, or model loading. Images and portrait slides are supported.
+PowerPoint includes all elements visibly in their final state, without reveal animations.
+
+Links store word anchors, not fixed video timestamps. Caption timing corrections
+and regenerated audio with the same script and normalized word sequence update their
+timing automatically. Changed scripts or word sequences require relinking; links never
+silently move to another occurrence. Stale or missing narration also needs attention.
+Unresolved elements remain visible in playback with an editor warning, and drafts can
+still be saved. MP4 export requires resolving or removing invalid links. A trigger
+outside its slide’s visible interval requires adjusting its word, offset, or transition.
 
 ## Timing and memory
 

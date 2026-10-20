@@ -102,7 +102,7 @@ export const renderSvgTextLines = ({
 export function SlideElement({ element, editing = false, isPreview = false }) {
     const el = canonicalElement(element);
     const strokeDash = el.stroke_style === 'dashed' ? '8 6' : undefined;
-    const opacity = el.opacity ?? 1;
+    const opacity = (el.opacity ?? 1) * (el._reveal_opacity ?? 1);
 
     switch (el.type) {
       case 'image': {

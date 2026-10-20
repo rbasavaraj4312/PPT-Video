@@ -57,6 +57,7 @@ pnpm-debug.log*
 backend/storage/data/*.mp4
 backend/storage/speech/
 .remotion/
+output/reveal-check/
 
 # OS & Editor
 .DS_Store

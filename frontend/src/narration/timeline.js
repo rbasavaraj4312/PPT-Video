@@ -1,20 +1,25 @@
 /** @typedef {import('@remotion/captions').Caption} Caption */
 import { canonicalElement } from '../rendering/elementModel.js';
 import { normalizedCrop } from '../rendering/imageModel.js';
+import { resolveReveal, revealOpacity } from './reveals.js';
 export { canonicalElement };
 export const narrationReady = (n) => Boolean(n?.asset_id && n.duration_ms > 0 &&
   n.generated_script === n.script?.trim() && n.generated_engine === n.engine &&
   n.generated_voice_id === n.voice_id);
 
 export const needsAnimatedExport = presentation => (presentation?.slides || []).some(slide =>
-  slide.narration?.script?.trim() || slide.elements?.some(element => element.type === 'motion_component'));
+  slide.narration?.script?.trim() || slide.elements?.some(element => element.type === 'motion_component' || element.reveal));
 
-export function motionSlideAtFrame(items, index, frame) {
+export function motionSlideAtFrame(items, index, frame, fps = 30) {
   const item = items[index];
   const previous = items[index - 1];
   const origin = previous?.transition > 0 ? previous.transition_start : item.start;
-  return { ...item.slide, elements: item.slide.elements.map(element => ({ ...canonicalElement(element),
-    ...(element.type === 'motion_component' ? { motion_frame: Math.max(0, frame - origin) } : {}) })) };
+  return { ...item.slide, elements: item.slide.elements.map(element => {
+    const resolved = resolveReveal(items, index, element, fps);
+    return { ...canonicalElement(element),
+      ...(element.reveal ? { _reveal_opacity: revealOpacity(resolved, frame), _reveal_binding: JSON.stringify([item.slide.id, element.reveal]) } : {}),
+      ...(element.type === 'motion_component' ? { motion_frame: Math.max(0, frame - (element.reveal && resolved.valid ? resolved.trigger : origin)) } : {}) };
+  }) };
 }
 
 export function audioBounds(n, fps = 30) {
@@ -112,9 +117,11 @@ export function morphSlide(a, b, progress) {
       mixed.image_crop = Object.fromEntries(Object.keys(start).map(key => [key, start[key] + (end[key] - start[key]) * t]));
     }
     const imageChanged = from.type === 'image' && (from.image_src !== to.image_src || Boolean(from.flip_x) !== Boolean(to.flip_x) || Boolean(from.flip_y) !== Boolean(to.flip_y));
-    if (imageChanged || from.content !== to.content || (from.type === 'motion_component' && JSON.stringify(from.motion_data) !== JSON.stringify(to.motion_data))) {
+    const revealChanged = (from._reveal_binding || to._reveal_binding) && from._reveal_binding !== to._reveal_binding;
+    if (revealChanged || imageChanged || from.content !== to.content || (from.type === 'motion_component' && JSON.stringify(from.motion_data) !== JSON.stringify(to.motion_data))) {
       elements.push({ ...mixed, opacity: (mixed.opacity ?? 1) * (1 - t) });
-      elements.push({ ...mixed, ...(imageChanged ? { image_src: to.image_src, image_width: to.image_width, image_height: to.image_height, flip_x: to.flip_x, flip_y: to.flip_y } : {}), id: `${to.id}-incoming`, content: to.content, motion_data: to.motion_data, motion_frame: to.motion_frame, opacity: (mixed.opacity ?? 1) * t });
+      elements.push({ ...mixed, ...(imageChanged ? { image_src: to.image_src, image_width: to.image_width, image_height: to.image_height, flip_x: to.flip_x, flip_y: to.flip_y } : {}), id: `${to.id}-incoming`, content: to.content, motion_data: to.motion_data, motion_frame: to.motion_frame,
+        reveal: to.reveal, _reveal_binding: to._reveal_binding, _reveal_opacity: to._reveal_opacity, opacity: (mixed.opacity ?? 1) * t });
     } else elements.push(mixed);
   }
   elements.push(...remaining.map(el => ({ ...el, id: `${el.id}-incoming`, opacity: (el.opacity ?? 1) * t })));
