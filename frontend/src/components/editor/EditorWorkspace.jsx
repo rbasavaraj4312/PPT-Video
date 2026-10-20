@@ -11,12 +11,16 @@ import { EditorTimeline } from './EditorTimeline';
 import { NarrationInspector } from './NarrationInspector';
 import { RevealControls } from './RevealControls';
 import { revealIssues } from '../../narration/reveals.js';
+import { NarrationImportModal } from './NarrationImportModal';
+import { slideNarration } from '../../narration/editorState';
+import { applyNarrationImport } from '../../narration/importState';
 import './editor-workspace.css';
 
 export const EditorWorkspace = forwardRef(function EditorWorkspace({ presentation, activeSlideIndex, onSelectSlide,
   updatePresentation, onUpdateSlide, selectedElementId, selectedElements = [], onUpdateSelectedElements, onSelectRevealElement,
   toolbar, canvas, designPanel, sidebarProps }, ref) {
   const [tab, setTab] = useState('voice');
+  const [importingNarration, setImportingNarration] = useState(false);
   const [sidebarHidden, setSidebarHidden] = useState(() => {
     try { return localStorage.getItem('ppt_slides_sidebar_hidden') === 'true'; } catch { return false; }
   });
@@ -58,7 +62,8 @@ export const EditorWorkspace = forwardRef(function EditorWorkspace({ presentatio
     if (frameRef.current >= timelineRef.current.totalFrames - 1) { frameRef.current = 0; setFrame(0); player.current?.seekTo(0); }
     setPlaying(true); setPreview(true); player.current?.play();
   }, edit,
-    showVoice: () => { edit(); setTab('voice'); } }), [edit]);
+    showVoice: () => { edit(); setTab('voice'); },
+    importNarration: () => { edit(); setImportingNarration(true); } }), [edit]);
   useEffect(() => {
     if (selectedElementId) { if (!markerSelection.current) edit(); setTab('design'); }
     markerSelection.current = false;
@@ -109,6 +114,13 @@ export const EditorWorkspace = forwardRef(function EditorWorkspace({ presentatio
   }, [timeline.totalFrames]);
 
   const slide = presentation.slides[activeSlideIndex];
+  function importDraft(draft, mode, sources) {
+    const deckId = presentation.id, defaults = slideNarration(slide);
+    const first = mode === 'update' ? Math.max(0, presentation.slides.findIndex(item => item.id === sources.sourceIds[sources.numbers[0] - 1])) : mode === 'replace' ? 0 : presentation.slides.length;
+    updatePresentation(previous => previous.id !== deckId ? previous : applyNarrationImport(previous, draft, mode,
+      { ...sources, voiceId: defaults.voice_id, engine: defaults.engine }));
+    setImportingNarration(false); setTab('voice'); edit(); selectSlide(first);
+  }
   const localMs = Math.max(0, frame - (timeline.items[activeSlideIndex]?.start || 0) + (timeline.items[activeSlideIndex]?.audio_from || 0)) / 30 * 1000;
   const previewWidth = Math.max(100, Math.min(size.width - 48, (size.height - 48) * width / height));
   return <div className="editor-workspace" data-testid="editor-workspace" style={{ '--slides-sidebar-width': sidebarHidden ? '0px' : undefined }}>
@@ -136,10 +148,13 @@ export const EditorWorkspace = forwardRef(function EditorWorkspace({ presentatio
         activeSlideIndex={activeSlideIndex} onCaptionSelect={() => setTab('captions')} onRevealSelect={selectReveal} />
     </main>
     <NarrationInspector tab={tab} onTabChange={value => { if (value === 'design') edit(); setTab(value); }} presentation={presentation}
+      onImportNarration={() => { edit(); setImportingNarration(true); }}
+      onSelectSlide={index => { edit(); selectSlide(index); setTab('voice'); }}
       activeSlideIndex={activeSlideIndex} updatePresentation={updatePresentation} onUpdateSlide={onUpdateSlide} designPanel={designPanel}
       revealPanel={<RevealControls key={selectedElements.map(element => element.id).join('|')} items={timeline.items} slideIndex={activeSlideIndex} selectedElements={selectedElements}
         onChange={patch => { edit(); onUpdateSelectedElements?.(patch); }} onPreview={previewReveal} />}
       onEdit={edit} onSeekCaption={ms => seek((timeline.items[activeSlideIndex]?.start || 0) - (timeline.items[activeSlideIndex]?.audio_from || 0) + Math.ceil(ms / 1000 * 30))} />
+    {importingNarration && <NarrationImportModal presentation={presentation} onClose={() => setImportingNarration(false)} onImport={importDraft} />}
     <footer className="workspace-status"><span><CheckCircle2 size={13} />{narrationReady(slide?.narration) ? 'Narration ready' : 'Edit slides, voice and captions in one place'}</span><span>Slide {activeSlideIndex + 1} of {presentation.slides.length} <i />{presentation.aspect_ratio || '16:9'}</span></footer>
   </div>;
 });

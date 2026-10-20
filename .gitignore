@@ -59,6 +59,7 @@ backend/storage/speech/
 .remotion/
 output/reveal-check/
 output/alignment-check/
+output/narration-import-check/
 
 # OS & Editor
 .DS_Store

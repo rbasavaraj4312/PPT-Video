@@ -8,7 +8,9 @@ export async function speechRequest(path, options = {}) {
   if (!response.ok) {
     const body = await response.json().catch(() => ({}));
     const detail = typeof body.detail === 'string' ? body.detail : JSON.stringify(body.detail);
-    throw new Error(detail || `Speech request failed (${response.status})`);
+    const error = new Error(detail || `Speech request failed (${response.status})`);
+    error.status = response.status;
+    throw error;
   }
   return response.json();
 }

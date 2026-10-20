@@ -151,6 +151,66 @@ Run on the host to use MLX; a Linux Docker container cannot use Apple's MLX runt
 
 ## Workflow
 
+### Start with all narration at once
+
+Open **Narration to slides** in the editor header, or **Voice → Import all
+narration → Create slides**. Paste your complete script, or upload a UTF-8 `.txt`
+or `.md` file:
+
+```text
+Slide 1:
+Every successful project starts with one clear idea.
+Give your audience a single message they can remember.
+
+Slide 2:
+Turn that idea into a practical plan.
+Define the goal, assign responsibilities, and set a deadline.
+```
+
+The dialog also provides **Copy ChatGPT / Claude prompt** for improving your
+explanation externally. Only narration and slide headings are needed. A script
+without headings becomes a single slide; Markdown headings and `Scene 1:` work too.
+Import up to 100 slides and 400,000 characters, with at most 12,000 characters per
+slide. Empty sections and duplicate slide numbers produce an error before import.
+
+Opening the dialog on a narrated deck preloads its current scripts with the actual
+slide numbers. The default destination is **Update narration · keep slide designs**:
+existing slide IDs, visual elements, voice settings, and unchanged audio are retained.
+Changed scripts make their old audio outdated. New slide numbers append scenes;
+omitting a number does not delete that slide. Choose **Add to this presentation**
+or **Replace all existing slides** explicitly when you want newly built layouts.
+
+Choose **Review slide draft** to edit suggested titles, visual excerpts, and the
+spoken script. Titles and excerpts are extracted locally from the narration;
+drafting uses predefined Focus or Key points layouts and loads no AI model.
+Choose a theme, then append the slides or explicitly replace the existing slides.
+The draft follows the presentation’s landscape or portrait aspect ratio. Creating
+slides is undoable, and every visual element remains editable in the canvas.
+Narration is preserved unless you edit it. Imported slides have no extra narration
+pause; transitions overlap the audio boundary as usual.
+
+Choose a saved voice in the **Voice** inspector, then use **Presentation voices →
+Generate all voices**. By default, this slide’s voice and engine apply to all
+scripted slides; uncheck that option to preserve individual voice choices. Current
+audio is skipped. Scripts and voice settings are saved before jobs start, and
+each slide receives a separate job on the existing serial voice worker.
+
+The panel displays per-slide progress, errors, **Retry failed slides**, and
+individual retry/regeneration actions. Completed slides are retained when another
+slide fails. **Cancel remaining voice jobs** stops the unfinished work. Queued
+jobs continue if you change tabs or leave the editor; reopening the presentation
+recovers progress in the same browser. Retrying an interrupted request reuses its
+batch identifier so it cannot enqueue duplicate jobs. A restarted voice service
+marks interrupted jobs failed, preserving completed results for individual retries.
+
+Editing, reordering, or deleting slides while jobs run does not attach old results
+to another slide or overwrite a changed script/voice. Save after generation to store
+the completed audio metadata with the presentation. Automatic word-linked reveal
+suggestions are not part of this workflow; existing manual reveal controls remain
+available after narration generation.
+
+### Work on individual slides
+
 1. Open a presentation and select the **Voice** inspector tab.
 2. Choose a saved voice, or **Record** / **Upload sample**. Select a 3–15 second clip (5–15 recommended),
    enter the exact words spoken in that clip, and save the voice profile.

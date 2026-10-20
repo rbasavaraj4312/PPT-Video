@@ -11,12 +11,15 @@ export function slideNarration(slide) {
 
 export function applyNarrationResult(presentation, tracked, result) {
   if (presentation.id !== tracked.presentationId) return presentation;
-  return { ...presentation, slides: presentation.slides.map(slide => {
+  let changed = false;
+  const slides = presentation.slides.map(slide => {
     const n = slide.narration;
     if (slide.id !== tracked.slideId || !n || n.script.trim() !== result.generated_script ||
       n.engine !== result.generated_engine || n.voice_id !== result.generated_voice_id) return slide;
+    changed = true;
     return { ...slide, narration: { ...n, ...result } };
-  }) };
+  });
+  return changed ? { ...presentation, slides } : presentation;
 }
 
 export function slideAtFrame(items, frame) {

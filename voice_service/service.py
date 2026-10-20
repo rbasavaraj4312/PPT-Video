@@ -149,7 +149,7 @@ class NarrationService:
                 self._terminate(process)
             return self.get_job(job_id)
 
-    def _enqueue(self, kind, data):
+    def _enqueue(self, kind, data, schedule=True):
         job_id = "job-" + uuid.uuid4().hex
         folder = self.root / "jobs" / job_id
         folder.mkdir(parents=True)
@@ -157,27 +157,77 @@ class NarrationService:
         with self.lock:
             self.jobs[job_id] = job
             atomic_json(folder / "job.json", job)
-        self.pool.submit(self._run, job_id, data)
+        if schedule:
+            self.pool.submit(self._run, job_id, data)
         return dict(job)
 
-    def generate(self, request):
+    def _generation_data(self, request, version_cache=None):
         profile = self.profile(request.voice_id)
-        versions = {}
-        for engine, package in [(request.engine, "mlx-audio" if request.engine == "omnivoice" else "pocket-tts"), ("align", "stable-ts")]:
-            try:
-                probe = subprocess.run([self.python(engine), "-c", "import importlib.metadata,sys; print(importlib.metadata.version(sys.argv[1]))", package], capture_output=True, text=True, timeout=10)
-                versions[package] = probe.stdout.strip() if probe.returncode == 0 else "not-installed"
-            except (OSError, subprocess.TimeoutExpired):
-                versions[package] = "not-installed"
+        cache = version_cache if version_cache is not None else {}
+        if request.engine not in cache:
+            versions = {}
+            for engine, package in [(request.engine, "mlx-audio" if request.engine == "omnivoice" else "pocket-tts"), ("align", "stable-ts")]:
+                try:
+                    probe = subprocess.run([self.python(engine), "-c", "import importlib.metadata,sys; print(importlib.metadata.version(sys.argv[1]))", package], capture_output=True, text=True, timeout=10)
+                    versions[package] = probe.stdout.strip() if probe.returncode == 0 else "not-installed"
+                except (OSError, subprocess.TimeoutExpired):
+                    versions[package] = "not-installed"
+            cache[request.engine] = versions
         settings = dict(engine=request.engine, script=request.script.strip(), voice_id=profile["id"],
                         reference_hash=profile["reference_hash"], transcript=profile["transcript"],
                         model=omnivoice_model() if request.engine == "omnivoice" else "pocket-english",
-                        alignment_model=os.getenv("ALIGNMENT_MODEL", "base.en"), versions=versions, pipeline_version=3)
+                        alignment_model=os.getenv("ALIGNMENT_MODEL", "base.en"), versions=cache[request.engine], pipeline_version=3)
         fingerprint = hashlib.sha256(json.dumps(settings, sort_keys=True).encode()).hexdigest()
         prompt_key = hashlib.sha256(json.dumps({k: settings[k] for k in ["engine", "model", "reference_hash", "transcript", "versions", "pipeline_version"]}, sort_keys=True).encode()).hexdigest()
-        return self._enqueue("speech", dict(**settings, asset_id=fingerprint,
+        return dict(**settings, asset_id=fingerprint,
                              prompt_cache=str(self.root / "voices" / profile["id"] / prompt_key),
-                             reference=str(self.root / "voices" / profile["id"] / "reference.wav")))
+                             reference=str(self.root / "voices" / profile["id"] / "reference.wav"))
+
+    def generate(self, request):
+        return self._enqueue('speech', self._generation_data(request))
+
+    def generate_batch(self, request):
+        path = self.root / 'batches' / valid_id(request.id) / 'batch.json'
+        fingerprint = hashlib.sha256(request.model_dump_json().encode()).hexdigest()
+        # Persist every job and the manifest before scheduling work. Repeating a
+        # request after a browser timeout returns the original jobs.
+        with self.lock:
+            if path.exists():
+                if json.loads(path.read_text())['fingerprint'] != fingerprint:
+                    raise ValueError('This batch identifier already belongs to a different request.')
+                return self.get_batch(request.id)
+            versions = {}
+            prepared = [(slide, self._generation_data(slide, versions)) for slide in request.slides]
+            rows, scheduled = [], []
+            for slide, data in prepared:
+                job = self._enqueue('speech', data, schedule=False)
+                rows.append(dict(slide_id=slide.slide_id, job_id=job['id'], script=slide.script,
+                                 engine=slide.engine, voice_id=slide.voice_id))
+                scheduled.append((job['id'], data))
+            atomic_json(path, dict(id=request.id, presentation_id=request.presentation_id,
+                fingerprint=fingerprint, created_at=time.time(), slides=rows))
+            for job_id, data in scheduled:
+                self.pool.submit(self._run, job_id, data)
+        return self.get_batch(request.id)
+
+    def get_batch(self, batch_id):
+        path = self.root / 'batches' / valid_id(batch_id) / 'batch.json'
+        if not path.exists():
+            raise FileNotFoundError('Voice batch not found')
+        batch = json.loads(path.read_text())
+        batch.pop('fingerprint', None)
+        batch['slides'] = [dict(**row, job=self.get_job(row['job_id'])) for row in batch['slides']]
+        statuses = [row['job']['status'] for row in batch['slides']]
+        batch['finished'] = all(status in TERMINAL for status in statuses)
+        return batch
+
+    def cancel_batch(self, batch_id):
+        # Hold the lock across the queue cancellation so another waiting child
+        # cannot start while its predecessor is being terminated.
+        with self.lock:
+            for row in self.get_batch(batch_id)['slides']:
+                self.cancel(row['job_id'])
+        return self.get_batch(batch_id)
 
     def render(self, presentation):
         from backend.app.services.narration_timeline import validate_narrations

@@ -16,6 +16,7 @@ from ..services.storage import storage_service
 from ..services.pptx_exporter import pptx_exporter
 from ..services.video_exporter import video_exporter
 from ..services.slide_compiler import slide_compiler, THEMES
+from ..services.narration_draft import DraftTextRequest, DraftBuildRequest, parse_narration, build_draft
 
 router = APIRouter(prefix="/api", tags=["presentations"])
 
@@ -313,6 +314,19 @@ def export_direct_video(
 class CompileOutlineRequest(BaseModel):
     outline: str
     theme: Optional[str] = None
+
+
+@router.post('/narration-draft/parse')
+def parse_narration_draft(request: DraftTextRequest):
+    try:
+        return {'slides': [slide.model_dump() for slide in parse_narration(request.text)]}
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+
+
+@router.post('/narration-draft/build', response_model=PresentationModel)
+def build_narration_draft(request: DraftBuildRequest):
+    return build_draft(request)
 
 
 @router.post("/compile-outline", response_model=PresentationModel)

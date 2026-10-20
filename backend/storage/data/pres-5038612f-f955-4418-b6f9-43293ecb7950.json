@@ -4,7 +4,7 @@
   "aspect_ratio": "9:16",
   "folder_id": "folder-reels",
   "created_at": "2026-10-20T08:15:25.191412+00:00",
-  "updated_at": "2026-10-20T10:33:44.130172+00:00",
+  "updated_at": "2026-10-20T15:12:11.177620+00:00",
   "slides": [
     {
       "id": "slide-66622418-a877-4e5f-9278-b424dce20013",
@@ -74,67 +74,116 @@
         }
       ],
       "narration": {
-        "script": "Today we will be learning something about",
+        "script": "Today, we're going to learn about one of the most fundamental concepts in programming.",
         "engine": "omnivoice",
         "voice_id": "voice-32e854cb1aed431bafea88d3ee806259",
-        "asset_id": "eb42a07373a7b3bf96d5c8a8cb88067a61bf832e8a5cbaa082945b707d967227",
-        "duration_ms": 3040.0,
-        "generated_script": "Today we will be learning something about",
+        "asset_id": "1f1ea3f231a1a785fff9de4f2d9d3518e560f8b3a8550a18120a3cbb3a160aad",
+        "duration_ms": 6160.0,
+        "generated_script": "Today, we're going to learn about one of the most fundamental concepts in programming.",
         "generated_engine": "omnivoice",
         "generated_voice_id": "voice-32e854cb1aed431bafea88d3ee806259",
         "fit_to_audio": true,
         "padding_ms": 200,
         "audio_start_ms": 0.0,
-        "audio_end_ms": 2990.0,
+        "audio_end_ms": 6080.0,
         "captions": [
           {
-            "text": " Today",
-            "startMs": 680.0,
-            "endMs": 880.0,
-            "timestampMs": 780.0,
-            "confidence": 0.6874695420265198
+            "text": " Today,",
+            "startMs": 60.0,
+            "endMs": 440.0,
+            "timestampMs": 250.0,
+            "confidence": 0.28544337674975395
           },
           {
-            "text": " we",
-            "startMs": 880.0,
-            "endMs": 1060.0,
-            "timestampMs": 970.0,
-            "confidence": 0.574526846408844
+            "text": " we're",
+            "startMs": 1600.0,
+            "endMs": 1720.0,
+            "timestampMs": 1660.0,
+            "confidence": 0.39354395866394043
           },
           {
-            "text": " will",
-            "startMs": 1060.0,
-            "endMs": 1160.0,
-            "timestampMs": 1110.0,
-            "confidence": 0.6412932276725769
+            "text": " going",
+            "startMs": 1720.0,
+            "endMs": 1920.0,
+            "timestampMs": 1820.0,
+            "confidence": 0.9903871417045593
           },
           {
-            "text": " be",
-            "startMs": 1160.0,
-            "endMs": 1260.0,
-            "timestampMs": 1210.0,
-            "confidence": 0.9918516278266907
+            "text": " to",
+            "startMs": 1920.0,
+            "endMs": 2140.0,
+            "timestampMs": 2030.0,
+            "confidence": 0.9937049746513367
           },
           {
-            "text": " learning",
-            "startMs": 1260.0,
-            "endMs": 1520.0,
-            "timestampMs": 1390.0,
-            "confidence": 0.9937130808830261
-          },
-          {
-            "text": " something",
-            "startMs": 1520.0,
-            "endMs": 2000.0,
-            "timestampMs": 1760.0,
-            "confidence": 0.9847127199172974
+            "text": " learn",
+            "startMs": 2140.0,
+            "endMs": 2360.0,
+            "timestampMs": 2250.0,
+            "confidence": 0.9947946667671204
           },
           {
             "text": " about",
-            "startMs": 2000.0,
-            "endMs": 2500.0,
-            "timestampMs": 2250.0,
-            "confidence": 0.9911075234413147
+            "startMs": 2360.0,
+            "endMs": 2680.0,
+            "timestampMs": 2520.0,
+            "confidence": 0.9800260066986084
+          },
+          {
+            "text": " one",
+            "startMs": 2680.0,
+            "endMs": 3040.0,
+            "timestampMs": 2860.0,
+            "confidence": 0.9080149531364441
+          },
+          {
+            "text": " of",
+            "startMs": 3040.0,
+            "endMs": 3160.0,
+            "timestampMs": 3100.0,
+            "confidence": 0.996830403804779
+          },
+          {
+            "text": " the",
+            "startMs": 3160.0,
+            "endMs": 3300.0,
+            "timestampMs": 3230.0,
+            "confidence": 0.9874273538589478
+          },
+          {
+            "text": " most",
+            "startMs": 3300.0,
+            "endMs": 3540.0,
+            "timestampMs": 3420.0,
+            "confidence": 0.9925548434257507
+          },
+          {
+            "text": " fundamental",
+            "startMs": 3540.0,
+            "endMs": 3900.0,
+            "timestampMs": 3720.0,
+            "confidence": 0.9979745745658875
+          },
+          {
+            "text": " concepts",
+            "startMs": 3900.0,
+            "endMs": 4820.0,
+            "timestampMs": 4360.0,
+            "confidence": 0.9816067218780518
+          },
+          {
+            "text": " in",
+            "startMs": 4820.0,
+            "endMs": 5200.0,
+            "timestampMs": 5010.0,
+            "confidence": 0.990630567073822
+          },
+          {
+            "text": " programming.",
+            "startMs": 5200.0,
+            "endMs": 5860.0,
+            "timestampMs": 5530.0,
+            "confidence": 0.9001180827617645
           }
         ],
         "caption_style": {
@@ -271,32 +320,186 @@
         }
       ],
       "narration": {
-        "script": " called array",
+        "script": "And that concept is called an **Array**. An array allows us to store multiple values of the same data type in a single variable.",
         "engine": "omnivoice",
         "voice_id": "voice-32e854cb1aed431bafea88d3ee806259",
-        "asset_id": "4adba6999a335e69dc7951e89523284f66617f9ed5c43abd99d74984a584b096",
-        "duration_ms": 1800.0,
-        "generated_script": "called array",
+        "asset_id": "d381371285cd9fe4f70d1978ed975e1058df7235a004f3c97683db8027338e0d",
+        "duration_ms": 8800.0,
+        "generated_script": "And that concept is called an **Array**. An array allows us to store multiple values of the same data type in a single variable.",
         "generated_engine": "omnivoice",
         "generated_voice_id": "voice-32e854cb1aed431bafea88d3ee806259",
         "fit_to_audio": true,
         "padding_ms": 200,
         "audio_start_ms": 0.0,
-        "audio_end_ms": 850.0,
+        "audio_end_ms": 8710.0,
         "captions": [
           {
+            "text": " And",
+            "startMs": 80.0,
+            "endMs": 180.0,
+            "timestampMs": 130.0,
+            "confidence": 0.015876054763793945
+          },
+          {
+            "text": " that",
+            "startMs": 180.0,
+            "endMs": 320.0,
+            "timestampMs": 250.0,
+            "confidence": 0.9658129811286926
+          },
+          {
+            "text": " concept",
+            "startMs": 320.0,
+            "endMs": 660.0,
+            "timestampMs": 490.0,
+            "confidence": 0.985828161239624
+          },
+          {
+            "text": " is",
+            "startMs": 660.0,
+            "endMs": 1060.0,
+            "timestampMs": 860.0,
+            "confidence": 0.9849381446838379
+          },
+          {
             "text": " called",
-            "startMs": 100.0,
-            "endMs": 300.0,
-            "timestampMs": 200.0,
-            "confidence": 0.8813185691833496
+            "startMs": 1060.0,
+            "endMs": 1380.0,
+            "timestampMs": 1220.0,
+            "confidence": 0.9907923936843872
+          },
+          {
+            "text": " an",
+            "startMs": 1380.0,
+            "endMs": 1640.0,
+            "timestampMs": 1510.0,
+            "confidence": 0.8685720562934875
+          },
+          {
+            "text": " **Array**.",
+            "startMs": 1640.0,
+            "endMs": 2440.0,
+            "timestampMs": 2040.0,
+            "confidence": 0.046670033829286695
+          },
+          {
+            "text": " An",
+            "startMs": 3760.0,
+            "endMs": 3820.0,
+            "timestampMs": 3790.0,
+            "confidence": 0.01744416356086731
           },
           {
             "text": " array",
-            "startMs": 300.0,
-            "endMs": 540.0,
-            "timestampMs": 420.0,
-            "confidence": 0.8035839200019836
+            "startMs": 3820.0,
+            "endMs": 4080.0,
+            "timestampMs": 3950.0,
+            "confidence": 0.7791205644607544
+          },
+          {
+            "text": " allows",
+            "startMs": 4080.0,
+            "endMs": 4420.0,
+            "timestampMs": 4250.0,
+            "confidence": 0.9907620549201965
+          },
+          {
+            "text": " us",
+            "startMs": 4420.0,
+            "endMs": 4640.0,
+            "timestampMs": 4530.0,
+            "confidence": 0.9951352477073669
+          },
+          {
+            "text": " to",
+            "startMs": 4640.0,
+            "endMs": 4820.0,
+            "timestampMs": 4730.0,
+            "confidence": 0.9913415312767029
+          },
+          {
+            "text": " store",
+            "startMs": 4960.0,
+            "endMs": 5060.0,
+            "timestampMs": 5010.0,
+            "confidence": 0.9981549382209778
+          },
+          {
+            "text": " multiple",
+            "startMs": 5060.0,
+            "endMs": 5400.0,
+            "timestampMs": 5230.0,
+            "confidence": 0.974431037902832
+          },
+          {
+            "text": " values",
+            "startMs": 5400.0,
+            "endMs": 6040.0,
+            "timestampMs": 5720.0,
+            "confidence": 0.9937074780464172
+          },
+          {
+            "text": " of",
+            "startMs": 6040.0,
+            "endMs": 6360.0,
+            "timestampMs": 6200.0,
+            "confidence": 0.9200254678726196
+          },
+          {
+            "text": " the",
+            "startMs": 6360.0,
+            "endMs": 6520.0,
+            "timestampMs": 6440.0,
+            "confidence": 0.9414997100830078
+          },
+          {
+            "text": " same",
+            "startMs": 6520.0,
+            "endMs": 6740.0,
+            "timestampMs": 6630.0,
+            "confidence": 0.9985517859458923
+          },
+          {
+            "text": " data",
+            "startMs": 6740.0,
+            "endMs": 6960.0,
+            "timestampMs": 6850.0,
+            "confidence": 0.8608346581459045
+          },
+          {
+            "text": " type",
+            "startMs": 6960.0,
+            "endMs": 7340.0,
+            "timestampMs": 7150.0,
+            "confidence": 0.9795265793800354
+          },
+          {
+            "text": " in",
+            "startMs": 7340.0,
+            "endMs": 7620.0,
+            "timestampMs": 7480.0,
+            "confidence": 0.9409307241439819
+          },
+          {
+            "text": " a",
+            "startMs": 7620.0,
+            "endMs": 7720.0,
+            "timestampMs": 7670.0,
+            "confidence": 0.9799540042877197
+          },
+          {
+            "text": " single",
+            "startMs": 7720.0,
+            "endMs": 7940.0,
+            "timestampMs": 7830.0,
+            "confidence": 0.9903205037117004
+          },
+          {
+            "text": " variable.",
+            "startMs": 7940.0,
+            "endMs": 8490.0,
+            "timestampMs": 8215.0,
+            "confidence": 0.9446065127849579
           }
         ],
         "caption_style": {
@@ -359,10 +562,10 @@
           "group_id": null,
           "reveal": {
             "effect": "fade",
-            "word_index": 9,
-            "word_text": "1",
-            "script_hash": "6831a6bd",
-            "token_sequence_hash": "31cd70ef",
+            "word_index": 17,
+            "word_text": "1,",
+            "script_hash": "aab48d97",
+            "token_sequence_hash": "77b2226b",
             "offset_ms": 0,
             "duration_ms": 200
           },
@@ -422,10 +625,10 @@
           "group_id": null,
           "reveal": {
             "effect": "fade",
-            "word_index": 10,
-            "word_text": "2",
-            "script_hash": "6831a6bd",
-            "token_sequence_hash": "31cd70ef",
+            "word_index": 18,
+            "word_text": "2,",
+            "script_hash": "aab48d97",
+            "token_sequence_hash": "77b2226b",
             "offset_ms": 0,
             "duration_ms": 200
           },
@@ -485,10 +688,10 @@
           "group_id": null,
           "reveal": {
             "effect": "fade",
-            "word_index": 11,
-            "word_text": "3",
-            "script_hash": "6831a6bd",
-            "token_sequence_hash": "31cd70ef",
+            "word_index": 19,
+            "word_text": "3,",
+            "script_hash": "aab48d97",
+            "token_sequence_hash": "77b2226b",
             "offset_ms": 0,
             "duration_ms": 200
           },
@@ -548,10 +751,10 @@
           "group_id": null,
           "reveal": {
             "effect": "fade",
-            "word_index": 12,
-            "word_text": "4",
-            "script_hash": "6831a6bd",
-            "token_sequence_hash": "31cd70ef",
+            "word_index": 20,
+            "word_text": "4,",
+            "script_hash": "aab48d97",
+            "token_sequence_hash": "77b2226b",
             "offset_ms": 0,
             "duration_ms": 200
           },
@@ -611,10 +814,10 @@
           "group_id": null,
           "reveal": {
             "effect": "fade",
-            "word_index": 13,
-            "word_text": "5",
-            "script_hash": "6831a6bd",
-            "token_sequence_hash": "31cd70ef",
+            "word_index": 22,
+            "word_text": "5,",
+            "script_hash": "aab48d97",
+            "token_sequence_hash": "77b2226b",
             "offset_ms": 0,
             "duration_ms": 200
           },
@@ -725,116 +928,228 @@
         }
       ],
       "narration": {
-        "script": "Looks like continuous blocks of memory like we have 1 2 3 4 5 ",
+        "script": "An array looks like a series of continuous memory blocks. For example, here we have five elements: 1, 2, 3, 4, and 5, stored next to each other in memory.",
         "engine": "omnivoice",
         "voice_id": "voice-32e854cb1aed431bafea88d3ee806259",
-        "asset_id": "d56f27e5dce9277fba97ddf2635623997c65baf5c39e9520a5729fdbdb4c7232",
-        "duration_ms": 5240.0,
-        "generated_script": "Looks like continuous blocks of memory like we have 1 2 3 4 5",
+        "asset_id": "0e342d70756a89df257856640581adfcfbe834dbc38f735346daf329d817fc88",
+        "duration_ms": 11440.0,
+        "generated_script": "An array looks like a series of continuous memory blocks. For example, here we have five elements: 1, 2, 3, 4, and 5, stored next to each other in memory.",
         "generated_engine": "omnivoice",
         "generated_voice_id": "voice-32e854cb1aed431bafea88d3ee806259",
         "fit_to_audio": true,
         "padding_ms": 200,
-        "audio_start_ms": 440.0,
-        "audio_end_ms": 5240.0,
+        "audio_start_ms": 10.0,
+        "audio_end_ms": 11420.0,
         "captions": [
           {
-            "text": " Looks",
-            "startMs": 520.0,
-            "endMs": 620.0,
-            "timestampMs": 570.0,
-            "confidence": 0.3691301643848419
+            "text": " An",
+            "startMs": 100.0,
+            "endMs": 200.0,
+            "timestampMs": 150.0,
+            "confidence": 0.008024843409657478
+          },
+          {
+            "text": " array",
+            "startMs": 200.0,
+            "endMs": 400.0,
+            "timestampMs": 300.0,
+            "confidence": 0.9879107475280762
+          },
+          {
+            "text": " looks",
+            "startMs": 400.0,
+            "endMs": 600.0,
+            "timestampMs": 500.0,
+            "confidence": 0.9888635873794556
           },
           {
             "text": " like",
-            "startMs": 620.0,
-            "endMs": 880.0,
-            "timestampMs": 750.0,
-            "confidence": 0.9903966188430786
+            "startMs": 600.0,
+            "endMs": 820.0,
+            "timestampMs": 710.0,
+            "confidence": 0.9967171549797058
           },
           {
-            "text": " continuous",
-            "startMs": 880.0,
-            "endMs": 1320.0,
-            "timestampMs": 1100.0,
-            "confidence": 0.9657945036888123
+            "text": " a",
+            "startMs": 820.0,
+            "endMs": 960.0,
+            "timestampMs": 890.0,
+            "confidence": 0.9898401498794556
           },
           {
-            "text": " blocks",
-            "startMs": 1320.0,
-            "endMs": 1740.0,
-            "timestampMs": 1530.0,
-            "confidence": 0.9836770296096802
+            "text": " series",
+            "startMs": 1080.0,
+            "endMs": 1240.0,
+            "timestampMs": 1160.0,
+            "confidence": 0.9878920316696167
           },
           {
             "text": " of",
-            "startMs": 1740.0,
-            "endMs": 2060.0,
-            "timestampMs": 1900.0,
-            "confidence": 0.994485080242157
+            "startMs": 1240.0,
+            "endMs": 1440.0,
+            "timestampMs": 1340.0,
+            "confidence": 0.997020423412323
+          },
+          {
+            "text": " continuous",
+            "startMs": 1440.0,
+            "endMs": 1780.0,
+            "timestampMs": 1610.0,
+            "confidence": 0.9800375699996948
           },
           {
             "text": " memory",
-            "startMs": 2060.0,
-            "endMs": 2280.0,
-            "timestampMs": 2170.0,
-            "confidence": 0.9872874021530151
+            "startMs": 1780.0,
+            "endMs": 2200.0,
+            "timestampMs": 1990.0,
+            "confidence": 0.996933102607727
           },
           {
-            "text": " like",
-            "startMs": 2280.0,
-            "endMs": 2800.0,
-            "timestampMs": 2540.0,
-            "confidence": 0.8196413516998291
+            "text": " blocks.",
+            "startMs": 2200.0,
+            "endMs": 2660.0,
+            "timestampMs": 2430.0,
+            "confidence": 0.8633196353912354
+          },
+          {
+            "text": " For",
+            "startMs": 3660.0,
+            "endMs": 3720.0,
+            "timestampMs": 3690.0,
+            "confidence": 0.8341315984725952
+          },
+          {
+            "text": " example,",
+            "startMs": 3720.0,
+            "endMs": 4400.0,
+            "timestampMs": 4060.0,
+            "confidence": 0.7958325743675232
+          },
+          {
+            "text": " here",
+            "startMs": 4440.0,
+            "endMs": 4580.0,
+            "timestampMs": 4510.0,
+            "confidence": 0.2431405633687973
           },
           {
             "text": " we",
-            "startMs": 2800.0,
-            "endMs": 2920.0,
-            "timestampMs": 2860.0,
-            "confidence": 0.9548164010047913
+            "startMs": 4580.0,
+            "endMs": 4700.0,
+            "timestampMs": 4640.0,
+            "confidence": 0.9367632269859314
           },
           {
             "text": " have",
-            "startMs": 2920.0,
-            "endMs": 3160.0,
-            "timestampMs": 3040.0,
-            "confidence": 0.9926815629005432
+            "startMs": 4700.0,
+            "endMs": 4900.0,
+            "timestampMs": 4800.0,
+            "confidence": 0.9964905381202698
           },
           {
-            "text": " 1",
-            "startMs": 3160.0,
-            "endMs": 3380.0,
-            "timestampMs": 3270.0,
-            "confidence": 0.6781668663024902
+            "text": " five",
+            "startMs": 4900.0,
+            "endMs": 5240.0,
+            "timestampMs": 5070.0,
+            "confidence": 0.30335569381713867
           },
           {
-            "text": " 2",
-            "startMs": 3380.0,
-            "endMs": 3660.0,
-            "timestampMs": 3520.0,
-            "confidence": 0.38549304008483887
+            "text": " elements:",
+            "startMs": 5240.0,
+            "endMs": 5740.0,
+            "timestampMs": 5490.0,
+            "confidence": 0.49081564124116994
           },
           {
-            "text": " 3",
-            "startMs": 3660.0,
-            "endMs": 4260.0,
-            "timestampMs": 3960.0,
-            "confidence": 0.8885571956634521
+            "text": " 1,",
+            "startMs": 6660.0,
+            "endMs": 6940.0,
+            "timestampMs": 6800.0,
+            "confidence": 0.47780928015708923
           },
           {
-            "text": " 4",
-            "startMs": 4260.0,
-            "endMs": 4580.0,
-            "timestampMs": 4420.0,
-            "confidence": 0.9913961291313171
+            "text": " 2,",
+            "startMs": 7060.0,
+            "endMs": 7340.0,
+            "timestampMs": 7200.0,
+            "confidence": 0.9619224071502686
           },
           {
-            "text": " 5",
-            "startMs": 4580.0,
-            "endMs": 4980.0,
-            "timestampMs": 4780.0,
-            "confidence": 0.9896087050437927
+            "text": " 3,",
+            "startMs": 7340.0,
+            "endMs": 7580.0,
+            "timestampMs": 7460.0,
+            "confidence": 0.977728545665741
+          },
+          {
+            "text": " 4,",
+            "startMs": 7820.0,
+            "endMs": 8119.999999999999,
+            "timestampMs": 7970.0,
+            "confidence": 0.6387492716312408
+          },
+          {
+            "text": " and",
+            "startMs": 8300.0,
+            "endMs": 8400.0,
+            "timestampMs": 8350.0,
+            "confidence": 0.5328720211982727
+          },
+          {
+            "text": " 5,",
+            "startMs": 8400.0,
+            "endMs": 9040.0,
+            "timestampMs": 8720.0,
+            "confidence": 0.45993177592754364
+          },
+          {
+            "text": " stored",
+            "startMs": 9500.0,
+            "endMs": 9600.0,
+            "timestampMs": 9550.0,
+            "confidence": 0.7044106125831604
+          },
+          {
+            "text": " next",
+            "startMs": 9600.0,
+            "endMs": 9860.0,
+            "timestampMs": 9730.0,
+            "confidence": 0.9914988875389099
+          },
+          {
+            "text": " to",
+            "startMs": 9860.0,
+            "endMs": 10120.0,
+            "timestampMs": 9990.0,
+            "confidence": 0.995273768901825
+          },
+          {
+            "text": " each",
+            "startMs": 10120.0,
+            "endMs": 10280.0,
+            "timestampMs": 10200.0,
+            "confidence": 0.9968309998512268
+          },
+          {
+            "text": " other",
+            "startMs": 10280.0,
+            "endMs": 10480.0,
+            "timestampMs": 10380.0,
+            "confidence": 0.9944596290588379
+          },
+          {
+            "text": " in",
+            "startMs": 10480.0,
+            "endMs": 10800.0,
+            "timestampMs": 10640.0,
+            "confidence": 0.9635199308395386
+          },
+          {
+            "text": " memory.",
+            "startMs": 10800.0,
+            "endMs": 11300.0,
+            "timestampMs": 11050.0,
+            "confidence": 0.94954052567482
           }
         ],
         "caption_style": {
@@ -1278,158 +1593,319 @@
         }
       ],
       "narration": {
-        "script": "we write array in the form of int I am variable name as ARR and we assigned values like 12345 ",
+        "script": "Now, let's see how we write an array in C. We start with int, followed by our array name arr, specify its size as 5, and assign the values 1, 2, 3, 4, and 5.\n\nint arr[5] = {1, 2, 3, 4, 5};",
         "engine": "omnivoice",
         "voice_id": "voice-32e854cb1aed431bafea88d3ee806259",
-        "asset_id": "8ad29a78e609db55fb48c4e8da06232f4a9080ea4165cad0d209c64d72aff3d0",
-        "duration_ms": 7480.0,
-        "generated_script": "we write array in the form of int I am variable name as ARR and we assigned values like 12345",
+        "asset_id": "6316404b66a8181a086410693a6662a6d4d049b9d192a81d522b69f69d56ec6c",
+        "duration_ms": 14320.0,
+        "generated_script": "Now, let's see how we write an array in C. We start with int, followed by our array name arr, specify its size as 5, and assign the values 1, 2, 3, 4, and 5.\n\nint arr[5] = {1, 2, 3, 4, 5};",
         "generated_engine": "omnivoice",
         "generated_voice_id": "voice-32e854cb1aed431bafea88d3ee806259",
         "fit_to_audio": true,
         "padding_ms": 200,
         "audio_start_ms": 0.0,
-        "audio_end_ms": 7360.0,
+        "audio_end_ms": 14320.0,
         "captions": [
           {
+            "text": " Now,",
+            "startMs": 0.0,
+            "endMs": 100.0,
+            "timestampMs": 50.0,
+            "confidence": 0.20576311647891998
+          },
+          {
+            "text": " let's",
+            "startMs": 400.0,
+            "endMs": 480.0,
+            "timestampMs": 440.0,
+            "confidence": 0.6578866839408875
+          },
+          {
+            "text": " see",
+            "startMs": 480.0,
+            "endMs": 580.0,
+            "timestampMs": 530.0,
+            "confidence": 0.9831988215446472
+          },
+          {
+            "text": " how",
+            "startMs": 580.0,
+            "endMs": 720.0,
+            "timestampMs": 650.0,
+            "confidence": 0.9582101702690125
+          },
+          {
             "text": " we",
-            "startMs": 80.0,
-            "endMs": 180.0,
-            "timestampMs": 130.0,
-            "confidence": 0.2831657826900482
+            "startMs": 720.0,
+            "endMs": 840.0,
+            "timestampMs": 780.0,
+            "confidence": 0.987204909324646
           },
           {
             "text": " write",
-            "startMs": 180.0,
-            "endMs": 400.0,
-            "timestampMs": 290.0,
-            "confidence": 0.9966094493865967
+            "startMs": 840.0,
+            "endMs": 1040.0,
+            "timestampMs": 940.0,
+            "confidence": 0.9873712062835693
+          },
+          {
+            "text": " an",
+            "startMs": 1040.0,
+            "endMs": 1200.0,
+            "timestampMs": 1120.0,
+            "confidence": 0.9563279151916504
           },
           {
             "text": " array",
-            "startMs": 400.0,
-            "endMs": 740.0,
-            "timestampMs": 570.0,
-            "confidence": 0.9368240237236023
+            "startMs": 1200.0,
+            "endMs": 1400.0,
+            "timestampMs": 1300.0,
+            "confidence": 0.9117379188537598
           },
           {
             "text": " in",
-            "startMs": 740.0,
-            "endMs": 920.0,
-            "timestampMs": 830.0,
-            "confidence": 0.9922317266464233
-          },
-          {
-            "text": " the",
-            "startMs": 920.0,
-            "endMs": 1000.0,
-            "timestampMs": 960.0,
-            "confidence": 0.9697665572166443
-          },
-          {
-            "text": " form",
-            "startMs": 1000.0,
-            "endMs": 1240.0,
-            "timestampMs": 1120.0,
-            "confidence": 0.9949527978897095
-          },
-          {
-            "text": " of",
-            "startMs": 1240.0,
-            "endMs": 1400.0,
-            "timestampMs": 1320.0,
-            "confidence": 0.9883536100387573
-          },
-          {
-            "text": " int",
             "startMs": 1400.0,
-            "endMs": 1660.0,
-            "timestampMs": 1530.0,
-            "confidence": 0.850929856300354
+            "endMs": 1580.0,
+            "timestampMs": 1490.0,
+            "confidence": 0.9765568971633911
           },
           {
-            "text": " I",
-            "startMs": 1660.0,
-            "endMs": 2320.0,
-            "timestampMs": 1990.0,
-            "confidence": 0.05824141576886177
+            "text": " C.",
+            "startMs": 1580.0,
+            "endMs": 1980.0,
+            "timestampMs": 1780.0,
+            "confidence": 0.7075813114643097
           },
           {
-            "text": " am",
-            "startMs": 2320.0,
-            "endMs": 2440.0,
-            "timestampMs": 2380.0,
-            "confidence": 0.9416816234588623
+            "text": " We",
+            "startMs": 3020.0,
+            "endMs": 3040.0,
+            "timestampMs": 3030.0,
+            "confidence": 0.7781815528869629
           },
           {
-            "text": " variable",
-            "startMs": 2440.0,
-            "endMs": 2700.0,
-            "timestampMs": 2570.0,
-            "confidence": 0.9731264710426331
+            "text": " start",
+            "startMs": 3040.0,
+            "endMs": 3260.0,
+            "timestampMs": 3150.0,
+            "confidence": 0.966529130935669
+          },
+          {
+            "text": " with",
+            "startMs": 3260.0,
+            "endMs": 3460.0,
+            "timestampMs": 3360.0,
+            "confidence": 0.995225191116333
+          },
+          {
+            "text": " int,",
+            "startMs": 3460.0,
+            "endMs": 3860.0,
+            "timestampMs": 3660.0,
+            "confidence": 0.4212769791483879
+          },
+          {
+            "text": " followed",
+            "startMs": 4080.0,
+            "endMs": 4200.0,
+            "timestampMs": 4140.0,
+            "confidence": 0.686328649520874
+          },
+          {
+            "text": " by",
+            "startMs": 4200.0,
+            "endMs": 4420.0,
+            "timestampMs": 4310.0,
+            "confidence": 0.9950283169746399
+          },
+          {
+            "text": " our",
+            "startMs": 4420.0,
+            "endMs": 4600.0,
+            "timestampMs": 4510.0,
+            "confidence": 0.9328990578651428
+          },
+          {
+            "text": " array",
+            "startMs": 4600.0,
+            "endMs": 4820.0,
+            "timestampMs": 4710.0,
+            "confidence": 0.9387051463127136
           },
           {
             "text": " name",
-            "startMs": 2700.0,
-            "endMs": 3120.0,
-            "timestampMs": 2910.0,
-            "confidence": 0.9604281187057495
+            "startMs": 4820.0,
+            "endMs": 5080.0,
+            "timestampMs": 4950.0,
+            "confidence": 0.6830313801765442
+          },
+          {
+            "text": " arr,",
+            "startMs": 5080.0,
+            "endMs": 5540.0,
+            "timestampMs": 5310.0,
+            "confidence": 0.21798669849522412
+          },
+          {
+            "text": " specify",
+            "startMs": 5820.0,
+            "endMs": 6020.0,
+            "timestampMs": 5920.0,
+            "confidence": 0.24776606261730194
+          },
+          {
+            "text": " its",
+            "startMs": 6080.0,
+            "endMs": 6260.0,
+            "timestampMs": 6170.0,
+            "confidence": 0.9073920249938965
+          },
+          {
+            "text": " size",
+            "startMs": 6260.0,
+            "endMs": 6480.0,
+            "timestampMs": 6370.0,
+            "confidence": 0.9960880279541016
           },
           {
             "text": " as",
-            "startMs": 3120.0,
-            "endMs": 3360.0,
-            "timestampMs": 3240.0,
-            "confidence": 0.9497433304786682
+            "startMs": 6480.0,
+            "endMs": 6680.0,
+            "timestampMs": 6580.0,
+            "confidence": 0.9738108515739441
           },
           {
-            "text": " ARR",
-            "startMs": 3360.0,
-            "endMs": 4000.0,
-            "timestampMs": 3680.0,
-            "confidence": 0.5519371852278709
+            "text": " 5,",
+            "startMs": 6680.0,
+            "endMs": 7180.0,
+            "timestampMs": 6930.0,
+            "confidence": 0.6401534825563431
           },
           {
             "text": " and",
-            "startMs": 4000.0,
-            "endMs": 4260.0,
-            "timestampMs": 4130.0,
-            "confidence": 0.9454771280288696
+            "startMs": 7580.0,
+            "endMs": 7640.0,
+            "timestampMs": 7610.0,
+            "confidence": 0.7238868474960327
           },
           {
-            "text": " we",
-            "startMs": 4260.0,
-            "endMs": 4420.0,
-            "timestampMs": 4340.0,
-            "confidence": 0.990687906742096
+            "text": " assign",
+            "startMs": 7640.0,
+            "endMs": 7820.0,
+            "timestampMs": 7730.0,
+            "confidence": 0.9893276691436768
           },
           {
-            "text": " assigned",
-            "startMs": 4420.0,
-            "endMs": 4640.0,
-            "timestampMs": 4530.0,
-            "confidence": 0.3239622414112091
+            "text": " the",
+            "startMs": 7820.0,
+            "endMs": 8080.0,
+            "timestampMs": 7950.0,
+            "confidence": 0.9427416920661926
           },
           {
             "text": " values",
-            "startMs": 4640.0,
-            "endMs": 5180.0,
-            "timestampMs": 4910.0,
-            "confidence": 0.9955812096595764
+            "startMs": 8080.0,
+            "endMs": 8260.0,
+            "timestampMs": 8170.0,
+            "confidence": 0.9891951084136963
           },
           {
-            "text": " like",
-            "startMs": 5180.0,
-            "endMs": 5540.0,
-            "timestampMs": 5360.0,
-            "confidence": 0.9732551574707031
+            "text": " 1,",
+            "startMs": 8260.0,
+            "endMs": 8710.0,
+            "timestampMs": 8485.0,
+            "confidence": 0.8059938848018646
           },
           {
-            "text": " 12345",
-            "startMs": 5540.0,
-            "endMs": 6190.0,
-            "timestampMs": 5865.0,
-            "confidence": 0.5022608635481447
+            "text": " 2,",
+            "startMs": 9100.0,
+            "endMs": 9340.0,
+            "timestampMs": 9220.0,
+            "confidence": 0.8959468603134155
+          },
+          {
+            "text": " 3,",
+            "startMs": 9680.0,
+            "endMs": 9940.0,
+            "timestampMs": 9810.0,
+            "confidence": 0.9590021967887878
+          },
+          {
+            "text": " 4,",
+            "startMs": 10200.0,
+            "endMs": 10420.0,
+            "timestampMs": 10310.0,
+            "confidence": 0.703710675239563
+          },
+          {
+            "text": " and",
+            "startMs": 10680.0,
+            "endMs": 10720.0,
+            "timestampMs": 10700.0,
+            "confidence": 0.8165855407714844
+          },
+          {
+            "text": " 5.",
+            "startMs": 10720.0,
+            "endMs": 11600.0,
+            "timestampMs": 11160.0,
+            "confidence": 0.49640264362096786
+          },
+          {
+            "text": "  int",
+            "startMs": 11600.0,
+            "endMs": 11720.0,
+            "timestampMs": 11660.0,
+            "confidence": 0.0001460160819988232
+          },
+          {
+            "text": " arr[5]",
+            "startMs": 11720.0,
+            "endMs": 11820.0,
+            "timestampMs": 11770.0,
+            "confidence": 0.054886256344502726
+          },
+          {
+            "text": " =",
+            "startMs": 12660.0,
+            "endMs": 12680.0,
+            "timestampMs": 12670.0,
+            "confidence": 0.00039566089981235564
+          },
+          {
+            "text": " {1,",
+            "startMs": 12680.0,
+            "endMs": 12960.0,
+            "timestampMs": 12820.0,
+            "confidence": 0.30363947845762596
+          },
+          {
+            "text": " 2,",
+            "startMs": 13140.0,
+            "endMs": 13180.0,
+            "timestampMs": 13160.0,
+            "confidence": 0.8584259152412415
+          },
+          {
+            "text": " 3,",
+            "startMs": 13420.0,
+            "endMs": 13500.0,
+            "timestampMs": 13460.0,
+            "confidence": 0.9345747530460358
+          },
+          {
+            "text": " 4,",
+            "startMs": 13660.0,
+            "endMs": 13820.0,
+            "timestampMs": 13740.0,
+            "confidence": 0.8764024972915649
+          },
+          {
+            "text": " 5};",
+            "startMs": 13960.0,
+            "endMs": 14060.0,
+            "timestampMs": 14010.0,
+            "confidence": 0.4559197641594892
           }
         ],
         "caption_style": {

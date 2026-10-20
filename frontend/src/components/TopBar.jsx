@@ -20,7 +20,8 @@ import {
   Tv,
   Smartphone,
   LayoutTemplate,
-  MoreHorizontal
+  MoreHorizontal,
+  FileText
 } from 'lucide-react';
 
 export function TopBar({
@@ -32,6 +33,7 @@ export function TopBar({
   onStartSlideShow,
   onStartRemotionVideo,
   onOpenNarration,
+  onImportNarration,
   onOpenAiOutlineModal,
   onOpenTemplateModal,
   onSaveAsTemplate,
@@ -191,6 +193,10 @@ export function TopBar({
           <span className="hidden md:inline">AI Outline</span>
         </button>
 
+        {onImportNarration && <button onClick={onImportNarration} aria-label="Narration to slides" title="Import slide-wise narration and create a presentation draft"
+          className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/40 rounded-lg border border-cyan-200 dark:border-cyan-800">
+          <FileText size={14} /><span className="hidden lg:inline">Narration to slides</span>
+        </button>}
         {/* Templates Modal */}
         <button
           onClick={onOpenTemplateModal}

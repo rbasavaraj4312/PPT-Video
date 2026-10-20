@@ -23,6 +23,13 @@ to toggle guides, or hold **Alt/Option** while dragging to move freely.
 
 ## Local voice cloning and captions
 
+Use **Narration to slides** in the editor header to paste or upload all your
+slide-wise explanations at once. Review the suggested titles and visual excerpts,
+create editable slides, choose a voice, then use **Voice → Presentation voices →
+Generate all voices**. Background jobs run sequentially, recover progress after a
+refresh, and support retrying failed or changed slides without redoing ready audio.
+The import dialog includes a prompt you can copy into ChatGPT or Claude.
+
 The unified editor includes a docked **Design / Voice / Captions** inspector and
 a synchronized timeline for slides, audio waveforms, captions, and transitions.
 Write scripts, record or upload voices, generate narration, and preview playback

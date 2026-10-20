@@ -151,6 +151,7 @@ export function useNarration({ presentation, activeSlideIndex, updatePresentatio
   }
   const run = action => Promise.resolve().then(action).catch(e => setError(e.message));
   return { n, voices, capabilities, error, setError, connecting, submitting, connect, change, generate, jobs: currentJobs, states,
+    deckJobs: jobs.filter(job => job.presentationId === presentation.id),
     cancel: id => run(() => speechRequest(`/jobs/${id}`, { method: 'DELETE' })),
     stop: () => run(() => speechPost('/service/stop', {})),
     file, setFile, name, setName, transcript, setTranscript, start, setStart, end, setEnd,

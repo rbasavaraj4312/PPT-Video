@@ -24,6 +24,23 @@ class GenerateRequest(BaseModel):
         return value
 
 
+class BatchSlide(GenerateRequest):
+    slide_id: str = Field(min_length=1, max_length=100)
+
+
+class BatchGenerateRequest(BaseModel):
+    id: str = Field(pattern=r'^batch-[a-f0-9]{32}$')
+    presentation_id: str = Field(min_length=1, max_length=100)
+    slides: list[BatchSlide] = Field(min_length=1, max_length=100)
+
+    @field_validator('slides')
+    @classmethod
+    def distinct_slides(cls, values):
+        if len({slide.slide_id for slide in values}) != len(values):
+            raise ValueError('Each slide may appear only once in a voice batch')
+        return values
+
+
 def create_router(narration_service):
     router = APIRouter(prefix="/api/speech", tags=["narration"])
 
@@ -88,6 +105,30 @@ def create_router(narration_service):
     def job(job_id: str):
         try:
             return narration_service.get_job(job_id)
+        except (ValueError, FileNotFoundError) as exc:
+            translate_error(exc)
+
+
+    @router.post('/batches', status_code=202)
+    def generate_batch(request: BatchGenerateRequest):
+        try:
+            return narration_service.generate_batch(request)
+        except (ValueError, FileNotFoundError) as exc:
+            translate_error(exc)
+
+
+    @router.get('/batches/{batch_id}')
+    def batch(batch_id: str):
+        try:
+            return narration_service.get_batch(batch_id)
+        except (ValueError, FileNotFoundError) as exc:
+            translate_error(exc)
+
+
+    @router.delete('/batches/{batch_id}')
+    def cancel_batch(batch_id: str):
+        try:
+            return narration_service.cancel_batch(batch_id)
         except (ValueError, FileNotFoundError) as exc:
             translate_error(exc)
 

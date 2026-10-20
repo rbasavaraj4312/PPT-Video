@@ -4,13 +4,16 @@ import { useNarration } from '../../narration/useNarration';
 import { narrationReady } from '../../narration/timeline';
 import { downloadSrt, speechUrl } from '../../services/speech';
 import { NarrationAudio } from './NarrationAudio';
+import { NarrationBatchPanel } from './NarrationBatchPanel';
+import { useNarrationBatch } from '../../narration/useNarrationBatch';
 
 function Toggle({ label, checked, onChange }) {
   return <label className="editor-toggle-label"><span>{label}</span><input type="checkbox" role="switch" checked={checked} onChange={event => onChange(event.target.checked)} /><span className="editor-switch" aria-hidden="true" /></label>;
 }
 
-export function NarrationInspector({ tab, onTabChange, presentation, activeSlideIndex, updatePresentation, onUpdateSlide, designPanel, revealPanel, onEdit, onSeekCaption }) {
+export function NarrationInspector({ tab, onTabChange, presentation, activeSlideIndex, updatePresentation, onUpdateSlide, designPanel, revealPanel, onEdit, onSeekCaption, onImportNarration, onSelectSlide }) {
   const voice = useNarration({ presentation, activeSlideIndex, updatePresentation });
+  const batch = useNarrationBatch({ presentation, updatePresentation });
   const { n } = voice;
   const slide = presentation.slides[activeSlideIndex];
   const ready = narrationReady(n), audioRef = useRef(null), uploadRef = useRef(null);
@@ -30,6 +33,7 @@ export function NarrationInspector({ tab, onTabChange, presentation, activeSlide
       {tab === 'design' ? <>{revealPanel}<div className="workspace-design">{designPanel}</div></> : <>
         {voice.error && <div role="alert" className="editor-alert">{voice.error}<button aria-label="Dismiss error" onClick={() => voice.setError('')}>×</button></div>}
         {tab === 'voice' && <>
+          <section className="inspector-section"><button className="editor-secondary full" onClick={onImportNarration}>Import all narration → Create slides</button></section>
           <section className="inspector-section">
             <label className="inspector-heading" htmlFor="slide-script">Slide narration</label>
             <textarea id="slide-script" className="editor-field script-field" rows={4} value={n.script} maxLength={12000} onChange={event => change({ script: event.target.value })} placeholder="What should your audience hear on this slide?" />
@@ -58,7 +62,7 @@ export function NarrationInspector({ tab, onTabChange, presentation, activeSlide
               <button className="editor-secondary full" onClick={voice.saveVoice} disabled={!voice.file || !voice.name.trim() || !voice.transcript.trim() || voice.uploading || voice.recording}>{voice.uploading ? 'Preparing sample…' : 'Save voice profile'}</button>
               <button className="editor-text-button" onClick={() => setShowSample(false)} disabled={voice.recording}>Close sample settings</button>
             </div>}
-            <button className="editor-generate" onClick={voice.generate} disabled={!n.script.trim() || !n.voice_id || voice.jobs.length > 0 || voice.connecting || voice.submitting}>{voice.connecting || voice.jobs.length > 0 ? <Loader2 size={17} className="animate-spin" /> : <AudioLines size={18} />}{voice.jobs.length ? voice.states[voice.jobs[0].id]?.phase || 'Generating voice…' : 'Generate voice'}</button>
+            <button className="editor-generate" onClick={voice.generate} disabled={!n.script.trim() || !n.voice_id || voice.jobs.length > 0 || voice.connecting || voice.submitting || batch.busy || batch.submitting}>{voice.connecting || voice.jobs.length > 0 ? <Loader2 size={17} className="animate-spin" /> : <AudioLines size={18} />}{voice.jobs.length ? voice.states[voice.jobs[0].id]?.phase || 'Generating voice…' : 'Generate voice'}</button>
             {voice.jobs.map(job => <div className="editor-meta" key={job.id}><span>Processing this slide</span><button className="editor-text-button" onClick={() => voice.cancel(job.id)}>Cancel</button></div>)}
             {ready && <>
               <div className="audio-ready"><span><CheckCircle2 size={15} />Audio ready</span><small>{(n.duration_ms / 1000).toFixed(1)} sec</small></div>
@@ -68,6 +72,7 @@ export function NarrationInspector({ tab, onTabChange, presentation, activeSlide
             {voice.capabilities.find(item => item.id === n.engine)?.available === false && <p className="editor-stale">{voice.capabilities.find(item => item.id === n.engine).reason}</p>}
             <details className="editor-details"><summary>Voice settings <ChevronDown size={12} /></summary>{n.engine === 'omnivoice' && <p className="editor-hint">Uses your local OmniVoice model when available. Only the selected TTS engine runs. OmniVoice pretrained weights are for noncommercial use.</p>}<button className="editor-text-button" onClick={voice.stop} disabled={voice.jobs.length > 0}>Stop voice processing</button></details>
           </section>
+          <NarrationBatchPanel presentation={presentation} batch={batch} voice={voice} onSelectSlide={onSelectSlide} />
         </>}
         <section className="inspector-section caption-settings">
           <Toggle label="Captions" checked={n.caption_style.enabled} onChange={enabled => caption({ enabled })} />

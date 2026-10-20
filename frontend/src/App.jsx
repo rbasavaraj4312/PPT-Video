@@ -952,6 +952,7 @@ export default function App() {
           ? setIsRemotionPlayerOpen(true) : setIsSlideShowOpen(true)}
         onStartRemotionVideo={() => workspaceRef.current?.preview()}
         onOpenNarration={() => workspaceRef.current?.showVoice()}
+        onImportNarration={() => workspaceRef.current?.importNarration()}
         onOpenAiOutlineModal={() => setIsAiOutlineModalOpen(true)}
         onOpenTemplateModal={() => setIsTemplateModalOpen(true)}
         onSaveAsTemplate={() => setIsSaveAsTemplateModalOpen(true)}
