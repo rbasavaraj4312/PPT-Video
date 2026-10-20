@@ -183,11 +183,29 @@ try {
   await new Promise(resolve => setTimeout(resolve, 300));
   const portrait = await client.send('Page.captureScreenshot', { format: 'png' });
   fs.writeFileSync(path.join(output, 'portrait.png'), Buffer.from(portrait.value.data, 'base64'));
+  await save();
+  deck.slides[0].narration.voice_id = voice;
+  const pending = { id: 'batch-' + 'f'.repeat(32), presentation_id: deck.id, slides: [{
+    slide_id: deck.slides[0].id, script: deck.slides[0].narration.script, engine: 'omnivoice', voice_id: voice }] };
+  await page.evaluate(request => {
+    const refs = JSON.parse(localStorage.getItem('ppt_narration_batches') || '[]');
+    refs.push({ id: request.id, presentationId: request.presentation_id, pending: request });
+    localStorage.setItem('ppt_narration_batches', JSON.stringify(refs));
+  }, pending);
+  await page.goto({ url: `http://localhost:3000/editor/${deck.id}`, timeout: 30000 });
+  await waitFor(() => [...document.querySelectorAll('button')].some(el => el.textContent.trim() === 'Resume voice generation'), 'Unsubmitted work waits for Resume');
+  await new Promise(resolve => setTimeout(resolve, 1700));
+  assert.equal(submitted.length, 3, 'Opening an editor never submits saved generation work');
+  await button('Resume voice generation');
+  await waitFor(() => document.querySelector('.narration-batch-panel')?.textContent.includes('1/1 ready'), 'Explicit resume submits saved work');
+  assert.equal(submitted.length, 4);
+  assert.equal(submitted[3].id, pending.id);
   assert.deepEqual(errors, []);
   const report = { importedSlides: 3, editableReview: true, undoRedo: true, savedBeforeQueue: true,
     refreshRecovery: true, duplicateJobs: false, guardedLateResult: true, failedOnlyRetry: true,
     changedOnlyRetry: true, existingNarrationPrefilled: true, updatePreservesDesigns: true,
-    textFileImport: true, appendPreservesAudio: true, portraitLayout: true, speechInference: false, errors };
+    textFileImport: true, appendPreservesAudio: true, portraitLayout: true,
+    openingEditorNeverGenerates: true, explicitResume: true, speechInference: false, errors };
   fs.writeFileSync(path.join(output, 'verification.json'), JSON.stringify(report, null, 2));
   console.log(JSON.stringify(report));
 } finally { await browser.close({ silent: true }); }

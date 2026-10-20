@@ -10,13 +10,12 @@ import sys
 import threading
 import time
 import uuid
-import wave
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-import imageio_ffmpeg
 
 from backend.app.models.presentation import CaptionModel
+from backend.app.services.speech_storage import SpeechStorage, atomic_json, valid_id, audio_duration
 from voice_service.model_config import omnivoice_model
 from voice_service.audio_timing import speech_bounds
 
@@ -26,25 +25,7 @@ WORKER = Path(__file__).with_name("speech_worker.py")
 TERMINAL = {"complete", "failed", "cancelled"}
 
 
-def atomic_json(path, value):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temp = path.with_name(f".{path.name}.{uuid.uuid4().hex}.tmp")
-    temp.write_text(json.dumps(value, indent=2), encoding="utf-8")
-    temp.replace(path)
-
-
-def valid_id(value):
-    if not re.fullmatch(r"[a-zA-Z0-9_-]{1,80}", value):
-        raise ValueError("Invalid identifier")
-    return value
-
-
-def audio_duration(path):
-    with wave.open(str(path), "rb") as audio:
-        return audio.getnframes() / audio.getframerate() * 1000
-
-
-class NarrationService:
+class NarrationService(SpeechStorage):
     def __init__(self, root=None):
         self.root = Path(root or os.getenv("SPEECH_STORAGE_DIR", str(ROOT / "storage" / "speech"))).resolve()
         self.root.mkdir(parents=True, exist_ok=True)
@@ -79,38 +60,6 @@ class NarrationService:
                                 f"Install speech dependencies or configure {engine} Python; see docs/narration.md"))
         return {"engines": engines, "serial": True, "default_engine": "omnivoice",
                 "omnivoice_model": omnivoice_model()}
-
-    def profiles(self):
-        return [json.loads(p.read_text()) for p in sorted(self.root.glob("voices/*/profile.json"))]
-
-    def profile(self, voice_id):
-        path = self.root / "voices" / valid_id(voice_id) / "profile.json"
-        if not path.exists():
-            raise FileNotFoundError("Voice profile not found")
-        return json.loads(path.read_text())
-
-    def create_profile(self, name, transcript, source, start=0, end=None):
-        voice_id = "voice-" + uuid.uuid4().hex
-        folder = self.root / "voices" / voice_id
-        folder.mkdir(parents=True)
-        output = folder / "reference.wav"
-        cmd = [imageio_ffmpeg.get_ffmpeg_exe(), "-nostdin", "-v", "error", "-protocol_whitelist", "file,pipe", "-ss", str(start), "-i", str(source)]
-        limit = min(end - start, 15.1) if end is not None else 15.1
-        cmd += ["-t", str(limit), "-ac", "1", "-ar", "24000", "-c:a", "pcm_s16le", "-y", str(output)]
-        try:
-            subprocess.run(cmd, capture_output=True, check=True, timeout=30)
-            duration = audio_duration(output)
-            if not 3000 <= duration <= 15000:
-                raise ValueError("Choose a reference clip between 3 and 15 seconds; its transcript must match exactly.")
-            profile = dict(id=voice_id, name=name.strip(), transcript=transcript.strip(),
-                           duration_ms=duration, reference_hash=hashlib.sha256(output.read_bytes()).hexdigest(),
-                           created_at=time.time())
-            atomic_json(folder / "profile.json", profile)
-            return profile
-        except Exception:
-            output.unlink(missing_ok=True)
-            folder.rmdir()
-            raise
 
     def get_job(self, job_id):
         with self.lock:
@@ -210,17 +159,6 @@ class NarrationService:
                 self.pool.submit(self._run, job_id, data)
         return self.get_batch(request.id)
 
-    def get_batch(self, batch_id):
-        path = self.root / 'batches' / valid_id(batch_id) / 'batch.json'
-        if not path.exists():
-            raise FileNotFoundError('Voice batch not found')
-        batch = json.loads(path.read_text())
-        batch.pop('fingerprint', None)
-        batch['slides'] = [dict(**row, job=self.get_job(row['job_id'])) for row in batch['slides']]
-        statuses = [row['job']['status'] for row in batch['slides']]
-        batch['finished'] = all(status in TERMINAL for status in statuses)
-        return batch
-
     def cancel_batch(self, batch_id):
         # Hold the lock across the queue cancellation so another waiting child
         # cannot start while its predecessor is being terminated.
@@ -237,32 +175,6 @@ class NarrationService:
         validate_reveals(presentation)
         return self._enqueue("render", {"presentation": presentation.model_dump()})
 
-    def asset_result(self, asset_id):
-        path = self.asset(asset_id, "result.json")
-        result = json.loads(path.read_text())
-        if result.get("audio_start_ms") is None or result.get("audio_end_ms") is None:
-            result.update(speech_bounds(self.asset(asset_id, "narration.wav"), result.get("captions", [])))
-            atomic_json(path, result)
-        return result
-
-    def prepare_timing(self, presentation):
-        from backend.app.services.narration_timeline import narration_ready
-        prepared = presentation.model_copy(deep=True)
-        for slide in prepared.slides:
-            if narration_ready(slide.narration):
-                result = self.asset_result(slide.narration.asset_id)
-                slide.narration.audio_start_ms = result['audio_start_ms']
-                slide.narration.audio_end_ms = result['audio_end_ms']
-        return prepared
-
-    def asset(self, asset_id, filename):
-        if not re.fullmatch(r"[a-f0-9]{64}", asset_id) or filename not in {"narration.wav", "captions.json", "result.json"}:
-            raise ValueError("Invalid asset")
-        path = self.root / "assets" / asset_id / filename
-        if not path.exists():
-            raise FileNotFoundError("Audio asset not found")
-        return path
-
     def _process(self, job_id, command, phase):
         self._update(job_id, status="running", phase=phase)
         folder = self.root / "jobs" / job_id
@@ -273,19 +185,21 @@ class NarrationService:
                 process = subprocess.Popen(command, stdout=log, stderr=log, cwd=ROOT.parent,
                                            start_new_session=os.name != "nt")
                 self.processes[job_id] = process
-            deadline = time.monotonic() + 3600
-            while process.poll() is None:
-                if self.get_job(job_id)["status"] == "cancelled" or time.monotonic() > deadline:
-                    self._terminate(process)
-                    try:
-                        process.wait(timeout=5)
-                    except subprocess.TimeoutExpired:
-                        self._terminate(process, force=True)
-                        process.wait()
-                    raise InterruptedError("Cancelled or timed out")
-                time.sleep(.2)
-            with self.lock:
-                self.processes.pop(job_id, None)
+            try:
+                deadline = time.monotonic() + 3600
+                while process.poll() is None:
+                    if self.get_job(job_id)["status"] == "cancelled" or time.monotonic() > deadline:
+                        self._terminate(process)
+                        try:
+                            process.wait(timeout=5)
+                        except subprocess.TimeoutExpired:
+                            self._terminate(process, force=True)
+                            process.wait()
+                        raise InterruptedError("Cancelled or timed out")
+                    time.sleep(.2)
+            finally:
+                with self.lock:
+                    self.processes.pop(job_id, None)
             if process.returncode:
                 tail = (folder / "worker.log").read_text(errors="replace")[-1600:]
                 for line in reversed(tail.splitlines()):

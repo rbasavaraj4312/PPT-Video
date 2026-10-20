@@ -110,13 +110,11 @@ class ByteStream(httpx.AsyncByteStream):
         yield b'voice-bytes'
 
 
-def test_proxy_preserves_uploads_status_and_range_downloads(monkeypatch):
+def test_generation_proxy_preserves_status_and_request_body(monkeypatch):
     seen = []
     async def handler(request):
         seen.append((request, await request.aread()))
-        if request.method == 'POST':
-            return httpx.Response(201, headers={'content-type': 'application/json'}, stream=ByteStream())
-        return httpx.Response(206, headers={'content-range': 'bytes 0-10/20', 'content-type': 'audio/wav'}, stream=ByteStream())
+        return httpx.Response(202, headers={'content-type': 'application/json'}, stream=ByteStream())
     manager = VoiceProcess()
     manager.client = httpx.AsyncClient(transport=httpx.MockTransport(handler))
     async def ready(): pass
@@ -125,15 +123,11 @@ def test_proxy_preserves_uploads_status_and_range_downloads(monkeypatch):
     app = FastAPI()
     app.include_router(speech.router)
     with TestClient(app) as client:
-        upload = client.post('/api/speech/voices', files={'audio': ('voice.wav', b'WAV-CONTENT', 'audio/wav')})
-        assert upload.status_code == 201
-        assert b'WAV-CONTENT' in seen[0][1]
-        audio = client.get('/api/speech/assets/id/narration.wav?download=1', headers={'Range': 'bytes=0-10'})
-        assert audio.status_code == 206
-        assert audio.content == b'voice-bytes'
-        assert audio.headers['content-range'] == 'bytes 0-10/20'
-        assert seen[1][0].headers['range'] == 'bytes=0-10'
-        assert seen[1][0].url.query == b'download=1'
+        body = dict(script='Generate only on request', voice_id='voice-' + 'a' * 32, engine='pocket')
+        response = client.post('/api/speech/generate', json=body)
+        assert response.status_code == 202
+        assert response.content == b'voice-bytes'
+        assert json.loads(seen[0][1]) == body
     asyncio.run(manager.close())
 
 
@@ -159,6 +153,7 @@ def test_unavailable_service_returns_useful_503(monkeypatch):
     app = FastAPI()
     app.include_router(speech.router)
     with TestClient(app) as client:
-        response = client.get('/api/speech/voices')
+        assert client.get('/api/speech/voices').status_code == 200
+        response = client.post('/api/speech/generate', json=dict(script='Hello', voice_id='voice-' + 'a' * 32))
         assert response.status_code == 503
         assert 'Missing voice environment' in response.json()['detail']

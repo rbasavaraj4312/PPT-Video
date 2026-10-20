@@ -14,6 +14,8 @@ class IdleState:
     def __init__(self):
         self.last_activity = time.monotonic()
         self.active_requests = 0
+        self.work_seen = False
+        self.draining = False
 
     def expired(self, service, timeout):
         return timeout > 0 and self.active_requests == 0 and not service.busy() and time.monotonic() - self.last_activity >= timeout
@@ -26,30 +28,43 @@ class ActivityMiddleware:
     async def __call__(self, scope, receive, send):
         if scope["type"] != "http" or scope["path"] == "/health":
             return await self.app(scope, receive, send)
+        work = scope.get('method') == 'POST' and scope['path'] in {'/api/speech/generate', '/api/speech/batches', '/api/speech/render'}
+        if work and self.state.draining:
+            # The proxy may safely retry this response: no job was accepted.
+            await send({'type': 'http.response.start', 'status': 503,
+                'headers': [(b'content-type', b'application/json'), (b'x-voice-worker-draining', b'1')]})
+            await send({'type': 'http.response.body', 'body': b'{"detail":"Voice worker is finishing shutdown. Retry generation."}'})
+            return
         self.state.active_requests += 1
-        self.state.last_activity = time.monotonic()
+        if work:
+            self.state.work_seen = True
+            self.state.last_activity = time.monotonic()
         try:
             await self.app(scope, receive, send)
         finally:
             self.state.active_requests -= 1
-            self.state.last_activity = time.monotonic()
+            if work:
+                self.state.last_activity = time.monotonic()
 
 
 def create_app(service=None, idle_seconds=None, shutdown=None):
     state = IdleState()
-    timeout = float(os.getenv("VOICE_SERVICE_IDLE_SECONDS", "60")) if idle_seconds is None else idle_seconds
+    timeout = float(os.getenv("VOICE_SERVICE_IDLE_SECONDS", "10")) if idle_seconds is None else idle_seconds
 
     @asynccontextmanager
     async def lifespan(app):
         async def watch_idle():
             while True:
-                await asyncio.sleep(min(5, max(.1, timeout / 2)))
+                await asyncio.sleep(.1)
                 if app.state.narration.busy() or state.active_requests:
+                    if app.state.narration.busy():
+                        state.work_seen = True
                     state.last_activity = time.monotonic()
                     continue
-                if state.expired(app.state.narration, timeout):
+                if state.work_seen or state.expired(app.state.narration, timeout):
                     callback = shutdown or getattr(app.state, "request_shutdown", None)
                     if callback:
+                        state.draining = True
                         callback()
                         return
 
@@ -57,7 +72,7 @@ def create_app(service=None, idle_seconds=None, shutdown=None):
         app.state.narration = instance
         app.include_router(create_router(instance))
         state.last_activity = time.monotonic()
-        watcher = asyncio.create_task(watch_idle()) if timeout > 0 else None
+        watcher = asyncio.create_task(watch_idle())
         try:
             yield
         finally:
@@ -76,6 +91,7 @@ def create_app(service=None, idle_seconds=None, shutdown=None):
     @app.get("/health")
     def health():
         instance = getattr(app.state, "narration", None)
-        return {"status": "ok", "service": "voice", "busy": bool(state.active_requests or (instance and instance.busy())), "idle_seconds": timeout}
+        return {"status": "ok", "service": "voice", "busy": bool(state.active_requests or (instance and instance.busy())),
+                "stopping": state.draining, "idle_seconds": timeout}
 
     return app

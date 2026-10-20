@@ -36,6 +36,12 @@ class VoiceProcess:
         except (httpx.HTTPError, ValueError):
             return None
 
+    async def is_running(self):
+        if self.process is not None and self.process.poll() is None:
+            return True
+        status = await self.health()
+        return bool(status and not status.get('stopping'))
+
     def interpreter(self):
         configured = os.getenv("VOICE_SERVICE_PYTHON")
         if configured:
@@ -47,7 +53,20 @@ class VoiceProcess:
 
     async def ensure_running(self):
         async with self.lock:
-            if await self.health():
+            status = await self.health()
+            if status and status.get('stopping'):
+                deadline = time.monotonic() + 15
+                while status and status.get('stopping') and time.monotonic() < deadline:
+                    await asyncio.sleep(.1)
+                    status = await self.health()
+                if status and status.get('stopping'):
+                    raise VoiceServiceUnavailable('Voice service is finishing shutdown. Retry generation.')
+                if self.process is not None and self.process.poll() is None:
+                    try:
+                        await asyncio.to_thread(self.process.wait, timeout=5)
+                    except subprocess.TimeoutExpired as exc:
+                        raise VoiceServiceUnavailable('Voice service is finishing shutdown. Retry generation.') from exc
+            if status and not status.get('stopping'):
                 return
             if self.process is not None and self.process.poll() is None:
                 raise VoiceServiceUnavailable("Voice service is not responding. Check " + str(self.log_path))

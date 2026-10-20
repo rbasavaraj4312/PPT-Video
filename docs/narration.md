@@ -8,16 +8,23 @@ transitions. **Preview** plays in the canvas; **Back to editing** returns to edi
 ## On-demand voice service
 
 Voice processing runs in a separate FastAPI process in `voice_service/`, on
-`127.0.0.1:8001`. The main backend forwards the existing `/api/speech/*` URLs,
-so the browser configuration and saved presentations keep working.
+`127.0.0.1:8001`. The main backend serves saved files through the existing
+`/api/speech/*` URLs and forwards generation/render jobs to the separate worker.
 
 - Starting the normal backend alone does not start the voice process. Editing
   slide artwork does not load any voice models.
-- Loading an existing narration waveform, opening the voice selector, generating
-  speech, or exporting a narrated video starts the service automatically. Models
-  are not loaded to display existing audio or voice profiles.
-- The service exits after **60 idle seconds**. Active jobs, uploads, and downloads
-  prevent idle shutdown. The next request starts it again.
+- **Generate voice**, **Generate all voices**, explicit retries/resume, and video
+  rendering start the worker. It shuts down as soon as the job queue finishes,
+  fails, or is cancelled, rather than staying alive for an idle period.
+- Voice lists, waveforms, playback, saved job/batch history, audio/video downloads,
+  SRT export, and audio-boundary metadata work while the worker is stopped.
+  Opening the editor or voice selector never starts it. Engine availability is
+  checked during generation instead of spawning probes when menus open.
+- Uploading a reference sample uses a short FFmpeg conversion process, without
+  starting the TTS host or loading speech models.
+- An unsubmitted saved batch waits for **Resume voice generation** after reopening
+  the editor. Running jobs continue normally, and finished results remain readable
+  after the worker exits. Polling does not keep it alive or restart it.
 - Models load only in short-lived inference processes. Generation and alignment
   run serially, with **one CPU thread** by default. Model memory is released when
   each process exits. Active generation can still make the laptop warm.
@@ -49,7 +56,7 @@ Configuration is inherited from the terminal that starts the backend:
 | --- | --- | --- |
 | `VOICE_SERVICE_PYTHON` | `voice_service/.venv/bin/python`, then `backend/.venv-speech/bin/python` | Interpreter for the separate service |
 | `VOICE_SERVICE_PORT` | `8001` | Local service port |
-| `VOICE_SERVICE_IDLE_SECONDS` | `60` | Exit after idle time; `0` disables automatic exit |
+| `VOICE_SERVICE_IDLE_SECONDS` | `10` | Startup grace if no work arrives; `0` disables only this fallback. Finishing the queue always shuts down the worker. |
 | `VOICE_CPU_THREADS` | `1` | CPU thread limit, clamped to 1–4 |
 
 `GET /api/speech/service/status` reports its state without starting it.
@@ -144,7 +151,7 @@ downloads a browser on first use if needed. To use an existing browser, set
 `REMOTION_BROWSER_EXECUTABLE` in the backend environment.
 
 Start the backend as usual on port 8000, with **one Uvicorn worker** and no reloader
-for everyday use. The voice service starts automatically. If using a
+for everyday use. The voice worker starts when generation/rendering is requested. If using a
 different port, set `NARRATION_API_ORIGIN`, e.g. `http://127.0.0.1:8010`.
 This is the address the local video renderer uses to fetch audio from FastAPI.
 Run on the host to use MLX; a Linux Docker container cannot use Apple's MLX runtime.
@@ -199,8 +206,9 @@ The panel displays per-slide progress, errors, **Retry failed slides**, and
 individual retry/regeneration actions. Completed slides are retained when another
 slide fails. **Cancel remaining voice jobs** stops the unfinished work. Queued
 jobs continue if you change tabs or leave the editor; reopening the presentation
-recovers progress in the same browser. Retrying an interrupted request reuses its
-batch identifier so it cannot enqueue duplicate jobs. A restarted voice service
+recovers progress in the same browser without starting new work. A saved submission
+that never reached the worker waits for **Resume voice generation**. Resuming reuses
+its batch identifier so it cannot enqueue duplicate jobs. A restarted voice service
 marks interrupted jobs failed, preserving completed results for individual retries.
 
 Editing, reordering, or deleting slides while jobs run does not attach old results

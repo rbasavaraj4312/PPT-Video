@@ -60,6 +60,7 @@ backend/storage/speech/
 output/reveal-check/
 output/alignment-check/
 output/narration-import-check/
+output/voice-lifecycle-check/
 
 # OS & Editor
 .DS_Store

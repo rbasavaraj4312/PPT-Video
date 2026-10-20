@@ -177,13 +177,13 @@ export function NarrationModal({ isOpen, onClose, presentation, activeSlideIndex
           </details>
           <label className="block text-sm">Speech engine<select className={input} value={n.engine} onChange={e => change({ engine: e.target.value })}><option value="omnivoice">OmniVoice · MLX / Apple Silicon</option><option value="pocket">Pocket TTS · CPU</option></select></label>
           <p className="text-xs text-slate-500">{engineStatus?.reason || 'Checking speech engine…'}</p>
-          {alignmentStatus && !alignmentStatus.available && <p className="text-xs text-amber-600">Word alignment: {alignmentStatus.reason}</p>}
+          {alignmentStatus?.available === false && <p className="text-xs text-amber-600">Word alignment: {alignmentStatus.reason}</p>}
           {n.engine === 'omnivoice' && <p className="text-xs text-amber-600">OmniVoice pretrained weights are for noncommercial use.</p>}
         </section>
         <section className="space-y-3">
           <h3 className="font-semibold">2. Narrate this slide</h3>
           <label className="block text-sm">Narration script<textarea className={input} rows={7} value={n.script} maxLength={12000} onChange={e => change({ script: e.target.value })} placeholder="Write what your voice should say…" /></label>
-          <button className={button} onClick={generate} disabled={!n.script.trim() || !n.voice_id || currentJobs.length > 0 || !engineStatus?.available || !alignmentStatus?.available}><Volume2 className="inline w-4 h-4 mr-1" />{ready ? 'Regenerate narration' : 'Generate narration'}</button>
+          <button className={button} onClick={generate} disabled={!n.script.trim() || !n.voice_id || currentJobs.length > 0 || engineStatus?.available === false || alignmentStatus?.available === false}><Volume2 className="inline w-4 h-4 mr-1" />{ready ? 'Regenerate narration' : 'Generate narration'}</button>
           {currentJobs.map(j => <div key={j.id} className="text-sm flex items-center gap-2"><Loader2 className="w-4 h-4 animate-spin" />{states[j.id]?.phase || 'Queued'}<button className="underline" onClick={() => run(() => speechRequest(`/jobs/${j.id}`, { method: 'DELETE' }))}>Cancel</button></div>)}
           {n.asset_id && !ready && <p className="text-sm text-amber-600">The script, voice, or engine changed. Generate again before exporting.</p>}
           {ready && <><audio key={n.asset_id} controls src={speechUrl(`/assets/${n.asset_id}/narration.wav`)} className="w-full" /><a className="text-sm underline" download href={speechUrl(`/assets/${n.asset_id}/narration.wav`)}>Download narration WAV</a><p className="text-xs text-slate-500">{(n.duration_ms / 1000).toFixed(1)} seconds · {n.captions.length} aligned words</p></>}

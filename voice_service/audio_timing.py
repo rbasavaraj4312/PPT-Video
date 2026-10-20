@@ -1,31 +1,4 @@
-"""Conservative PCM boundary detection; no inference or audio rewriting."""
-from array import array
-import math
-import sys
-import wave
+"""Compatibility import for existing speech workers and scripts."""
+from backend.app.services.audio_timing import speech_bounds
 
-
-def speech_bounds(path, captions=()):
-    with wave.open(str(path), 'rb') as source:
-        rate, channels = source.getframerate(), source.getnchannels()
-        duration = source.getnframes() / rate * 1000
-        if source.getsampwidth() != 2:
-            return dict(audio_start_ms=0, audio_end_ms=duration)
-        window = max(1, rate // 100)  # 10 ms RMS windows
-        levels = []
-        while raw := source.readframes(window):
-            samples = array('h', raw)
-            if sys.byteorder != 'little':
-                samples.byteswap()
-            levels.append(math.sqrt(sum(value * value for value in samples) / len(samples)) / 32768)
-    # Quiet breaths and consonants count as activity. Only trim the ends;
-    # never remove silence inside a sentence or normalize the voice.
-    threshold = max(.0003, max(levels, default=0) * .002)
-    active = [index for index, level in enumerate(levels) if level > threshold]
-    if not active:
-        return dict(audio_start_ms=0, audio_end_ms=duration)
-    start, end = active[0] * window / rate * 1000, (active[-1] + 1) * window / rate * 1000
-    if captions:
-        start = min(start, min(c['startMs'] for c in captions))
-        end = max(end, max(c['endMs'] for c in captions))
-    return dict(audio_start_ms=max(0, start - 80), audio_end_ms=min(duration, end + 120))
+__all__ = ['speech_bounds']

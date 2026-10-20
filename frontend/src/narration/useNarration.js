@@ -109,10 +109,8 @@ export function useNarration({ presentation, activeSlideIndex, updatePresentatio
     const caps = await connect();
     if (!mounted.current) return;
     if (!caps) { setSubmitting(false); return; }
-    for (const engine of [n.engine, 'align']) {
-      const status = caps.find(item => item.id === engine);
-      if (!status?.available) { setError(status?.reason || 'Speech engine unavailable'); setSubmitting(false); return; }
-    }
+    // Optional engine dependencies are checked by the worker only when a job
+    // actually runs. Opening the voice selector never boots that worker.
     try {
       const job = await speechPost('/generate', { script: n.script, engine: n.engine, voice_id: n.voice_id });
       const tracked = { id: job.id, presentationId: presentation.id, slideId: slide.id };

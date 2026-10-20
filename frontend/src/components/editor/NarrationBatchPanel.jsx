@@ -31,6 +31,7 @@ export function NarrationBatchPanel({ presentation, batch, voice, onSelectSlide 
         {!active && !current && job && <button className="editor-text-button" disabled={voice.deckJobs.length > 0} onClick={() => start([slide.id], false)}>{['failed', 'cancelled'].includes(job.status) ? 'Retry slide' : 'Generate changed slide'}</button>}
       </div>;
     })}</div>
+    {batch.batches.filter(item => item.awaiting_generation).map(item => <button key={item.id} className="editor-secondary full" disabled={active} onClick={() => batch.resume(item.id)}>Resume voice generation</button>)}
     {batch.batches.filter(item => !item.finished).map(item => <button key={item.id} className="editor-secondary full" onClick={() => batch.cancel(item.id)}>Cancel remaining voice jobs</button>)}
     {active && <p className="editor-hint">You can keep editing. Progress is recovered when you reopen this presentation.</p>}
   </section>;

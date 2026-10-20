@@ -9,6 +9,8 @@ const read = () => { try { return JSON.parse(localStorage.getItem(KEY)) || []; }
 export function useNarrationBatch({ presentation, updatePresentation }) {
   const [tracked, setTracked] = useState(read), [batches, setBatches] = useState({});
   const [submitting, setSubmitting] = useState(false), [error, setError] = useState('');
+  const [resumeTick, setResumeTick] = useState(0);
+  const requested = useRef(new Set());
   const guard = useRef(false), mounted = useRef(true), current = useRef(presentation);
   current.current = presentation;
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
@@ -29,7 +31,7 @@ export function useNarrationBatch({ presentation, updatePresentation }) {
       for (const ref of deckRefs) {
         if (finished.has(ref.id)) continue;
         try {
-          const batch = ref.pending ? await speechPost('/batches', ref.pending) : await speechRequest(`/batches/${ref.id}`);
+          const batch = ref.pending && requested.current.has(ref.id) ? await speechPost('/batches', ref.pending) : await speechRequest(`/batches/${ref.id}`);
           if (!live) return;
           setError('');
           setBatches(previous => ({ ...previous, [batch.id]: batch }));
@@ -48,7 +50,12 @@ export function useNarrationBatch({ presentation, updatePresentation }) {
         } catch (exception) {
           if (!live) return;
           setError(exception.message);
-          if ([400, 404, 422].includes(exception.status)) {
+          if (exception.status === 404 && ref.pending && !requested.current.has(ref.id)) {
+            finished.add(ref.id); setError('');
+            setBatches(previous => ({ ...previous, [ref.id]: { id: ref.id, presentation_id: ref.presentationId,
+              finished: true, awaiting_generation: true, slides: ref.pending.slides.map(task => ({ ...task,
+                job: { status: 'paused', phase: 'Waiting for generation' } })) } }));
+          } else if ([400, 404, 422].includes(exception.status)) {
             finished.add(ref.id);
             setBatches(previous => ({ ...previous, [ref.id]: { id: ref.id, presentation_id: ref.presentationId, finished: true,
               slides: (ref.pending?.slides || []).map(task => ({ ...task, job: { status: 'failed', phase: 'Failed', error: exception.message } })) } }));
@@ -59,7 +66,7 @@ export function useNarrationBatch({ presentation, updatePresentation }) {
     }
     poll();
     return () => { live = false; clearTimeout(timeout); };
-  }, [key, presentation.id, updatePresentation]);
+  }, [key, presentation.id, resumeTick, updatePresentation]);
 
   const ordered = deckRefs.map(ref => batches[ref.id]).filter(Boolean);
   const rows = latestBatchRows(ordered);
@@ -79,7 +86,8 @@ export function useNarrationBatch({ presentation, updatePresentation }) {
       updatePresentation(prepared.presentation);
       const id = 'batch-' + crypto.randomUUID().replaceAll('-', '');
       const request = { id, presentation_id: original.id, slides: prepared.tasks };
-      remember([...read(), { id, presentationId: original.id, pending: request }]);
+      requested.current.add(id);
+      remember([...read().filter(ref => !batches[ref.id]?.awaiting_generation), { id, presentationId: original.id, pending: request }]);
       // The polling effect sends the persisted request if this batch is new.
     } catch (exception) { if (mounted.current) setError(exception.message); }
     finally { guard.current = false; if (mounted.current) setSubmitting(false); }
@@ -90,5 +98,10 @@ export function useNarrationBatch({ presentation, updatePresentation }) {
       setBatches(previous => ({ ...previous, [batch.id]: batch }));
     } catch (exception) { setError(exception.message); }
   }
-  return { rows, batches: ordered, busy, submitting, error, setError, start, cancel };
+  function resume(id) {
+    requested.current.add(id);
+    setBatches(previous => ({ ...previous, [id]: { ...previous[id], finished: false, awaiting_generation: false } }));
+    setResumeTick(tick => tick + 1);
+  }
+  return { rows, batches: ordered, busy, submitting, error, setError, start, cancel, resume };
 }

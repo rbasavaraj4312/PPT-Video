@@ -140,6 +140,8 @@ def test_worker_cancellation_reaps_process(service):
         future.result(timeout=5)
     assert process.poll() is not None
     assert service.get_job(job_id)['status'] == 'cancelled'
+    assert service.processes == {}
+    assert not service.busy()
 
 
 def test_pending_jobs_fail_clearly_after_restart(tmp_path):

@@ -156,8 +156,9 @@ python -m uvicorn app.main:app --port 8000
 ```
 * Backend API: **[http://localhost:8000](http://localhost:8000)**
 * API Documentation (Swagger): **[http://localhost:8000/docs](http://localhost:8000/docs)**
-* Voice processing uses a separate FastAPI service that starts on demand and exits
-  after 60 idle seconds. Existing speech environments are reused automatically.
+* Voice processing uses a separate FastAPI worker that starts for generation/render
+  jobs and exits when the queue finishes. Opening the editor, playing saved audio,
+  and reading job history do not start it. Existing speech environments are reused.
   See [voice setup and power controls](docs/narration.md). For backend development,
   use `--reload --reload-dir app`; keep reload off for everyday use.
 * Stored presentations are in `backend/storage/*.json`
