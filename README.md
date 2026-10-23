@@ -20,6 +20,9 @@ When arranging elements, pink smart guides snap the selection to slide edges,
 slide centers, and other elements’ edges and centers. Groups move together with
 their spacing preserved. Use the magnet button beside the canvas zoom controls
 to toggle guides, or hold **Alt/Option** while dragging to move freely.
+Drag any corner handle of a selected group to resize it proportionally. Shapes,
+text, arrow widths and heads, and internal spacing scale together; the opposite
+corner stays fixed. One Undo restores the whole group.
 
 ## Local voice cloning and captions
 

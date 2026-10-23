@@ -21,6 +21,21 @@ def temp_storage(tmp_path):
     return StorageService(storage_dir=tmp_path)
 
 
+def test_group_resize_scale_survives_storage(temp_storage):
+    element = ElementModel(id="scaled-arrow", type=ElementType.ARROW,
+                           x=100.25, y=80.5, width=-50.25, height=0,
+                           stroke_width=.5, font_size=6, visual_scale=.25,
+                           group_id="scaled-group")
+    deck = PresentationModel(id="scaled-deck", title="Scaled group",
+                             slides=[SlideModel(id="scaled-slide", elements=[element])])
+    temp_storage.save_presentation(deck)
+    saved = temp_storage.get_presentation(deck.id).slides[0].elements[0]
+    assert saved.visual_scale == .25
+    assert saved.stroke_width == .5
+    assert saved.width == -50.25
+    assert saved.group_id == "scaled-group"
+
+
 def test_storage_crud(temp_storage):
     # Verify sample is created
     summaries = temp_storage.list_presentations()

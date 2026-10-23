@@ -1179,6 +1179,7 @@ export function SlideShowModal({
           y2: lerp(y2A, y2B, eased),
           rotation: lerp(elA.rotation || 0, elB.rotation || 0, eased),
           radius: lerp(elA.radius !== undefined ? elA.radius : 16, elB.radius !== undefined ? elB.radius : 16, eased),
+          visual_scale: lerp(elA.visual_scale ?? 1, elB.visual_scale ?? 1, eased),
           fill_color: morphedFill,
           fill: morphedFill,
           stroke_color: morphedStroke,

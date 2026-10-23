@@ -5,6 +5,8 @@ import { readFileSync } from 'node:fs';
 import { build } from 'esbuild';
 import { buildTimeline, motionSlideAtFrame } from '../src/narration/timeline.js';
 import { createReveal } from '../src/narration/reveals.js';
+import { resizeGroup } from '../src/rendering/groupResize.js';
+import { selectionBounds } from '../src/rendering/alignmentGuides.js';
 
 // Render the actual React components, including the editor's interaction wrappers.
 const bundled = await build({ stdin: {
@@ -16,7 +18,7 @@ const bundled = await build({ stdin: {
     import { SlideThumbnail } from './src/components/editor/SlideThumbnail.jsx';
     export const thumbnail = slide => renderToStaticMarkup(React.createElement(SlideThumbnail, { slide, vertical: true }));
     export const captions = narration => renderToStaticMarkup(React.createElement(CaptionOverlay, { narration, timeMs: 150 }));
-    export const editor = (slide, vertical) => renderToStaticMarkup(React.createElement(Canvas, { activeSlide: slide, aspectRatio: vertical ? '9:16' : '16:9' }));
+    export const editor = (slide, vertical, selectedElementIds = []) => renderToStaticMarkup(React.createElement(Canvas, { activeSlide: slide, selectedElementIds, aspectRatio: vertical ? '9:16' : '16:9' }));
     export const video = (slide, vertical, scale = 1) => renderToStaticMarkup(React.createElement(RemotionSlideRenderer, { slide, isVertical: vertical, scale }));`,
   resolveDir: new URL('..', import.meta.url).pathname, loader: 'jsx',
 }, bundle: true, platform: 'node', format: 'cjs', write: false, logLevel: 'silent',
@@ -24,6 +26,35 @@ const bundled = await build({ stdin: {
 const module = { exports: {} };
 new Function('require', 'module', 'exports', bundled.outputFiles[0].text)(createRequire(import.meta.url), module, module.exports);
 const { editor, video } = module.exports;
+
+test('Grouped selections expose four interactive proportional resize handles', () => {
+  const slide = { elements: [
+    { id: 'a', type: 'rectangle', x: 100, y: 100, width: 200, height: 100, group_id: 'group' },
+    { id: 'b', type: 'text', x: 120, y: 120, width: 100, height: 50, group_id: 'group' },
+  ] };
+  const markup = editor(slide, false, ['a', 'b']);
+  for (const corner of ['nw', 'ne', 'sw', 'se']) {
+    assert.match(markup, new RegExp(`pointer-events="all" aria-label="Resize selection ${corner} proportionally"`));
+  }
+});
+
+test('Shrunk groups preserve original local arrowheads, dashes, text wrapping and icons across surfaces', () => {
+  const original = [
+    { id: 'box', type: 'rounded_rectangle', x: 0, y: 0, width: 200, height: 100, radius: 16, font_size: 24, text: 'Several words on two lines', group_id: 'g' },
+    { id: 'arrow', type: 'arrow', x: 240, y: 0, width: -40, height: 100, stroke_width: 4, stroke_style: 'dashed', arrow_head: 'both', group_id: 'g' },
+    { id: 'icon', type: 'icon', x: 0, y: 150, width: 80, height: 80, icon_name: 'Star', text: 'Icon label', group_id: 'g' },
+  ];
+  const bounds = selectionBounds(original);
+  const elements = resizeGroup(original, bounds, 'se', -(bounds.right - bounds.left) / 2, -(bounds.bottom - bounds.top) / 2);
+  const slide = { elements };
+  const markup = scene(editor(slide));
+  assert.equal(markup, scene(video(slide)));
+  assert.match(markup, /translate\(0 0\) scale\(0.5\)/);
+  assert.match(markup, /font-size="24"/);
+  assert.match(markup, /stroke-dasharray="8 6"/);
+  assert.match(markup, /rx="16" ry="16"/);
+  assert.equal((markup.match(/<tspan/g) || []).length, (scene(editor({ elements: original })).match(/<tspan/g) || []).length);
+});
 
 test('Word highlighting can be disabled without hiding captions', () => {
   const narration = { captions: [{ text: 'Hello', startMs: 0, endMs: 500 }],

@@ -108,6 +108,7 @@ export function morphSlide(a, b, progress) {
     if (index < 0) { elements.push({ ...from, opacity: (from.opacity ?? 1) * (1 - t) }); continue; }
     const to = remaining.splice(index, 1)[0];
     const mixed = { ...from };
+    mixed.visual_scale = (from.visual_scale ?? 1) + ((to.visual_scale ?? 1) - (from.visual_scale ?? 1)) * t;
     for (const field of ['x', 'y', 'width', 'height', 'rotation', 'font_size', 'stroke_width', 'radius', 'opacity', 'x1', 'x2', 'y1', 'y2', 'image_brightness', 'image_contrast', 'image_saturation']) {
       if (typeof from[field] === 'number' && typeof to[field] === 'number') mixed[field] = from[field] + (to[field] - from[field]) * t;
     }

@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { ZoomIn, ZoomOut, Scan, Hand, Magnet } from 'lucide-react';
 import { SlideElement } from '../rendering/SlideElement';
 import { alignmentTargets, selectionBounds, snapDrag } from '../rendering/alignmentGuides.js';
+import { resizeGroup } from '../rendering/groupResize.js';
 
 const DEFAULT_CANVAS_WIDTH = 1280;
 const DEFAULT_CANVAS_HEIGHT = 720;
@@ -366,6 +367,17 @@ export function Canvas({
   };
 
   // Start resizing via a handle
+  const handleGroupResizePointerDown = (e, handle, elements) => {
+    if (e.button !== 0 || isSpacePressed || activeTool !== 'select') return;
+    e.stopPropagation();
+    e.preventDefault();
+    containerRef.current?.setPointerCapture(e.pointerId);
+    const { x, y } = getCanvasCoords(e);
+    setGuides([]);
+    setInteractionState({ type: 'group-resize', handle, startX: x, startY: y,
+      initialElements: elements.map(el => ({ ...el })), bounds: selectionBounds(elements) });
+  };
+
   const handleResizePointerDown = (e, handle, element) => {
     if (isSpacePressed || activeTool === 'hand') return;
     e.stopPropagation();
@@ -434,6 +446,11 @@ export function Canvas({
           updateElement(initial.id, partial, false);
         });
       }
+    } else if (interactionState.type === 'group-resize') {
+      if (!interactionState.moved && Math.hypot(dx, dy) * zoom < 2) return;
+      const { initialElements, bounds, handle } = interactionState;
+      resizeGroup(initialElements, bounds, handle, dx, dy).forEach(el => updateElement(el.id, el, false));
+      setInteractionState(prev => ({ ...prev, moved: true }));
     } else if (interactionState.type === 'resize') {
       const initial = interactionState.initialElement;
       const { handle } = interactionState;
@@ -610,7 +627,7 @@ export function Canvas({
           else setSelectedElementId(hitIds[0] || null);
         }
       }
-    } else if (interactionState.type === 'drag') {
+    } else if (interactionState.type === 'drag' || interactionState.type === 'group-resize') {
       const { initialElements } = interactionState;
       if (interactionState.moved && initialElements && initialElements.length > 0) {
         // All members already moved without history. Commit the whole current
@@ -809,10 +826,7 @@ export function Canvas({
     }
 
     // Multiple elements selected (PowerPoint style)
-    const minX = Math.min(...selectedElements.map((e) => (e.type === 'line' || e.type === 'arrow' ? Math.min(e.x, e.x + e.width) : e.x)));
-    const maxX = Math.max(...selectedElements.map((e) => (e.type === 'line' || e.type === 'arrow' ? Math.max(e.x, e.x + e.width) : e.x + e.width)));
-    const minY = Math.min(...selectedElements.map((e) => (e.type === 'line' || e.type === 'arrow' ? Math.min(e.y, e.y + e.height) : e.y)));
-    const maxY = Math.max(...selectedElements.map((e) => (e.type === 'line' || e.type === 'arrow' ? Math.max(e.y, e.y + e.height) : e.y + e.height)));
+    const { left: minX, right: maxX, top: minY, bottom: maxY } = selectionBounds(selectedElements);
     const groupW = maxX - minX;
     const groupH = maxY - minY;
 
@@ -875,12 +889,12 @@ export function Canvas({
           </g>
         )}
 
-        {/* Corner Indicator Dots */}
+        {/* Proportional resize handles for the entire selection. */}
         {[
-          { cx: minX - 3, cy: minY - 3 },
-          { cx: maxX + 3, cy: minY - 3 },
-          { cx: minX - 3, cy: maxY + 3 },
-          { cx: maxX + 3, cy: maxY + 3 },
+          { id: 'nw', cx: minX - 3, cy: minY - 3, cursor: 'nwse-resize' },
+          { id: 'ne', cx: maxX + 3, cy: minY - 3, cursor: 'nesw-resize' },
+          { id: 'sw', cx: minX - 3, cy: maxY + 3, cursor: 'nesw-resize' },
+          { id: 'se', cx: maxX + 3, cy: maxY + 3, cursor: 'nwse-resize' },
         ].map((pt, idx) => (
           <rect
             key={idx}
@@ -891,7 +905,11 @@ export function Canvas({
             fill="#ffffff"
             stroke="#2563eb"
             strokeWidth={1.5}
-          />
+            pointerEvents="all"
+            aria-label={`Resize selection ${pt.id} proportionally`}
+            style={{ cursor: pt.cursor }}
+            onPointerDown={(e) => handleGroupResizePointerDown(e, pt.id, selectedElements)}
+          ><title>Drag to resize proportionally</title></rect>
         ))}
       </g>
     );

@@ -4,6 +4,7 @@ import { MotionWidget } from '../components/MotionWidgets/MotionWidget';
 import { canonicalElement } from './elementModel.js';
 import { MotionFrameContext } from '../motion/core/MotionFrameContext';
 import { normalizedCrop } from './imageModel.js';
+import { unscaledElement } from './groupResize.js';
 
 // One SVG layout for the editing canvas, video preview and rendered frames.
 export const renderSvgTextLines = ({
@@ -101,6 +102,11 @@ export const renderSvgTextLines = ({
 
 export function SlideElement({ element, editing = false, isPreview = false }) {
     const el = canonicalElement(element);
+    if (el.visual_scale > 0 && el.visual_scale !== 1) {
+      return <g transform={`translate(${el.x} ${el.y}) scale(${el.visual_scale})`}>
+        <SlideElement element={unscaledElement(el)} editing={editing} isPreview={isPreview} />
+      </g>;
+    }
     const strokeDash = el.stroke_style === 'dashed' ? '8 6' : undefined;
     const opacity = (el.opacity ?? 1) * (el._reveal_opacity ?? 1);
 

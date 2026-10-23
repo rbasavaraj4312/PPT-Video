@@ -95,6 +95,7 @@ class ElementModel(BaseModel):
     width: float = 120.0
     height: float = 80.0
     rotation: float = 0.0  # degrees
+    visual_scale: float = Field(default=1.0, gt=0, allow_inf_nan=False)
 
     # Endpoints for lines and arrows
     x1: Optional[float] = None
