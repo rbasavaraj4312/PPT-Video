@@ -2,6 +2,8 @@
 
 from typing import Any, Dict, List
 
+from .landscape_templates import LANDSCAPE_TEMPLATES
+
 
 def text(id: str, value: str, x: int, y: int, w: int, h: int, size: int, color: str, morph: str, *, align: str = "left", bold: bool = False, z: int = 2) -> Dict[str, Any]:
     return {"id": id, "type": "text", "content": value, "x": x, "y": y, "width": w, "height": h, "font_size": size, "font_color": color, "font_weight": "bold" if bold else "normal", "text_align": align, "vertical_align": "middle", "fill": "transparent", "stroke": "transparent", "morph_id": morph, "z_index": z}
@@ -211,4 +213,5 @@ BUILTIN_TEMPLATES: List[Dict[str, Any]] = [
     binary_search_template(),
     stack_queue_template(),
     dsa_short_template(),
+    *LANDSCAPE_TEMPLATES,
 ]
