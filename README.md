@@ -36,7 +36,7 @@ The import dialog includes a prompt you can copy into ChatGPT or Claude.
 The unified editor includes a docked **Design / Voice / Captions** inspector and
 a synchronized timeline for slides, audio waveforms, captions, and transitions.
 Write scripts, record or upload voices, generate narration, and preview playback
-in the canvas. Select an element and use **Design → Reveal with narration** to
+in the canvas. In **Captions**, choose classic subtitles, word-by-word typography, or an Editorial, Marker, Impact, Signal, Camera zoom out, Wavy, Typewriter, Paper Cutout, Neon Trace, Stacked Headlines, Focus Pull, 3D Word Tunnel, Orbiting Words, or Elastic Ribbon treatment. The tunnel brings each spoken word from depth, holds it in focus, then flies it past the camera. Orbiting Words curves incoming words into place; Elastic Ribbon bends the sentence along a flowing baseline that stretches gently with speech. The caption inspector shows a sample of the selected design. New words enter with speech timing while earlier words settle. Drag captions on the canvas to position them and use their corner handle to resize the text. Top, center, bottom, and custom positions are also available; the same design appears in preview and narrated video export. Select an element and use **Design → Reveal with narration** to
 link its appearance to a spoken word. Grouped elements can reveal together, with
 the same timing in preview and MP4; reveal edits never regenerate speech.
 Voice profiles use OmniVoice through MLX Audio by default, reusing

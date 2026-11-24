@@ -221,10 +221,13 @@ class CaptionModel(BaseModel):
 class CaptionStyle(BaseModel):
     enabled: bool = True
     highlight_words: bool = True
-    font_size: int = Field(default=34, ge=16, le=72)
+    design: str = Field(default="classic", pattern=r"^(classic|build|word|editorial|marker|impact|signal|camera_zoom_out|wavy|typewriter|paper_cutout|neon_trace|stacked_headlines|focus_pull|word_tunnel|orbiting_words|elastic_ribbon)$")
+    font_size: int = Field(default=34, ge=16, le=160)
     color: str = Field(default="#ffffff", pattern=r"^#[0-9a-fA-F]{6}$")
     highlight: str = Field(default="#facc15", pattern=r"^#[0-9a-fA-F]{6}$")
-    position: str = Field(default="bottom", pattern=r"^(top|bottom)$")
+    position: str = Field(default="bottom", pattern=r"^(top|center|bottom|custom)$")
+    x_percent: float = Field(default=50, ge=0, le=100, allow_inf_nan=False)
+    y_percent: float = Field(default=50, ge=0, le=100, allow_inf_nan=False)
     words_per_phrase: int = Field(default=6, ge=2, le=12)
 
 

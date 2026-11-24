@@ -3,7 +3,7 @@ import { Player } from '@remotion/player';
 import { CheckCircle2, Pencil, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import { SlideSidebar } from '../SlideSidebar';
 import { NarratedComposition } from '../../narration/NarratedComposition';
-import { CaptionOverlay } from '../../narration/CaptionOverlay';
+import { EditableCaptionOverlay } from '../../narration/EditableCaptionOverlay';
 import { narrationReady } from '../../narration/timeline';
 import { editorTimeline, slideAtFrame } from '../../narration/editorState.js';
 import { speechUrl } from '../../services/speech';
@@ -142,7 +142,9 @@ export const EditorWorkspace = forwardRef(function EditorWorkspace({ presentatio
             compositionWidth={width} compositionHeight={height} fps={30} controls={false} autoPlay={false}
             style={{ width: '100%', height: '100%' }} clickToPlay={false} doubleClickToFullscreen={false} loop={false} />
         </div><button className="return-to-edit editor-secondary" onClick={edit}><Pencil size={13} />Back to editing</button></div>
-          : React.cloneElement(canvas, { overlay: narrationReady(slide?.narration) ? <CaptionOverlay narration={slide.narration} timeMs={localMs} /> : null })}
+          : React.cloneElement(canvas, { overlay: narrationReady(slide?.narration) ? <EditableCaptionOverlay key={slide.id} narration={slide.narration} timeMs={localMs}
+            onSelect={() => setTab('captions')} onChange={patch => onUpdateSlide({ narration: { ...slide.narration,
+              caption_style: { ...slide.narration.caption_style, ...patch } } })} /> : null })}
       </div>
       <EditorTimeline presentation={presentation} timeline={timeline} frame={frame} playing={playing} onSeek={seek} onTogglePlay={play}
         activeSlideIndex={activeSlideIndex} onCaptionSelect={() => setTab('captions')} onRevealSelect={selectReveal} />

@@ -75,6 +75,14 @@ export function captionPhrase(captions, timeMs, size = 6) {
   return captions.slice(offset, offset + size).map((c, i) => ({ ...c, active: offset + i === active }));
 }
 
+// Typography designs never show words before their spoken start time.
+export function captionWords(captions, timeMs, size = 6, design = 'classic') {
+  const phrase = captionPhrase(captions, timeMs, size);
+  if (['word', 'impact', 'camera_zoom_out', 'word_tunnel'].includes(design)) return phrase.filter(word => word.active);
+  if (['build', 'marker', 'signal', 'wavy', 'typewriter', 'paper_cutout', 'neon_trace', 'stacked_headlines', 'focus_pull', 'orbiting_words', 'elastic_ribbon'].includes(design)) return phrase.filter(word => word.startMs <= timeMs);
+  return phrase;
+}
+
 export function visualAtFrame(items, frame) {
   const boundary = items.findIndex(item => item.transition > 0 && frame >= item.transition_start && frame < item.transition_start + item.transition);
   if (boundary >= 0) return { index: boundary, inTransition: true,

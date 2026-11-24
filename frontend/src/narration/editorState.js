@@ -1,8 +1,8 @@
 import { buildTimeline, narrationReady } from './timeline.js';
 
 export const narrationDefaults = () => ({ script: '', engine: 'omnivoice', voice_id: '', fit_to_audio: true,
-  padding_ms: 200, captions: [], caption_style: { enabled: true, highlight_words: true, font_size: 28,
-    color: '#ffffff', highlight: '#22d3ee', position: 'bottom', words_per_phrase: 6 } });
+  padding_ms: 200, captions: [], caption_style: { enabled: true, highlight_words: true, design: 'classic', font_size: 28,
+    color: '#ffffff', highlight: '#22d3ee', position: 'bottom', x_percent: 50, y_percent: 50, words_per_phrase: 6 } });
 
 export function slideNarration(slide) {
   const defaults = narrationDefaults();

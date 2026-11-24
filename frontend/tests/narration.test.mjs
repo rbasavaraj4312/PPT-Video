@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { audioBounds, buildTimeline, captionPhrase, narrationReady, morphSlide, canonicalElement, visualAtFrame, motionSlideAtFrame, needsAnimatedExport } from '../src/narration/timeline.js';
+import { audioBounds, buildTimeline, captionPhrase, captionWords, narrationReady, morphSlide, canonicalElement, visualAtFrame, motionSlideAtFrame, needsAnimatedExport } from '../src/narration/timeline.js';
 
 const voice = { script: 'Hello world', generated_script: 'Hello world', engine: 'pocket',
   generated_engine: 'pocket', voice_id: 'v', generated_voice_id: 'v', asset_id: 'a'.repeat(64),
@@ -122,4 +122,25 @@ test('Legacy aliases cannot override interpolated colors or incoming text', () =
   assert.deepEqual(middle.map(el => el.content), ['Before', 'After']);
   assert.equal(middle[0].font_color, 'rgba(128,128,128,1)');
   assert.equal(middle[0].fill, 'rgba(128,128,128,1)');
+});
+
+
+test('Typography captions reveal only spoken words and respect phrase boundaries', () => {
+  const words = Array.from({ length: 4 }, (_, i) => ({ text: `word${i}`, startMs: i * 100, endMs: (i + 1) * 100 }));
+  assert.deepEqual(captionWords(words, 150, 3, 'build').map(w => w.text), ['word0', 'word1']);
+  assert.deepEqual(captionWords(words, 150, 3, 'word').map(w => w.text), ['word1']);
+  assert.deepEqual(captionWords(words, 350, 3, 'build').map(w => w.text), ['word3']);
+  assert.equal(captionWords(words, 150, 3, 'classic').length, 3);
+  assert.deepEqual(captionWords(words, 400, 3, 'word'), []);
+});
+
+
+test('New caption treatments reveal the intended words at speech boundaries', () => {
+  const words = Array.from({ length: 3 }, (_, i) => ({ text: `word${i}`, startMs: i * 100, endMs: (i + 1) * 100 }));
+  for (const design of ['marker', 'signal', 'wavy', 'typewriter', 'paper_cutout', 'neon_trace', 'stacked_headlines', 'focus_pull', 'orbiting_words', 'elastic_ribbon']) {
+    assert.deepEqual(captionWords(words, 150, 3, design).map(w => w.text), ['word0', 'word1']);
+    assert.deepEqual(captionWords(words, 300, 3, design), []);
+  }
+  assert.deepEqual(captionWords(words, 150, 3, 'impact').map(w => w.text), ['word1']);
+  assert.equal(captionWords(words, 150, 3, 'editorial').length, 3);
 });

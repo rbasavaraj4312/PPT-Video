@@ -6,6 +6,31 @@ import { downloadSrt, speechUrl } from '../../services/speech';
 import { NarrationAudio } from './NarrationAudio';
 import { NarrationBatchPanel } from './NarrationBatchPanel';
 import { useNarrationBatch } from '../../narration/useNarrationBatch';
+import { CaptionOverlay } from '../../narration/CaptionOverlay';
+
+const captionDesigns = [
+  ['classic', 'Classic subtitles', 'A clean, readable subtitle box.'],
+  ['build', 'Build phrase', 'Words enter as they are spoken.'],
+  ['word', 'Single word', 'One spoken word at a time.'],
+  ['editorial', 'Editorial', 'A serif quote with an accent rule.'],
+  ['marker', 'Marker', 'A moving highlight across the phrase.'],
+  ['impact', 'Impact', 'Oversized, punchy words for emphasis.'],
+  ['camera_zoom_out', 'Camera zoom out', 'Each spoken word pulls back from a close-up.'],
+  ['wavy', 'Wavy', 'New words enter letter by letter in a wave, then settle.'],
+  ['signal', 'Signal', 'A precise broadcast-style caption bar.'],
+  ['typewriter', 'Typewriter', 'Letters type in with a cursor that disappears when complete.'],
+  ['paper_cutout', 'Paper Cutout', 'Words land on textured paper strips with a playful tilt.'],
+  ['neon_trace', 'Neon Trace', 'A glowing outline fills in as each word arrives.'],
+  ['stacked_headlines', 'Stacked Headlines', 'Spoken words slide into a bold, left-aligned stack.'],
+  ['focus_pull', 'Focus Pull', 'New words sharpen from a soft blur; earlier words stay crisp.'],
+  ['word_tunnel', '3D Word Tunnel', 'Each word approaches from depth, holds in focus, then passes the camera.'],
+  ['orbiting_words', 'Orbiting Words', 'Incoming words follow a curved orbit, then settle into the sentence.'],
+  ['elastic_ribbon', 'Elastic Ribbon', 'Words follow a flowing curve that gently stretches with speech.'],
+];
+const captionSample = [
+  { text: 'Make it', startMs: 0, endMs: 400 },
+  { text: 'memorable', startMs: 400, endMs: 1000 },
+];
 
 function Toggle({ label, checked, onChange }) {
   return <label className="editor-toggle-label"><span>{label}</span><input type="checkbox" role="switch" checked={checked} onChange={event => onChange(event.target.checked)} /><span className="editor-switch" aria-hidden="true" /></label>;
@@ -76,10 +101,17 @@ export function NarrationInspector({ tab, onTabChange, presentation, activeSlide
         </>}
         <section className="inspector-section caption-settings">
           <Toggle label="Captions" checked={n.caption_style.enabled} onChange={enabled => caption({ enabled })} />
+          <label>Caption design<select className="editor-field" aria-label="Caption design" value={n.caption_style.design || 'classic'} onChange={event => caption({ design: event.target.value })}>{captionDesigns.map(([id, name]) => <option key={id} value={id}>{name}</option>)}</select></label>
+          <div className="caption-design-preview" aria-hidden="true"><CaptionOverlay narration={{ captions: captionSample, caption_style: { ...n.caption_style, enabled: true, position: 'center', font_size: 26 } }} timeMs={650} scale={0.8} /></div>
+          <p className="editor-hint">{captionDesigns.find(([id]) => id === (n.caption_style.design || 'classic'))?.[2]}</p>
           <Toggle label="Word highlight" checked={n.caption_style.highlight_words !== false} onChange={highlight_words => caption({ highlight_words })} />
-          <div className="editor-field-grid three"><label>Highlight<input className="editor-field color-field" aria-label="Caption highlight color" type="color" value={n.caption_style.highlight} onChange={event => caption({ highlight: event.target.value })} /></label><label>Text color<input className="editor-field color-field" aria-label="Caption text color" type="color" value={n.caption_style.color} onChange={event => caption({ color: event.target.value })} /></label><label>Position<select className="editor-field" value={n.caption_style.position} onChange={event => caption({ position: event.target.value })}><option value="bottom">Bottom</option><option value="top">Top</option></select></label></div>
+          <div className="editor-field-grid three"><label>Highlight<input className="editor-field color-field" aria-label="Caption highlight color" type="color" value={n.caption_style.highlight} onChange={event => caption({ highlight: event.target.value })} /></label><label>Text color<input className="editor-field color-field" aria-label="Caption text color" type="color" value={n.caption_style.color} onChange={event => caption({ color: event.target.value })} /></label><label>Position<select className="editor-field" value={n.caption_style.position} onChange={event => caption({ position: event.target.value })}><option value="bottom">Bottom</option><option value="center">Center</option><option value="top">Top</option><option value="custom">Custom</option></select></label></div>
+          {n.caption_style.position === 'custom' && <div className="editor-field-grid">
+            {['x', 'y'].map(axis => <label key={axis}>{axis === 'x' ? 'Horizontal' : 'Vertical'} position (%)<input className="editor-field" aria-label={`Caption ${axis === 'x' ? 'horizontal' : 'vertical'} position`} type="range" min="0" max="100" step="1" value={n.caption_style[`${axis}_percent`] ?? 50} onChange={event => caption({ [`${axis}_percent`]: Number(event.target.value) })} /><input className="editor-field" aria-label={`Caption ${axis === 'x' ? 'horizontal' : 'vertical'} position percent`} type="number" min="0" max="100" value={n.caption_style[`${axis}_percent`] ?? 50} onChange={event => caption({ [`${axis}_percent`]: Math.max(0, Math.min(100, Number(event.target.value))) })} /></label>)}
+            <p className="editor-hint">Drag the caption on the canvas to move it. Drag its corner to resize.</p>
+          </div>}
           {tab === 'captions' && <>
-            <div className="editor-field-grid"><label>Font size<input className="editor-field" type="number" min="16" max="72" value={n.caption_style.font_size} onChange={event => caption({ font_size: Math.max(16, Math.min(72, Number(event.target.value))) })} /></label><label>Words per phrase<input className="editor-field" type="number" min="2" max="12" value={n.caption_style.words_per_phrase} onChange={event => caption({ words_per_phrase: Math.max(2, Math.min(12, Number(event.target.value))) })} /></label></div>
+            <div className="editor-field-grid"><label>Font size<input className="editor-field" type="number" min="16" max="160" value={n.caption_style.font_size} onChange={event => caption({ font_size: Math.max(16, Math.min(160, Number(event.target.value))) })} /></label><label>Words per phrase<input className="editor-field" type="number" min="2" max="12" value={n.caption_style.words_per_phrase} onChange={event => caption({ words_per_phrase: Math.max(2, Math.min(12, Number(event.target.value))) })} /></label></div>
             <h3 className="inspector-heading">Words & timing</h3><p className="editor-hint">Times are in seconds within this slide. Select a word to preview it.</p>
             {ready ? <div className="caption-word-list">{n.captions.map((word, index) => <div className="caption-word-row" key={index}>
               <button className="editor-icon-button" aria-label={`Preview word ${index + 1}`} onClick={() => onSeekCaption(word.startMs)}><Play size={12} /></button>
