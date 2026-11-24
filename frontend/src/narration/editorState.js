@@ -29,6 +29,7 @@ export function slideAtFrame(items, frame) {
 }
 
 export function narrationStatus(slide) {
+  if (slide.media) return slide.media.kind === 'video' ? 'Video clip' : 'Image clip';
   if (narrationReady(slide.narration) && slide.narration.script?.trim()) return 'Voice ready';
   if (slide.narration?.script?.trim()) return slide.narration.asset_id ? 'Needs update' : 'Not generated';
   return 'Add narration';

@@ -24,6 +24,22 @@ Drag any corner handle of a selected group to resize it proportionally. Shapes,
 text, arrow widths and heads, and internal spacing scale together; the opposite
 corner stays fixed. One Undo restores the whole group.
 
+## Image and video clips between slides
+
+Use **+ Add image / video** beneath any slide thumbnail to insert a media clip
+at that position. Reorder, duplicate, delete, and undo clips like other slides.
+In **Design**, set image duration, trim video start/end, mute or adjust video
+volume, and choose Fit or Fill. Images use the existing image editing controls.
+Videos accept MP4 or WebM up to 50 MB; images accept PNG, JPEG, WebP, or GIF up to
+10 MB (GIF is a still image).
+
+Add timed **Media subtitles** in Design or Captions. Subtitle times are relative
+to the trimmed clip; set text, start/end, position, and font size. Preview them
+with the timeline. Clips and subtitles appear in MP4 exports, and subtitles are
+included in SRT exports. Media boundaries use cuts so clip lengths stay exact.
+PowerPoint export currently uses the clip's still image/poster; use MP4 for video
+playback and timed subtitles.
+
 ## Local voice cloning and captions
 
 Use **Narration to slides** in the editor header to paste or upload all your

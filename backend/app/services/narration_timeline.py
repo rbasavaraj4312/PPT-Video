@@ -44,14 +44,16 @@ def timeline(presentation, fps=30):
         narrated = narration_ready(n) and bool(n.script.strip())
         audio_from, audio_frames = audio_bounds(n, fps) if narrated else (0, 0)
         hold = max(1, math.ceil(max(500, slide.slide_duration * 1000) / 1000 * fps))
+        if slide.media:
+            hold = max(1, math.ceil((slide.media.trim_end - slide.media.trim_start if slide.media.kind == 'video' else slide.slide_duration) * fps))
         if narrated:
             audio_hold = audio_frames + (math.ceil(n.padding_ms / 1000 * fps) if index < len(presentation.slides) - 1 else 0)
-            hold = audio_hold if n.fit_to_audio else max(hold, audio_hold)
+            hold = audio_hold if n.fit_to_audio and not slide.media else max(hold, audio_hold)
         items.append(dict(start=cursor, hold=hold, transition=0, transition_start=cursor + hold,
                           audio_from=audio_from, audio_frames=audio_frames))
         cursor += hold
     for index, (slide, item) in enumerate(zip(presentation.slides, items)):
-        if index == len(items) - 1 or slide.transition_type == "none":
+        if index == len(items) - 1 or slide.transition_type == "none" or slide.media or presentation.slides[index + 1].media:
             continue
         next_item = items[index + 1]
         lower = item['start'] + math.ceil(item['hold'] / 2)
@@ -75,6 +77,12 @@ def srt(presentation):
     items, _ = timeline(presentation)
     blocks = []
     for slide, item in zip(presentation.slides, items):
+        if slide.media:
+            base_ms = item['start'] * 1000 / 30
+            length_ms = item['hold'] * 1000 / 30
+            for cue in slide.media.subtitles:
+                if cue.text.strip() and cue.startMs < min(cue.endMs, length_ms):
+                    blocks.append((base_ms + cue.startMs, base_ms + min(cue.endMs, length_ms), cue.text.strip()))
         n = slide.narration
         if not narration_ready(n) or not n.script.strip() or not n.caption_style.enabled:
             continue
@@ -85,5 +93,6 @@ def srt(presentation):
                 continue
             base_ms = (item["start"] - item["audio_from"]) * 1000 / 30
             text = " ".join(c.text.strip() for c in phrase)
-            blocks.append(f"{len(blocks)+1}\n{stamp(base_ms + phrase[0].startMs)} --> {stamp(base_ms + phrase[-1].endMs)}\n{text}\n")
-    return "\n".join(blocks)
+            blocks.append((base_ms + phrase[0].startMs, base_ms + phrase[-1].endMs, text))
+    return "\n".join(f"{i+1}\n{stamp(start)} --> {stamp(end)}\n{text}\n"
+                     for i, (start, end, text) in enumerate(sorted(blocks)))

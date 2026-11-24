@@ -248,6 +248,29 @@ class NarrationModel(BaseModel):
     caption_style: CaptionStyle = Field(default_factory=CaptionStyle)
 
 
+class SlideMedia(BaseModel):
+    kind: str = Field(pattern=r"^(image|video)$")
+    src: str = Field(max_length=70_000_000, pattern=r"^data:(image/(png|jpeg|webp|gif)|video/(mp4|webm));base64,[A-Za-z0-9+/=]+$")
+    name: str = Field(default="Media", max_length=255)
+    duration: float = Field(default=5, ge=.1, le=3600, allow_inf_nan=False)
+    trim_start: float = Field(default=0, ge=0, allow_inf_nan=False)
+    trim_end: float = Field(default=5, gt=0, allow_inf_nan=False)
+    fit: str = Field(default="contain", pattern=r"^(contain|cover)$")
+    volume: float = Field(default=1, ge=0, le=1, allow_inf_nan=False)
+    muted: bool = False
+    subtitles: List[CaptionModel] = Field(default_factory=list, max_length=1000)
+    subtitle_position: str = Field(default="bottom", pattern=r"^(top|center|bottom)$")
+    subtitle_size: int = Field(default=34, ge=16, le=160)
+
+    @model_validator(mode="after")
+    def valid_media(self):
+        if not self.src.startswith(f"data:{self.kind}/"):
+            raise ValueError("Media source must match its kind")
+        if self.trim_start >= self.trim_end or self.trim_end > self.duration + .001:
+            raise ValueError("Video trim must stay within the source duration")
+        return self
+
+
 class SlideModel(BaseModel):
     id: str
     title: str = "Untitled Slide"
@@ -260,6 +283,7 @@ class SlideModel(BaseModel):
     slide_duration: float = 3.0  # seconds to display slide in video
     elements: List[ElementModel] = Field(default_factory=list)
     narration: Optional[NarrationModel] = None
+    media: Optional[SlideMedia] = None
 
 
 class PresentationModel(BaseModel):

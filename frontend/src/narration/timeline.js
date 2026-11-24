@@ -1,5 +1,6 @@
 /** @typedef {import('@remotion/captions').Caption} Caption */
 import { canonicalElement } from '../rendering/elementModel.js';
+import { mediaDuration } from '../rendering/mediaModel.js';
 import { normalizedCrop } from '../rendering/imageModel.js';
 import { resolveReveal, revealOpacity } from './reveals.js';
 export { canonicalElement };
@@ -8,7 +9,7 @@ export const narrationReady = (n) => Boolean(n?.asset_id && n.duration_ms > 0 &&
   n.generated_voice_id === n.voice_id);
 
 export const needsAnimatedExport = presentation => (presentation?.slides || []).some(slide =>
-  slide.narration?.script?.trim() || slide.elements?.some(element => element.type === 'motion_component' || element.reveal));
+  slide.media || slide.narration?.script?.trim() || slide.elements?.some(element => element.type === 'motion_component' || element.reveal));
 
 export function motionSlideAtFrame(items, index, frame, fps = 30) {
   const item = items[index];
@@ -43,10 +44,11 @@ export function buildTimeline(presentation, fps = 30) {
     const n = slide.narration;
     const narrated = narrationReady(n) && Boolean(n.script?.trim());
     let hold = Math.max(1, Math.ceil(Math.max(500, Number(slide.slide_duration ?? 3) * 1000) / 1000 * fps));
+    if (slide.media) hold = Math.max(1, Math.ceil(mediaDuration(slide) * fps));
     if (narrated) {
       const bounds = audioBounds(n, fps);
       const audioHold = bounds.audio_frames + (index < slides.length - 1 ? Math.ceil((n.padding_ms ?? 200) / 1000 * fps) : 0);
-      hold = n.fit_to_audio !== false ? audioHold : Math.max(hold, audioHold);
+      hold = n.fit_to_audio !== false && !slide.media ? audioHold : Math.max(hold, audioHold);
     }
     const item = { start: cursor, hold, transition: 0, transition_start: cursor + hold, slide, narrated,
       ...(narrated ? audioBounds(n, fps) : { audio_from: 0, audio_frames: 0 }) };
@@ -55,7 +57,7 @@ export function buildTimeline(presentation, fps = 30) {
   });
   items.forEach((item, index) => {
     const next = items[index + 1];
-    if (!next || (item.slide.transition_type || 'morph') === 'none') return;
+    if (!next || item.slide.media || next.slide.media || (item.slide.transition_type || 'morph') === 'none') return;
     // Reserve half of each scene for either adjacent transition. Long Morphs
     // shorten instead of colliding or inserting silence into the audio track.
     const lower = item.start + Math.ceil(item.hold / 2);

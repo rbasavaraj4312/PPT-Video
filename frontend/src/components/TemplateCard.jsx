@@ -73,7 +73,7 @@ export function TemplateCard({
   const currentElements = currentSlide.elements || [];
 
   return (
-    <div className="group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800/90 hover:border-blue-500/50 dark:hover:border-blue-500/50 shadow-sm hover:shadow-xl transition-all duration-200 flex flex-col overflow-hidden select-none">
+    <div className="group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800/90 hover:border-blue-500/50 dark:hover:border-blue-500/50 shadow-sm hover:shadow-xl transition-all duration-200 flex min-w-0 flex-col overflow-hidden select-none">
       {/* Top Visual Mockup Preview */}
       <div 
         className="relative bg-slate-950 p-3 flex items-center justify-center overflow-hidden"
@@ -150,7 +150,7 @@ export function TemplateCard({
         )}
 
         {/* Aspect Ratio Badge Top Left */}
-        <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
+        <div className="absolute top-2.5 left-2.5 right-2.5 flex flex-wrap items-center gap-1.5 pr-16">
           <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${
             is916
               ? 'bg-rose-500/90 text-white'
@@ -265,10 +265,10 @@ export function TemplateCard({
       </div>
 
       {/* Card Info Body */}
-      <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
+      <div className="p-4 min-w-0 flex-1 flex flex-col justify-between space-y-3">
         <div>
           {/* Category Tag */}
-          <div className="flex items-center gap-1.5 mb-1.5">
+          <div className="flex flex-wrap items-center gap-1.5 mb-1.5">
             <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider ${catMeta.badgeClass}`}>
               <CatIcon size={11} />
               <span>{catMeta.label}</span>
@@ -292,15 +292,17 @@ export function TemplateCard({
         </div>
 
         {/* Slide Dots Indicator & Actions */}
-        <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-          {/* Mini Slide Dots */}
-          <div className="flex items-center gap-1">
+        <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex min-w-0 flex-col gap-3">
+          {/* Preview navigation has its own row so it cannot crowd the actions. */}
+          <div className="flex flex-wrap items-center gap-1" role="group" aria-label="Slide previews">
             {slides.map((_, i) => (
               <button
                 key={i}
                 type="button"
                 onClick={() => setActivePreviewIndex(i)}
-                className={`h-1.5 rounded-full transition-all ${
+                aria-label={`Preview slide ${i + 1}`}
+                aria-pressed={activePreviewIndex === i}
+                className={`h-1.5 shrink-0 rounded-full transition-all ${
                   activePreviewIndex === i
                     ? 'w-4 bg-blue-600 dark:bg-blue-400'
                     : 'w-1.5 bg-slate-300 dark:bg-slate-700 hover:bg-slate-400'
@@ -310,8 +312,8 @@ export function TemplateCard({
             ))}
           </div>
 
-          {/* Use, Edit & Delete Action Buttons */}
-          <div className="flex items-center gap-1.5">
+          {/* Actions wrap within the card, including at narrow grid widths. */}
+          <div className="flex min-w-0 flex-wrap items-center justify-end gap-1.5">
             {onDeleteTemplate && (
               <button
                 type="button"
@@ -319,7 +321,7 @@ export function TemplateCard({
                   e.stopPropagation();
                   onDeleteTemplate(template.id);
                 }}
-                className="p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:border-rose-200 dark:hover:border-rose-800 transition"
+                className="shrink-0 p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:border-rose-200 dark:hover:border-rose-800 transition"
                 title="Delete Template"
               >
                 <Trash2 size={13} />
@@ -330,7 +332,7 @@ export function TemplateCard({
               <button
                 type="button"
                 onClick={() => onEditSlides(template)}
-                className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-semibold transition"
+                className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap px-2.5 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-semibold transition"
                 title="Edit template slides and morph animations"
               >
                 <Edit3 size={12} />
@@ -341,7 +343,7 @@ export function TemplateCard({
             <button
               type="button"
               onClick={() => onUseTemplate(template)}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold shadow-xs transition"
+              className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-semibold shadow-xs transition"
             >
               <Sparkles size={13} />
               <span>Use</span>

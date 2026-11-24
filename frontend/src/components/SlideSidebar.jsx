@@ -1,6 +1,7 @@
-import React from 'react';
-import { Plus, Copy, Trash2, ChevronUp, ChevronDown, LayoutTemplate, Sparkles, Volume2, Mic } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { Plus, Copy, Trash2, ChevronUp, ChevronDown, Film, Image as ImageIcon, Sparkles, Volume2, Mic } from 'lucide-react';
 import { SlideThumbnail } from './editor/SlideThumbnail';
+import { mediaDuration } from '../rendering/mediaModel.js';
 import { narrationStatus } from '../narration/editorState.js';
 
 export function SlideSidebar({
@@ -11,16 +12,22 @@ export function SlideSidebar({
   activeSlideIndex,
   onSelectSlide,
   onAddSlide,
+  onAddMedia,
+  mediaLoading,
   onDuplicateSlide,
   onDeleteSlide,
   onReorderSlides,
   onOpenTemplateModal,
   onOpenAiOutline,
 }) {
+  const listRef = useRef(null);
+  useEffect(() => {
+    if (!hidden) listRef.current?.querySelector('[data-active-slide="true"]')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  }, [activeSlideIndex, hidden, slides.length]);
   return (
     <aside id={id} hidden={hidden} aria-label="Slides" className="slides-sidebar w-56 border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex flex-col h-[calc(100vh-3.5rem)] select-none transition-colors">
       {/* Header with Add Slide Button, AI Outline & Template Import */}
-      <div className="p-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-1">
+      <div className="slides-sidebar-header p-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-1">
         <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider shrink-0">
           Slides ({slides.length})
         </span>
@@ -37,7 +44,7 @@ export function SlideSidebar({
       </div>
 
       {/* Slide Thumbnails List */}
-      <div className="flex-1 overflow-y-auto p-3 space-y-3">
+      <div ref={listRef} className="slides-sidebar-list">
         {slides.length === 0 && (
           <div className="flex flex-col items-center justify-center text-center p-4 border border-dashed border-slate-300 dark:border-slate-800 rounded-xl my-4 text-xs text-slate-400">
             <p className="mb-2">No slides in presentation</p>
@@ -54,24 +61,28 @@ export function SlideSidebar({
         )}
         {slides.map((slide, idx) => {
           const isActive = idx === activeSlideIndex;
+          const status = narrationStatus(slide);
+          const StatusIcon = slide.media ? (slide.media.kind === 'video' ? Film : ImageIcon) : status === 'Voice ready' ? Volume2 : Mic;
+          const seconds = slide.media ? mediaDuration(slide) : status === 'Voice ready' ? slide.narration.duration_ms / 1000 : null;
 
           return (
+            <div key={slide.id} className="slide-list-entry">
             <div
-              key={slide.id}
+              data-active-slide={isActive}
               onClick={() => onSelectSlide(idx)}
-              className={`group relative rounded-xl border-2 transition-all cursor-pointer p-1.5 ${
+              className={`slide-card group relative rounded-xl border-2 transition-all cursor-pointer p-1.5 ${
                 isActive
                   ? 'border-blue-600 bg-blue-50/50 dark:bg-blue-950/30 shadow-sm'
                   : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800/60'
               }`}
             >
-              <div className="flex items-center justify-between mb-1.5 px-1">
-                <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 group-hover:text-slate-800 dark:group-hover:text-slate-200 transition-colors">
+              <div className="slide-card-header">
+                <span className="slide-card-title" title={slide.title || 'Untitled'}>
                   {idx + 1}. {slide.title || 'Untitled'}
                 </span>
                 
                 {/* Hover Quick Actions */}
-                <div className="opacity-0 group-hover:opacity-100 flex items-center gap-1 transition-opacity">
+                <div className="slide-card-actions">
                   {idx > 0 && (
                     <button
                       onClick={(e) => {
@@ -124,10 +135,12 @@ export function SlideSidebar({
               <div className={`mx-auto rounded-md overflow-hidden border border-slate-200 dark:border-slate-800 ${aspectRatio === '9:16' ? 'w-20 aspect-[9/16]' : 'w-full aspect-video'}`}>
                 <SlideThumbnail slide={slide} vertical={aspectRatio === '9:16'} />
               </div>
-              <div className={`slide-voice-status ${narrationStatus(slide) === 'Voice ready' ? 'ready' : slide.narration?.asset_id ? 'stale' : ''}`}>
-                <span>{narrationStatus(slide) === 'Voice ready' ? <Volume2 size={12} /> : <Mic size={11} />}{narrationStatus(slide)}</span>
-                {narrationStatus(slide) === 'Voice ready' && <span>{(slide.narration.duration_ms / 1000).toFixed(1)}s</span>}
+              <div className={`slide-voice-status ${status === 'Voice ready' ? 'ready' : !slide.media && slide.narration?.asset_id ? 'stale' : ''}`}>
+                <span><StatusIcon size={12} />{status}</span>
+                {seconds !== null && <span>{seconds.toFixed(1)}s</span>}
               </div>
+            </div>
+            {onAddMedia && <button className="media-insert-button" disabled={mediaLoading} aria-label={`Add image or video after slide ${idx + 1}`} onClick={() => onAddMedia(idx)}><Plus size={12} /><span>Add image / video</span></button>}
         </div>
       );
     })}

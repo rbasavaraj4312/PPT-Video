@@ -466,7 +466,7 @@ export default function App() {
         }
       } else if (e.key === 'F5') {
         e.preventDefault();
-        if (presentation.slides.some(s => s.narration?.script?.trim())) setIsRemotionPlayerOpen(true);
+        if (presentation.slides.some(s => s.media || s.narration?.script?.trim())) setIsRemotionPlayerOpen(true);
         else setIsSlideShowOpen(true);
       } else if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'c') {
         if (!['INPUT', 'TEXTAREA'].includes(document.activeElement?.tagName) && !document.activeElement?.isContentEditable) {
@@ -948,7 +948,7 @@ export default function App() {
         onSave={handleSave}
         onExport={handleExport}
         onExportVideo={() => setIsExportVideoModalOpen(true)}
-        onStartSlideShow={() => presentation.slides.some(s => s.narration?.script?.trim())
+        onStartSlideShow={() => presentation.slides.some(s => s.media || s.narration?.script?.trim())
           ? setIsRemotionPlayerOpen(true) : setIsSlideShowOpen(true)}
         onStartRemotionVideo={() => workspaceRef.current?.preview()}
         onOpenNarration={() => workspaceRef.current?.showVoice()}

@@ -3,8 +3,8 @@
   "title": "Horizontal Time Line",
   "aspect_ratio": "16:9",
   "folder_id": null,
-  "created_at": "2026-10-23T02:43:16.141316+00:00",
-  "updated_at": "2026-10-23T02:43:16.141316+00:00",
+  "created_at": "2026-11-24T16:32:16.115573+00:00",
+  "updated_at": "2026-11-24T16:32:16.115573+00:00",
   "slides": [
     {
       "id": "s-mvkcqv0g-3-agl0",
@@ -470,26 +470,227 @@
         "script": "In 1947, India gained independence after nearly two centuries of British rule. This historic moment marked the beginning of a new journey toward freedom, unity, and national development.",
         "engine": "omnivoice",
         "voice_id": "voice-32e854cb1aed431bafea88d3ee806259",
-        "asset_id": null,
-        "duration_ms": 0.0,
-        "generated_script": "",
-        "generated_engine": "",
-        "generated_voice_id": "",
+        "asset_id": "afd027f82d3eece7aad1275834e450ee047d5b4352f3aedface9f007ddf78341",
+        "duration_ms": 14120.0,
+        "generated_script": "In 1947, India gained independence after nearly two centuries of British rule. This historic moment marked the beginning of a new journey toward freedom, unity, and national development.",
+        "generated_engine": "omnivoice",
+        "generated_voice_id": "voice-32e854cb1aed431bafea88d3ee806259",
         "fit_to_audio": true,
         "padding_ms": 200,
-        "audio_start_ms": null,
-        "audio_end_ms": null,
-        "captions": [],
+        "audio_start_ms": 0.0,
+        "audio_end_ms": 13680.0,
+        "captions": [
+          {
+            "text": " In",
+            "startMs": 360.0,
+            "endMs": 460.0,
+            "timestampMs": 410.0,
+            "confidence": 0.08880522847175598
+          },
+          {
+            "text": " 1947,",
+            "startMs": 460.0,
+            "endMs": 1480.0,
+            "timestampMs": 970.0,
+            "confidence": 0.8791626989841461
+          },
+          {
+            "text": " India",
+            "startMs": 2240.0,
+            "endMs": 2380.0,
+            "timestampMs": 2310.0,
+            "confidence": 0.8925349116325378
+          },
+          {
+            "text": " gained",
+            "startMs": 2380.0,
+            "endMs": 2580.0,
+            "timestampMs": 2480.0,
+            "confidence": 0.9988749623298645
+          },
+          {
+            "text": " independence",
+            "startMs": 2580.0,
+            "endMs": 3020.0,
+            "timestampMs": 2800.0,
+            "confidence": 0.9898438453674316
+          },
+          {
+            "text": " after",
+            "startMs": 3020.0,
+            "endMs": 3820.0,
+            "timestampMs": 3420.0,
+            "confidence": 0.6516311168670654
+          },
+          {
+            "text": " nearly",
+            "startMs": 3820.0,
+            "endMs": 4320.0,
+            "timestampMs": 4070.0,
+            "confidence": 0.9833973050117493
+          },
+          {
+            "text": " two",
+            "startMs": 4320.0,
+            "endMs": 4760.0,
+            "timestampMs": 4540.0,
+            "confidence": 0.8402454257011414
+          },
+          {
+            "text": " centuries",
+            "startMs": 4760.0,
+            "endMs": 5180.0,
+            "timestampMs": 4970.0,
+            "confidence": 0.9936767220497131
+          },
+          {
+            "text": " of",
+            "startMs": 5180.0,
+            "endMs": 5520.0,
+            "timestampMs": 5350.0,
+            "confidence": 0.9855820536613464
+          },
+          {
+            "text": " British",
+            "startMs": 5520.0,
+            "endMs": 5840.0,
+            "timestampMs": 5680.0,
+            "confidence": 0.9774526357650757
+          },
+          {
+            "text": " rule.",
+            "startMs": 5840.0,
+            "endMs": 6340.0,
+            "timestampMs": 6090.0,
+            "confidence": 0.9212447702884674
+          },
+          {
+            "text": " This",
+            "startMs": 7460.0,
+            "endMs": 7660.0,
+            "timestampMs": 7560.0,
+            "confidence": 0.9335144758224487
+          },
+          {
+            "text": " historic",
+            "startMs": 7660.0,
+            "endMs": 8200.0,
+            "timestampMs": 7930.0,
+            "confidence": 0.9713135957717896
+          },
+          {
+            "text": " moment",
+            "startMs": 8200.0,
+            "endMs": 8780.0,
+            "timestampMs": 8490.0,
+            "confidence": 0.9874477982521057
+          },
+          {
+            "text": " marked",
+            "startMs": 8780.0,
+            "endMs": 9060.0,
+            "timestampMs": 8920.0,
+            "confidence": 0.9321566224098206
+          },
+          {
+            "text": " the",
+            "startMs": 9060.0,
+            "endMs": 9280.0,
+            "timestampMs": 9170.0,
+            "confidence": 0.9627143740653992
+          },
+          {
+            "text": " beginning",
+            "startMs": 9280.0,
+            "endMs": 9520.0,
+            "timestampMs": 9400.0,
+            "confidence": 0.9610535502433777
+          },
+          {
+            "text": " of",
+            "startMs": 9520.0,
+            "endMs": 9800.0,
+            "timestampMs": 9660.0,
+            "confidence": 0.9798840284347534
+          },
+          {
+            "text": " a",
+            "startMs": 9800.0,
+            "endMs": 9900.0,
+            "timestampMs": 9850.0,
+            "confidence": 0.9876794219017029
+          },
+          {
+            "text": " new",
+            "startMs": 9900.0,
+            "endMs": 10060.0,
+            "timestampMs": 9980.0,
+            "confidence": 0.9852380156517029
+          },
+          {
+            "text": " journey",
+            "startMs": 10060.0,
+            "endMs": 10460.0,
+            "timestampMs": 10260.0,
+            "confidence": 0.970478892326355
+          },
+          {
+            "text": " toward",
+            "startMs": 10460.0,
+            "endMs": 10740.0,
+            "timestampMs": 10600.0,
+            "confidence": 0.8138681054115295
+          },
+          {
+            "text": " freedom,",
+            "startMs": 10740.0,
+            "endMs": 11440.0,
+            "timestampMs": 11090.0,
+            "confidence": 0.7964344620704651
+          },
+          {
+            "text": " unity,",
+            "startMs": 11800.0,
+            "endMs": 12320.0,
+            "timestampMs": 12060.0,
+            "confidence": 0.5826158672571182
+          },
+          {
+            "text": " and",
+            "startMs": 12320.0,
+            "endMs": 12380.0,
+            "timestampMs": 12350.0,
+            "confidence": 0.9726406931877136
+          },
+          {
+            "text": " national",
+            "startMs": 12380.0,
+            "endMs": 12680.0,
+            "timestampMs": 12530.0,
+            "confidence": 0.9693807363510132
+          },
+          {
+            "text": " development.",
+            "startMs": 12680.0,
+            "endMs": 13380.0,
+            "timestampMs": 13030.0,
+            "confidence": 0.9771354496479034
+          }
+        ],
         "caption_style": {
           "enabled": true,
           "highlight_words": true,
+          "design": "classic",
           "font_size": 28,
           "color": "#ffffff",
           "highlight": "#22d3ee",
           "position": "bottom",
+          "x_percent": 50.0,
+          "y_percent": 50.0,
           "words_per_phrase": 6
         }
-      }
+      },
+      "media": null
     },
     {
       "id": "s-mvkcqv0g-4-0q95",
@@ -955,26 +1156,192 @@
         "script": "In 1950, India adopted its Constitution and became a democratic republic. This milestone established the foundation for justice, equality, liberty, and democratic governance.",
         "engine": "omnivoice",
         "voice_id": "voice-32e854cb1aed431bafea88d3ee806259",
-        "asset_id": null,
-        "duration_ms": 0.0,
-        "generated_script": "",
-        "generated_engine": "",
-        "generated_voice_id": "",
+        "asset_id": "c8184b0b3a932225acf9a9dd7dfeaa8a36e91eb52cb2da449f216eb61233b136",
+        "duration_ms": 13440.0,
+        "generated_script": "In 1950, India adopted its Constitution and became a democratic republic. This milestone established the foundation for justice, equality, liberty, and democratic governance.",
+        "generated_engine": "omnivoice",
+        "generated_voice_id": "voice-32e854cb1aed431bafea88d3ee806259",
         "fit_to_audio": true,
         "padding_ms": 200,
-        "audio_start_ms": null,
-        "audio_end_ms": null,
-        "captions": [],
+        "audio_start_ms": 0.0,
+        "audio_end_ms": 13410.0,
+        "captions": [
+          {
+            "text": " In",
+            "startMs": 500.0,
+            "endMs": 600.0,
+            "timestampMs": 550.0,
+            "confidence": 0.30583855509757996
+          },
+          {
+            "text": " 1950,",
+            "startMs": 600.0,
+            "endMs": 1540.0,
+            "timestampMs": 1070.0,
+            "confidence": 0.8824191987514496
+          },
+          {
+            "text": " India",
+            "startMs": 1940.0,
+            "endMs": 2040.0,
+            "timestampMs": 1990.0,
+            "confidence": 0.8544453978538513
+          },
+          {
+            "text": " adopted",
+            "startMs": 2040.0,
+            "endMs": 2560.0,
+            "timestampMs": 2300.0,
+            "confidence": 0.9546254873275757
+          },
+          {
+            "text": " its",
+            "startMs": 2560.0,
+            "endMs": 2920.0,
+            "timestampMs": 2740.0,
+            "confidence": 0.9775835275650024
+          },
+          {
+            "text": " Constitution",
+            "startMs": 2920.0,
+            "endMs": 3300.0,
+            "timestampMs": 3110.0,
+            "confidence": 0.3872840106487274
+          },
+          {
+            "text": " and",
+            "startMs": 3380.0,
+            "endMs": 4220.0,
+            "timestampMs": 3800.0,
+            "confidence": 0.5741862058639526
+          },
+          {
+            "text": " became",
+            "startMs": 4380.0,
+            "endMs": 4480.0,
+            "timestampMs": 4430.0,
+            "confidence": 0.961776614189148
+          },
+          {
+            "text": " a",
+            "startMs": 4480.0,
+            "endMs": 4720.0,
+            "timestampMs": 4600.0,
+            "confidence": 0.9920924305915833
+          },
+          {
+            "text": " democratic",
+            "startMs": 4720.0,
+            "endMs": 5180.0,
+            "timestampMs": 4950.0,
+            "confidence": 0.2801904082298279
+          },
+          {
+            "text": " republic.",
+            "startMs": 5180.0,
+            "endMs": 6130.0,
+            "timestampMs": 5655.0,
+            "confidence": 0.879327267408371
+          },
+          {
+            "text": " This",
+            "startMs": 6820.0,
+            "endMs": 6920.0,
+            "timestampMs": 6870.0,
+            "confidence": 0.8757785558700562
+          },
+          {
+            "text": " milestone",
+            "startMs": 6920.0,
+            "endMs": 7420.0,
+            "timestampMs": 7170.0,
+            "confidence": 0.9944400787353516
+          },
+          {
+            "text": " established",
+            "startMs": 7420.0,
+            "endMs": 7840.0,
+            "timestampMs": 7630.0,
+            "confidence": 0.9591633081436157
+          },
+          {
+            "text": " the",
+            "startMs": 7940.0,
+            "endMs": 8420.0,
+            "timestampMs": 8180.0,
+            "confidence": 0.9515807628631592
+          },
+          {
+            "text": " foundation",
+            "startMs": 8520.0,
+            "endMs": 8740.0,
+            "timestampMs": 8630.0,
+            "confidence": 0.7678497433662415
+          },
+          {
+            "text": " for",
+            "startMs": 8740.0,
+            "endMs": 9300.0,
+            "timestampMs": 9020.0,
+            "confidence": 0.9112474918365479
+          },
+          {
+            "text": " justice,",
+            "startMs": 9300.0,
+            "endMs": 10040.0,
+            "timestampMs": 9670.0,
+            "confidence": 0.6778007596731186
+          },
+          {
+            "text": " equality,",
+            "startMs": 10180.0,
+            "endMs": 11020.0,
+            "timestampMs": 10600.0,
+            "confidence": 0.9905778169631958
+          },
+          {
+            "text": " liberty,",
+            "startMs": 11020.0,
+            "endMs": 11880.0,
+            "timestampMs": 11450.0,
+            "confidence": 0.7288330346345901
+          },
+          {
+            "text": " and",
+            "startMs": 11880.0,
+            "endMs": 11900.0,
+            "timestampMs": 11890.0,
+            "confidence": 0.9148399233818054
+          },
+          {
+            "text": " democratic",
+            "startMs": 11900.0,
+            "endMs": 12220.0,
+            "timestampMs": 12060.0,
+            "confidence": 0.9290624260902405
+          },
+          {
+            "text": " governance.",
+            "startMs": 12220.0,
+            "endMs": 13020.0,
+            "timestampMs": 12620.0,
+            "confidence": 0.9424279928207397
+          }
+        ],
         "caption_style": {
           "enabled": true,
           "highlight_words": true,
+          "design": "classic",
           "font_size": 28,
           "color": "#ffffff",
           "highlight": "#22d3ee",
           "position": "bottom",
+          "x_percent": 50.0,
+          "y_percent": 50.0,
           "words_per_phrase": 6
         }
-      }
+      },
+      "media": null
     },
     {
       "id": "s-mvkcqv0g-5-wpef",
@@ -1423,43 +1790,230 @@
           "image_width": 1,
           "image_height": 1,
           "image_crop": {
-            "x": 0,
-            "y": 0,
-            "width": 1,
-            "height": 1
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
           },
           "aspect_locked": true,
           "flip_x": false,
           "flip_y": false,
-          "image_brightness": 100,
-          "image_contrast": 100,
-          "image_saturation": 100
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         }
       ],
       "narration": {
         "script": "In 1969, India established the Indian Space Research Organisation, known as ISRO. This marked the beginning of an ambitious journey toward space exploration and technological advancement.",
         "engine": "omnivoice",
         "voice_id": "voice-32e854cb1aed431bafea88d3ee806259",
-        "asset_id": null,
-        "duration_ms": 0.0,
-        "generated_script": "",
-        "generated_engine": "",
-        "generated_voice_id": "",
+        "asset_id": "244a1bd6ed3e5f711c330e440359766e86b7a52a6b4f7f4460963e36529ab52d",
+        "duration_ms": 14360.0,
+        "generated_script": "In 1969, India established the Indian Space Research Organisation, known as ISRO. This marked the beginning of an ambitious journey toward space exploration and technological advancement.",
+        "generated_engine": "omnivoice",
+        "generated_voice_id": "voice-32e854cb1aed431bafea88d3ee806259",
         "fit_to_audio": true,
         "padding_ms": 200,
-        "audio_start_ms": null,
-        "audio_end_ms": null,
-        "captions": [],
+        "audio_start_ms": 640.0,
+        "audio_end_ms": 14110.0,
+        "captions": [
+          {
+            "text": " In",
+            "startMs": 720.0,
+            "endMs": 820.0,
+            "timestampMs": 770.0,
+            "confidence": 0.33530721068382263
+          },
+          {
+            "text": " 1969,",
+            "startMs": 820.0,
+            "endMs": 1960.0,
+            "timestampMs": 1390.0,
+            "confidence": 0.9362636804580688
+          },
+          {
+            "text": " India",
+            "startMs": 3020.0,
+            "endMs": 3220.0,
+            "timestampMs": 3120.0,
+            "confidence": 0.8994287848472595
+          },
+          {
+            "text": " established",
+            "startMs": 3220.0,
+            "endMs": 3720.0,
+            "timestampMs": 3470.0,
+            "confidence": 0.9945120811462402
+          },
+          {
+            "text": " the",
+            "startMs": 3720.0,
+            "endMs": 4000.0,
+            "timestampMs": 3860.0,
+            "confidence": 0.9416104555130005
+          },
+          {
+            "text": " Indian",
+            "startMs": 4000.0,
+            "endMs": 4300.0,
+            "timestampMs": 4150.0,
+            "confidence": 0.9492491483688354
+          },
+          {
+            "text": " Space",
+            "startMs": 4300.0,
+            "endMs": 4680.0,
+            "timestampMs": 4490.0,
+            "confidence": 0.903455913066864
+          },
+          {
+            "text": " Research",
+            "startMs": 4680.0,
+            "endMs": 5320.0,
+            "timestampMs": 5000.0,
+            "confidence": 0.9762045741081238
+          },
+          {
+            "text": " Organisation,",
+            "startMs": 5320.0,
+            "endMs": 6270.0,
+            "timestampMs": 5795.0,
+            "confidence": 0.5834332704544067
+          },
+          {
+            "text": " known",
+            "startMs": 7040.0,
+            "endMs": 7100.0,
+            "timestampMs": 7070.0,
+            "confidence": 0.8446571826934814
+          },
+          {
+            "text": " as",
+            "startMs": 7100.0,
+            "endMs": 7380.0,
+            "timestampMs": 7240.0,
+            "confidence": 0.9989114999771118
+          },
+          {
+            "text": " ISRO.",
+            "startMs": 7380.0,
+            "endMs": 8020.0,
+            "timestampMs": 7700.0,
+            "confidence": 0.7557811935742696
+          },
+          {
+            "text": " This",
+            "startMs": 8020.0,
+            "endMs": 8100.0,
+            "timestampMs": 8060.0,
+            "confidence": 0.7985393404960632
+          },
+          {
+            "text": " marked",
+            "startMs": 8100.0,
+            "endMs": 8800.0,
+            "timestampMs": 8450.0,
+            "confidence": 0.9202205538749695
+          },
+          {
+            "text": " the",
+            "startMs": 8800.0,
+            "endMs": 9060.0,
+            "timestampMs": 8930.0,
+            "confidence": 0.9842990636825562
+          },
+          {
+            "text": " beginning",
+            "startMs": 9060.0,
+            "endMs": 9380.0,
+            "timestampMs": 9220.0,
+            "confidence": 0.96710604429245
+          },
+          {
+            "text": " of",
+            "startMs": 9380.0,
+            "endMs": 9640.0,
+            "timestampMs": 9510.0,
+            "confidence": 0.9727851152420044
+          },
+          {
+            "text": " an",
+            "startMs": 9640.0,
+            "endMs": 9780.0,
+            "timestampMs": 9710.0,
+            "confidence": 0.982084333896637
+          },
+          {
+            "text": " ambitious",
+            "startMs": 9780.0,
+            "endMs": 10120.0,
+            "timestampMs": 9950.0,
+            "confidence": 0.9508849382400513
+          },
+          {
+            "text": " journey",
+            "startMs": 10120.0,
+            "endMs": 10580.0,
+            "timestampMs": 10350.0,
+            "confidence": 0.9798440933227539
+          },
+          {
+            "text": " toward",
+            "startMs": 10580.0,
+            "endMs": 10960.0,
+            "timestampMs": 10770.0,
+            "confidence": 0.17975568771362305
+          },
+          {
+            "text": " space",
+            "startMs": 10960.0,
+            "endMs": 11380.0,
+            "timestampMs": 11170.0,
+            "confidence": 0.6467607617378235
+          },
+          {
+            "text": " exploration",
+            "startMs": 11380.0,
+            "endMs": 11960.0,
+            "timestampMs": 11670.0,
+            "confidence": 0.7134903073310852
+          },
+          {
+            "text": " and",
+            "startMs": 11960.0,
+            "endMs": 12460.0,
+            "timestampMs": 12210.0,
+            "confidence": 0.9175896048545837
+          },
+          {
+            "text": " technological",
+            "startMs": 12460.0,
+            "endMs": 12860.0,
+            "timestampMs": 12660.0,
+            "confidence": 0.9883729815483093
+          },
+          {
+            "text": " advancement.",
+            "startMs": 12860.0,
+            "endMs": 13810.0,
+            "timestampMs": 13335.0,
+            "confidence": 0.9796298742294312
+          }
+        ],
         "caption_style": {
           "enabled": true,
           "highlight_words": true,
+          "design": "classic",
           "font_size": 28,
           "color": "#ffffff",
           "highlight": "#22d3ee",
           "position": "bottom",
+          "x_percent": 50.0,
+          "y_percent": 50.0,
           "words_per_phrase": 6
         }
-      }
+      },
+      "media": null
     },
     {
       "id": "slide-45ed589b-0732-4749-a994-7742b47e4a57",
@@ -1908,43 +2462,265 @@
           "image_width": 1,
           "image_height": 1,
           "image_crop": {
-            "x": 0,
-            "y": 0,
-            "width": 1,
-            "height": 1
+            "x": 0.0,
+            "y": 0.0,
+            "width": 1.0,
+            "height": 1.0
           },
           "aspect_locked": true,
           "flip_x": false,
           "flip_y": false,
-          "image_brightness": 100,
-          "image_contrast": 100,
-          "image_saturation": 100
+          "image_brightness": 100.0,
+          "image_contrast": 100.0,
+          "image_saturation": 100.0
         }
       ],
       "narration": {
         "script": "In 2023, India achieved a historic milestone with Chandrayaan-3, becoming the first country to land near the Moon's south pole. This success demonstrated India's growing strength in science, technology, and innovation.",
         "engine": "omnivoice",
         "voice_id": "voice-32e854cb1aed431bafea88d3ee806259",
-        "asset_id": null,
-        "duration_ms": 0.0,
-        "generated_script": "",
-        "generated_engine": "",
-        "generated_voice_id": "",
+        "asset_id": "1443adaaab5d52b5f9385b91023e7addee2c941e0db2fcc1cad7c0ddaa1b1072",
+        "duration_ms": 16560.0,
+        "generated_script": "In 2023, India achieved a historic milestone with Chandrayaan-3, becoming the first country to land near the Moon's south pole. This success demonstrated India's growing strength in science, technology, and innovation.",
+        "generated_engine": "omnivoice",
+        "generated_voice_id": "voice-32e854cb1aed431bafea88d3ee806259",
         "fit_to_audio": true,
         "padding_ms": 200,
-        "audio_start_ms": null,
-        "audio_end_ms": null,
-        "captions": [],
+        "audio_start_ms": 620.0,
+        "audio_end_ms": 16540.0,
+        "captions": [
+          {
+            "text": " In",
+            "startMs": 700.0,
+            "endMs": 900.0,
+            "timestampMs": 800.0,
+            "confidence": 0.12424355000257492
+          },
+          {
+            "text": " 2023,",
+            "startMs": 900.0,
+            "endMs": 2440.0,
+            "timestampMs": 1670.0,
+            "confidence": 0.5147562573353449
+          },
+          {
+            "text": " India",
+            "startMs": 2900.0,
+            "endMs": 3060.0,
+            "timestampMs": 2980.0,
+            "confidence": 0.6357775330543518
+          },
+          {
+            "text": " achieved",
+            "startMs": 3060.0,
+            "endMs": 3420.0,
+            "timestampMs": 3240.0,
+            "confidence": 0.9967082738876343
+          },
+          {
+            "text": " a",
+            "startMs": 3420.0,
+            "endMs": 3640.0,
+            "timestampMs": 3530.0,
+            "confidence": 0.9225667715072632
+          },
+          {
+            "text": " historic",
+            "startMs": 3640.0,
+            "endMs": 4059.9999999999995,
+            "timestampMs": 3850.0,
+            "confidence": 0.9741163849830627
+          },
+          {
+            "text": " milestone",
+            "startMs": 4059.9999999999995,
+            "endMs": 4560.0,
+            "timestampMs": 4310.0,
+            "confidence": 0.9963884353637695
+          },
+          {
+            "text": " with",
+            "startMs": 4560.0,
+            "endMs": 4960.0,
+            "timestampMs": 4760.0,
+            "confidence": 0.9338515400886536
+          },
+          {
+            "text": " Chandrayaan-3,",
+            "startMs": 4960.0,
+            "endMs": 5960.0,
+            "timestampMs": 5460.0,
+            "confidence": 0.7481322934230169
+          },
+          {
+            "text": " becoming",
+            "startMs": 6380.0,
+            "endMs": 6620.0,
+            "timestampMs": 6500.0,
+            "confidence": 0.9166480302810669
+          },
+          {
+            "text": " the",
+            "startMs": 6620.0,
+            "endMs": 6880.0,
+            "timestampMs": 6750.0,
+            "confidence": 0.9875868558883667
+          },
+          {
+            "text": " first",
+            "startMs": 6880.0,
+            "endMs": 7160.0,
+            "timestampMs": 7020.0,
+            "confidence": 0.9860592484474182
+          },
+          {
+            "text": " country",
+            "startMs": 7160.0,
+            "endMs": 7480.0,
+            "timestampMs": 7320.0,
+            "confidence": 0.9937489032745361
+          },
+          {
+            "text": " to",
+            "startMs": 7480.0,
+            "endMs": 7840.0,
+            "timestampMs": 7660.0,
+            "confidence": 0.9740593433380127
+          },
+          {
+            "text": " land",
+            "startMs": 7840.0,
+            "endMs": 8020.0,
+            "timestampMs": 7930.0,
+            "confidence": 0.9907447695732117
+          },
+          {
+            "text": " near",
+            "startMs": 8020.0,
+            "endMs": 8260.0,
+            "timestampMs": 8140.0,
+            "confidence": 0.9967895150184631
+          },
+          {
+            "text": " the",
+            "startMs": 8260.0,
+            "endMs": 8400.0,
+            "timestampMs": 8330.0,
+            "confidence": 0.9753888249397278
+          },
+          {
+            "text": " Moon's",
+            "startMs": 8400.0,
+            "endMs": 8760.0,
+            "timestampMs": 8580.0,
+            "confidence": 0.4615228995680809
+          },
+          {
+            "text": " south",
+            "startMs": 8760.0,
+            "endMs": 8900.0,
+            "timestampMs": 8830.0,
+            "confidence": 0.2876497209072113
+          },
+          {
+            "text": " pole.",
+            "startMs": 8900.0,
+            "endMs": 9380.0,
+            "timestampMs": 9140.0,
+            "confidence": 0.9593870341777802
+          },
+          {
+            "text": " This",
+            "startMs": 10440.0,
+            "endMs": 10540.0,
+            "timestampMs": 10490.0,
+            "confidence": 0.9061952829360962
+          },
+          {
+            "text": " success",
+            "startMs": 10540.0,
+            "endMs": 10860.0,
+            "timestampMs": 10700.0,
+            "confidence": 0.9825953245162964
+          },
+          {
+            "text": " demonstrated",
+            "startMs": 10940.0,
+            "endMs": 11640.0,
+            "timestampMs": 11290.0,
+            "confidence": 0.3225120007991791
+          },
+          {
+            "text": " India's",
+            "startMs": 11640.0,
+            "endMs": 12420.0,
+            "timestampMs": 12030.0,
+            "confidence": 0.9218723475933075
+          },
+          {
+            "text": " growing",
+            "startMs": 12420.0,
+            "endMs": 12620.0,
+            "timestampMs": 12520.0,
+            "confidence": 0.7656535506248474
+          },
+          {
+            "text": " strength",
+            "startMs": 12900.0,
+            "endMs": 13000.0,
+            "timestampMs": 12950.0,
+            "confidence": 0.9660624265670776
+          },
+          {
+            "text": " in",
+            "startMs": 13000.0,
+            "endMs": 13280.0,
+            "timestampMs": 13140.0,
+            "confidence": 0.9514651894569397
+          },
+          {
+            "text": " science,",
+            "startMs": 13280.0,
+            "endMs": 13960.0,
+            "timestampMs": 13620.0,
+            "confidence": 0.8537910580635071
+          },
+          {
+            "text": " technology,",
+            "startMs": 14540.0,
+            "endMs": 15640.0,
+            "timestampMs": 15090.0,
+            "confidence": 0.5898126140236855
+          },
+          {
+            "text": " and",
+            "startMs": 15640.0,
+            "endMs": 15720.0,
+            "timestampMs": 15680.0,
+            "confidence": 0.960196316242218
+          },
+          {
+            "text": " innovation.",
+            "startMs": 15720.0,
+            "endMs": 16400.0,
+            "timestampMs": 16060.0,
+            "confidence": 0.9744945764541626
+          }
+        ],
         "caption_style": {
           "enabled": true,
           "highlight_words": true,
+          "design": "classic",
           "font_size": 28,
           "color": "#ffffff",
           "highlight": "#22d3ee",
           "position": "bottom",
+          "x_percent": 50.0,
+          "y_percent": 50.0,
           "words_per_phrase": 6
         }
-      }
+      },
+      "media": null
     }
   ]
 }

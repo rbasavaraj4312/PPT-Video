@@ -1,6 +1,7 @@
 import React from 'react';
 import { Sequence, useCurrentFrame, useVideoConfig } from 'remotion';
 import { Audio } from '@remotion/media';
+import { MediaClip } from './MediaClip';
 import { CaptionOverlay } from './CaptionOverlay';
 import { RemotionSlideRenderer } from '../motion/core/RemotionSlideRenderer';
 import { buildTimeline, motionSlideAtFrame, morphSlide, visualAtFrame } from './timeline';
@@ -32,6 +33,9 @@ export function NarratedComposition({ presentation, assetBase }) {
     {inTransition && item.slide.transition_type === 'fade' && <div style={{ position: 'absolute', inset: 0, opacity: progress }}>
       <RemotionSlideRenderer slide={next} scale={scale} isVertical={vertical} />
     </div>}
+    {items.filter(entry => entry.slide.media).map(entry => <Sequence key={`media-${entry.slide.id}`} from={entry.start} durationInFrames={entry.hold}>
+      <MediaClip media={entry.slide.media} scale={scale} />
+    </Sequence>)}
     {items.filter(entry => entry.narrated).map(entry => <Sequence key={entry.slide.id} from={entry.start}
       durationInFrames={entry.audio_frames} premountFor={fps}>
       <NarrationTrack item={entry} scale={scale} assetBase={assetBase} />

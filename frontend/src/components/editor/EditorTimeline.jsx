@@ -64,6 +64,11 @@ export function EditorTimeline({ presentation, timeline, frame, playing, onSeek,
         </button>)}</div>
         <div className="timeline-lane caption-lane">{items.flatMap((item, slideIndex) => {
           const n = item.slide.narration;
+          if (item.slide.media) return (item.slide.media.subtitles || []).filter(cue => cue.startMs < item.hold / 30 * 1000).map((cue, i) => {
+            const from = item.start + cue.startMs / 1000 * 30;
+            const to = Math.min(item.start + item.hold, item.start + cue.endMs / 1000 * 30);
+            return <button key={`${item.slide.id}-media-${i}`} className="timeline-caption-clip" style={{ left: percent(from), width: percent(Math.max(1, to - from)) }} title={cue.text} onClick={() => { onSeek(Math.floor(from)); onCaptionSelect(slideIndex); }}>{cue.text || 'Subtitle'}</button>;
+          });
           if (!narrationReady(n) || n.caption_style?.enabled === false) return [];
           const size = n.caption_style?.words_per_phrase || 6;
           return n.captions.filter((_, index) => index % size === 0).map((_, group) => {
