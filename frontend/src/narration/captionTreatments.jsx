@@ -12,6 +12,31 @@ export function captionTreatment({ design, word, index, timeMs, scale, ink, acce
   const remaining = (1 - progress) ** 3;
   const color = word.active && highlighting ? accent : ink;
   const text = word.text.trim();
+  if (design === 'big_kinetic') {
+    const punch = Math.sin(progress * Math.PI) * remaining;
+    return { style: { fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-.045em',
+      padding: '0 .08em', transformOrigin: 'center center',
+      transform: `translateY(${(fontSize * scale * .6 * remaining).toFixed(3)}px) rotate(${((index % 2 ? -1 : 1) * 7 * remaining).toFixed(3)}deg) scale(${(1 + .38 * punch).toFixed(3)}, ${(1 + .65 * punch).toFixed(3)})`,
+      opacity: .2 + .8 * progress }, content: text };
+  }
+  if (design === 'handwritten') {
+    const reveal = clamp((timeMs - word.startMs) / Math.max(1, (word.endMs - word.startMs) * .8));
+    return { style: { position: 'relative', padding: '0 .08em .16em', fontWeight: 500,
+      transform: `rotate(${[-2, 1, -1, 2][index % 4]}deg)`, textShadow: 'none' }, content: <>
+      <span style={{ visibility: 'hidden' }}>{text}</span>
+      <span data-handwriting-reveal style={{ position: 'absolute', left: '.08em', top: 0, clipPath: `inset(0 ${(100 * (1 - reveal)).toFixed(3)}% 0 0)` }}>{text}</span>
+      <svg aria-hidden="true" viewBox="0 0 100 8" preserveAspectRatio="none" style={{ position: 'absolute', left: '4%', bottom: 0, width: '92%', height: '.13em', overflow: 'visible' }}>
+        <path d="M2 5 Q28 1 49 4 T98 3" pathLength="1" fill="none" stroke={highlighting ? accent : ink} strokeWidth="2.5" strokeLinecap="round" strokeDasharray="1" strokeDashoffset={1 - clamp((reveal - .7) / .3)} />
+      </svg>
+    </> };
+  }
+  if (design === 'outline_to_solid') {
+    const fill = clamp((timeMs - word.startMs) / Math.max(1, word.endMs - word.startMs));
+    return { style: { position: 'relative', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-.025em',
+      WebkitTextStroke: `${Math.max(.6, fontSize * scale * .018)}px ${color}`, WebkitTextFillColor: 'transparent', textShadow: 'none' },
+      content: <><span>{text}</span><span aria-hidden="true" data-caption-fill style={{ position: 'absolute', inset: 0,
+        WebkitTextFillColor: color, clipPath: `inset(0 ${(100 * (1 - fill)).toFixed(3)}% 0 0)` }}>{text}</span></> };
+  }
   if (design === 'orbiting_words') {
     const radius = fontSize * scale * 1.6 * remaining;
     const angle = (1 - progress) * Math.PI * 1.4;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { captionPhrase, captionWords } from './timeline.js';
+import { captionLyricLines, captionPhrase, captionWords } from './timeline.js';
 import { captionTreatment, graphemes } from './captionTreatments';
 
 // Pick a readable ink color for the active marker, whatever accent the user chooses.
@@ -17,6 +17,7 @@ export function CaptionOverlay({ narration, timeMs, scale = 1, contentProps = {}
   if (!words.length) return null;
   const accent = style.highlight || '#facc15', ink = style.color || '#ffffff';
   const highlighting = style.highlight_words !== false;
+  const lyricLines = design === 'stacking_lyrics' ? captionLyricLines(narration?.captions || [], timeMs, style.words_per_phrase || 6) : [];
   const phraseWords = design === 'elastic_ribbon' ? captionPhrase(narration?.captions || [], timeMs, style.words_per_phrase || 6) : words;
   const position = style.position === 'custom'
     ? { left: `${style.x_percent ?? 50}%`, top: `${style.y_percent ?? 50}%`, width: 'max-content', maxWidth: '90%', transform: 'translate(-50%, -50%)' }
@@ -38,6 +39,10 @@ export function CaptionOverlay({ narration, timeMs, scale = 1, contentProps = {}
     word_tunnel: { padding: `${8 * scale}px`, overflow: 'visible' },
     orbiting_words: { padding: `${12 * scale}px`, textShadow: `0 ${3 * scale}px ${12 * scale}px rgba(0,0,0,.75)` },
     elastic_ribbon: { padding: `${(style.font_size || 34) * scale * .55}px ${12 * scale}px`, textShadow: `0 ${3 * scale}px ${12 * scale}px rgba(0,0,0,.75)` },
+    big_kinetic: { padding: '.4em .15em', lineHeight: 1.35, textShadow: `0 ${3 * scale}px ${14 * scale}px rgba(0,0,0,.8)` },
+    handwritten: { fontFamily: '"Noteworthy", "Chalkboard SE", "Comic Sans MS", cursive', lineHeight: 1.5, padding: '.15em .2em', filter: `drop-shadow(0 ${2 * scale}px ${3 * scale}px rgba(0,0,0,.7))` },
+    stacking_lyrics: { textAlign: 'left', lineHeight: 1.3, fontWeight: 800, letterSpacing: '-.025em', textShadow: `0 ${3 * scale}px ${12 * scale}px rgba(0,0,0,.8)` },
+    outline_to_solid: { lineHeight: 1.3, padding: '.1em', textShadow: 'none' },
   };
   const containerStyle = treatments[design] || { textShadow: `0 ${2 * scale}px ${8 * scale}px rgba(0,0,0,.55)` };
   return <div aria-hidden={contentProps.role ? undefined : true} style={{ position: 'absolute', pointerEvents: 'none', left: '5%', width: '90%',
@@ -46,7 +51,8 @@ export function CaptionOverlay({ narration, timeMs, scale = 1, contentProps = {}
     lineHeight: design === 'classic' ? 1.45 : design === 'editorial' ? 1.25 : 1.15 }}>
     <span {...contentProps} data-caption-design={design} style={{ display: 'inline-block', position: 'relative', maxWidth: '100%', overflowWrap: 'anywhere',
       ...containerStyle, ...contentProps.style }}>
-      {words.map((word, index) => {
+      {(() => {
+        const renderWord = (word, index) => {
         const progress = Math.max(0, Math.min(1, (timeMs - word.startMs) / 180));
         const zoomProgress = Math.max(0, Math.min(1, (timeMs - word.startMs) / Math.max(1, Math.min(320, (word.endMs - word.startMs) * .75))));
         const zoomScale = 1 + 0.65 * (1 - zoomProgress) ** 3;
@@ -54,13 +60,14 @@ export function CaptionOverlay({ narration, timeMs, scale = 1, contentProps = {}
         const animated = ['build', 'word', 'marker', 'impact', 'signal'].includes(design) && word.active;
         const treatment = captionTreatment({ design, word, index, timeMs, scale, ink, accent, highlighting, markerInk, fontSize: style.font_size || 34, phraseWords });
         return <span key={`${word.startMs}-${index}`} style={{ display: 'inline-block', whiteSpace: 'pre-wrap',
+          ...(['big_kinetic', 'handwritten', 'outline_to_solid'].includes(design) ? { marginRight: '.22em', maxWidth: '100%', overflowWrap: 'anywhere', whiteSpace: 'normal' } : {}),
           color: active && design === 'marker' ? markerInk(accent) : active ? accent : ink,
           ...(active && design === 'marker' ? { background: accent, borderRadius: 3 * scale, boxShadow: `0 0 0 ${3 * scale}px ${accent}` } : {}),
           ...(active && design === 'editorial' ? { textDecoration: 'underline', textDecorationColor: accent, textUnderlineOffset: '0.18em', textDecorationThickness: '0.07em' } : {}),
           ...(design === 'camera_zoom_out' && word.active ? { opacity: 0.65 + 0.35 * zoomProgress, transform: `scale(${zoomScale})`, transformOrigin: 'center center' }
             : animated ? { opacity: 0.5 + progress * 0.5, transform: `translateY(${(1 - progress) * (design === 'impact' ? 20 : 10) * scale}px) scale(${(design === 'impact' ? 1.12 : 0.94) + progress * (design === 'impact' ? -0.12 : 0.06)})` } : {}),
           ...treatment.style
-        }}>{index && design !== 'stacked_headlines' && design !== 'paper_cutout' ? ' ' : ''}{design === 'wavy' ? (() => {
+        }}>{index && !['stacked_headlines', 'paper_cutout', 'big_kinetic', 'handwritten', 'outline_to_solid'].includes(design) ? ' ' : ''}{design === 'wavy' ? (() => {
           const letters = graphemes(word.text.trim());
           // Each letter enters in sequence, then settles before the word ends.
           const duration = Math.max(1, Math.min(400, (word.endMs - word.startMs) * 0.85));
@@ -71,7 +78,18 @@ export function CaptionOverlay({ narration, timeMs, scale = 1, contentProps = {}
             return <span key={letterIndex} style={{ display: 'inline-block', whiteSpace: 'pre', opacity: entrance, transform: `translateY(${offset.toFixed(3)}px)` }}>{letter}</span>;
           });
         })() : treatment.content}</span>;
-      })}
+        };
+        if (design !== 'stacking_lyrics') return words.map(renderWord);
+        return lyricLines.map((line, index) => {
+          const entrance = Math.max(0, Math.min(1, (timeMs - line.startMs) / 260));
+          const currentStart = lyricLines[lyricLines.length - 1].startMs;
+          const shift = (1 - Math.max(0, Math.min(1, (timeMs - currentStart) / 260))) ** 3;
+          return <span key={line.id} data-caption-lyric={line.current ? 'current' : 'previous'} style={{ display: 'block',
+            opacity: line.current ? .3 + .7 * entrance : .25 + .15 * index,
+            transform: `translateY(${(shift * (style.font_size || 34) * scale * .5).toFixed(3)}px)`,
+            padding: '.08em 0' }}>{line.words.map(renderWord)}</span>;
+        });
+      })()}
       {controls}
     </span>
   </div>;

@@ -79,10 +79,24 @@ export function captionPhrase(captions, timeMs, size = 6) {
 
 // Typography designs never show words before their spoken start time.
 export function captionWords(captions, timeMs, size = 6, design = 'classic') {
+  if (design === 'stacking_lyrics') return captionLyricLines(captions, timeMs, size).flatMap(line => line.words);
   const phrase = captionPhrase(captions, timeMs, size);
   if (['word', 'impact', 'camera_zoom_out', 'word_tunnel'].includes(design)) return phrase.filter(word => word.active);
-  if (['build', 'marker', 'signal', 'wavy', 'typewriter', 'paper_cutout', 'neon_trace', 'stacked_headlines', 'focus_pull', 'orbiting_words', 'elastic_ribbon'].includes(design)) return phrase.filter(word => word.startMs <= timeMs);
+  if (['build', 'marker', 'signal', 'wavy', 'typewriter', 'paper_cutout', 'neon_trace', 'stacked_headlines', 'focus_pull', 'orbiting_words', 'elastic_ribbon', 'big_kinetic', 'handwritten'].includes(design)) return phrase.filter(word => word.startMs <= timeMs);
   return phrase;
+}
+
+// Keep two completed phrases above the current lyric, including brief speech gaps.
+export function captionLyricLines(captions, timeMs, size = 6) {
+  if (!captions.length || timeMs < captions[0].startMs || timeMs >= captions[captions.length - 1].endMs) return [];
+  const latest = captions.findLastIndex(word => word.startMs <= timeMs);
+  const current = Math.floor(latest / size);
+  return Array.from({ length: Math.min(3, current + 1) }, (_, index) => {
+    const line = Math.max(0, current - 2) + index;
+    const phrase = captions.slice(line * size, (line + 1) * size);
+    return { id: line, current: line === current, startMs: phrase[0].startMs,
+      words: phrase.filter(word => word.startMs <= timeMs).map(word => ({ ...word, active: timeMs >= word.startMs && timeMs < word.endMs })) };
+  });
 }
 
 export function visualAtFrame(items, frame) {

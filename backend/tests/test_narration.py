@@ -174,7 +174,7 @@ def test_chunking_preserves_all_words_and_sentence_order():
 
 @pytest.mark.parametrize('design', ['editorial', 'marker', 'impact', 'signal', 'camera_zoom_out', 'wavy',
                                          'typewriter', 'paper_cutout', 'neon_trace', 'stacked_headlines', 'focus_pull', 'word_tunnel',
-                                         'orbiting_words', 'elastic_ribbon'])
+                                         'orbiting_words', 'elastic_ribbon', 'big_kinetic', 'handwritten', 'stacking_lyrics', 'outline_to_solid'])
 def test_caption_designs_round_trip(design):
     presentation = PresentationModel.model_validate({'id': 'test', 'slides': [{'id': 's', 'narration': {'caption_style': {'design': design}}}]})
     assert PresentationModel.model_validate_json(presentation.model_dump_json()).slides[0].narration.caption_style.design == design

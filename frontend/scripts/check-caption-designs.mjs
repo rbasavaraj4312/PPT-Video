@@ -20,7 +20,7 @@ const bundled = await build({ stdin: { contents: `import React from 'react';
   bundle: true, platform: 'node', format: 'cjs', write: false, logLevel: 'silent' });
 const module = { exports: {} };
 new Function('require', 'module', 'exports', bundled.outputFiles[0].text)(createRequire(import.meta.url), module, module.exports);
-const designs = ['typewriter', 'paper_cutout', 'neon_trace', 'stacked_headlines', 'focus_pull', 'orbiting_words', 'elastic_ribbon'];
+const designs = ['typewriter', 'paper_cutout', 'neon_trace', 'stacked_headlines', 'focus_pull', 'orbiting_words', 'elastic_ribbon', 'big_kinetic', 'handwritten', 'stacking_lyrics', 'outline_to_solid'];
 const html = `<html><head><meta charset="utf-8"><style>
   *{box-sizing:border-box}body{margin:0;padding:24px;background:#090e19;color:#dce3ee;font-family:Arial}
   h1{font-size:24px;margin:0 0 6px}p{font-size:13px;color:#94a3b8;margin:0 0 20px}
@@ -36,7 +36,7 @@ fs.writeFileSync(htmlPath, html);
 const browser = await openBrowser('chrome', { browserExecutable: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', logLevel: 'error' });
 try {
   const page = await browser.newPage({ context: () => null, logLevel: 'error', indent: false, pageIndex: 0, onBrowserLog: null, onLog: () => {} });
-  await page.setViewport({ width: 1280, height: 2170, deviceScaleFactor: 1 });
+  await page.setViewport({ width: 1280, height: 3260, deviceScaleFactor: 1 });
   await page.goto({ url: `file://${htmlPath}`, timeout: 30000 });
   const result = await page.evaluate(() => {
     const word = (design, time) => document.querySelector(`section[data-design="${design}"][data-time="${time}"] [data-caption-design]`).lastElementChild;
@@ -56,6 +56,14 @@ try {
       ribbonEntering: getComputedStyle(word('elastic_ribbon', 1050)).transform,
       ribbonSettled: getComputedStyle(word('elastic_ribbon', 1400)).transform,
       ribbonWordTransforms: Array.from(document.querySelector('section[data-design="elastic_ribbon"][data-time="1400"] [data-caption-design]').children).map(item => getComputedStyle(item).transform),
+      kineticEntering: getComputedStyle(word('big_kinetic', 1050)).transform,
+      kineticSettled: getComputedStyle(word('big_kinetic', 1400)).transform,
+      handwritingEntering: getComputedStyle(word('handwritten', 1050).querySelector('[data-handwriting-reveal]')).clipPath,
+      handwritingSettled: getComputedStyle(word('handwritten', 1400).querySelector('[data-handwriting-reveal]')).clipPath,
+      handwritingFont: getComputedStyle(word('handwritten', 1400)).fontFamily,
+      lyricLine: Boolean(document.querySelector('[data-caption-lyric="current"]')),
+      outlineEntering: getComputedStyle(word('outline_to_solid', 1050).querySelector('[data-caption-fill]')).clipPath,
+      outlineSettled: getComputedStyle(word('outline_to_solid', 1400).querySelector('[data-caption-fill]')).clipPath,
     };
   });
   assert.equal(result.enteringCursor, true);
@@ -72,6 +80,12 @@ try {
   assert.equal(result.orbitSettled, 'matrix(1, 0, 0, 1, 0, 0)');
   assert.notEqual(result.ribbonEntering, result.ribbonSettled);
   assert.equal(new Set(result.ribbonWordTransforms).size, 3);
+  assert.notEqual(result.kineticEntering, result.kineticSettled);
+  assert.equal(result.kineticSettled, 'matrix(1, 0, 0, 1, 0, 0)');
+  assert.notEqual(result.handwritingEntering, result.handwritingSettled);
+  assert.match(result.handwritingFont, /Noteworthy/);
+  assert.equal(result.lyricLine, true);
+  assert.notEqual(result.outlineEntering, result.outlineSettled);
   const shot = await page._client().send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true });
   fs.writeFileSync(path.join(output, 'contact-sheet.png'), Buffer.from(shot.value.data, 'base64'));
   fs.writeFileSync(path.join(output, 'verification.json'), JSON.stringify(result, null, 2));

@@ -221,7 +221,7 @@ class CaptionModel(BaseModel):
 class CaptionStyle(BaseModel):
     enabled: bool = True
     highlight_words: bool = True
-    design: str = Field(default="classic", pattern=r"^(classic|build|word|editorial|marker|impact|signal|camera_zoom_out|wavy|typewriter|paper_cutout|neon_trace|stacked_headlines|focus_pull|word_tunnel|orbiting_words|elastic_ribbon)$")
+    design: str = Field(default="classic", pattern=r"^(classic|build|word|editorial|marker|impact|signal|camera_zoom_out|wavy|typewriter|paper_cutout|neon_trace|stacked_headlines|focus_pull|word_tunnel|orbiting_words|elastic_ribbon|big_kinetic|handwritten|stacking_lyrics|outline_to_solid)$")
     font_size: int = Field(default=34, ge=16, le=160)
     color: str = Field(default="#ffffff", pattern=r"^#[0-9a-fA-F]{6}$")
     highlight: str = Field(default="#facc15", pattern=r"^#[0-9a-fA-F]{6}$")

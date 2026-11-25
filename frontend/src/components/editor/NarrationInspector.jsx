@@ -26,6 +26,10 @@ const captionDesigns = [
   ['word_tunnel', '3D Word Tunnel', 'Each word approaches from depth, holds in focus, then passes the camera.'],
   ['orbiting_words', 'Orbiting Words', 'Incoming words follow a curved orbit, then settle into the sentence.'],
   ['elastic_ribbon', 'Elastic Ribbon', 'Words follow a flowing curve that gently stretches with speech.'],
+  ['big_kinetic', 'Big kinetic typography', 'Oversized words pop, stretch, and rotate into place with speech.'],
+  ['handwritten', 'Handwritten captions', 'Handwritten letters reveal with speech, followed by a marker underline.'],
+  ['stacking_lyrics', 'Stacking lyrics', 'Phrases build into a three-line stack; earlier lyrics fade above the current line.'],
+  ['outline_to_solid', 'Outline to solid', 'The full phrase starts outlined; each word fills from left to right as it is spoken.'],
 ];
 const captionSample = [
   { text: 'Make it', startMs: 0, endMs: 400 },
@@ -101,7 +105,11 @@ export function NarrationInspector({ tab, onTabChange, presentation, activeSlide
         </>}
         <section className="inspector-section caption-settings">
           <Toggle label="Captions" checked={n.caption_style.enabled} onChange={enabled => caption({ enabled })} />
-          <label>Caption design<select className="editor-field" aria-label="Caption design" value={n.caption_style.design || 'classic'} onChange={event => caption({ design: event.target.value })}>{captionDesigns.map(([id, name]) => <option key={id} value={id}>{name}</option>)}</select></label>
+          <label>Caption design<select className="editor-field" aria-label="Caption design" value={n.caption_style.design || 'classic'} onChange={event => {
+            const design = event.target.value;
+            const presets = { big_kinetic: 80, handwritten: 64, stacking_lyrics: 56, outline_to_solid: 72 };
+            caption({ design, ...(presets[design] ? { position: 'center', font_size: presets[design], words_per_phrase: design === 'stacking_lyrics' ? 4 : 6 } : {}) });
+          }}>{captionDesigns.map(([id, name]) => <option key={id} value={id}>{name}</option>)}</select></label>
           <div className="caption-design-preview" aria-hidden="true"><CaptionOverlay narration={{ captions: captionSample, caption_style: { ...n.caption_style, enabled: true, position: 'center', font_size: 26 } }} timeMs={650} scale={0.8} /></div>
           <p className="editor-hint">{captionDesigns.find(([id]) => id === (n.caption_style.design || 'classic'))?.[2]}</p>
           <Toggle label="Word highlight" checked={n.caption_style.highlight_words !== false} onChange={highlight_words => caption({ highlight_words })} />
